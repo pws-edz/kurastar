@@ -41,7 +41,6 @@
 		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/flexslider.css">
 		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/custom.css" />
 		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css" />
-		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/lightbox/css/lightbox.css">
 
 		<?php wp_head(); ?>
 </head>

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 		$('.menu-sp').click(function(){
-			 $( ".menu" ).fadeToggle('fast');
+			 $( "#menu-header-menu" ).fadeToggle('fast');
 		});
 });
 /*
