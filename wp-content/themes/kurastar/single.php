@@ -8,7 +8,52 @@
  */
 
 get_header(); ?>
+<div class="mainbanner">
+            <div class="flexslider">
+              <ul class="slides">
+                <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image.jpg" /></li>
+                <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image2.jpg" /></li>
+              </ul>
+            </div>
+            <div class="defaultWidth center searchwrap">
+            <form>
+              <div class="searchwrap-inner">
+                <div class="transwrap">
+                  <input id="cty" type="text" value="select country" readonly />
+                </div>
+                <div class="transwrap">
+                  <input id="cat" type="text" value="select category" readonly />
+                </div>
+                <input type="submit" class="search-btn" value="" />
+                
+                <div class="dropcountry">
+                <div class="pointer"></div>
+                
+                <div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
+                  <div class="droplistcountry">
+                    <div>
+                      <?php wp_nav_menu( array('menu' => 'country-menu')); ?>
+                    </div>
+                  </div>
+                </div>
+                </div>
 
+                <div class="dropcategory">
+                <div class="pointer"></div>
+                <div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
+                  <div class="droplistcategory">
+                    <div>
+                      <?php wp_nav_menu( array('menu' => 'category-menu')); ?>
+                    </div>
+                    <div></div>
+                  </div>
+                
+                </div>
+                </div>
+              </div>
+            </form>
+            </div>
+</div>
 	<div id="primary" class="content-area container">
 		<main id="main" class="site-main" role="main">
 		<?php

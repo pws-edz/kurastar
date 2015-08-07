@@ -3,7 +3,6 @@
 	Template Name: Curator
 	*/
 get_header();?>
-
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="defaultWidth center clear-auto bodycontent article-detail-page">
 					<div class="contentbox">

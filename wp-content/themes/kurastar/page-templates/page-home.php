@@ -1,6 +1,55 @@
 <?php 
 /*Template Name: Home*/
 get_header(); ?>
+	<div class="mainbanner">
+						<div class="flexslider">
+							<ul class="slides">
+								<?php $row = 1; if(get_field('home_slider')): ?>
+									 <?php while(has_sub_field('home_slider')): ?>
+									 	<li><img src="<?php the_sub_field('slider_image'); ?>" /></li>
+									 <?php $row++; endwhile; ?>
+								<?php endif; ?>
+							</ul>
+						</div>
+						<div class="defaultWidth center searchwrap">
+						<form>
+							<div class="searchwrap-inner">
+								<div class="transwrap">
+									<input id="cty" type="text" value="select country" readonly />
+								</div>
+								<div class="transwrap">
+									<input id="cat" type="text" value="select category" readonly />
+								</div>
+								<input type="submit" class="search-btn" value="" />
+								
+								<div class="dropcountry">
+								<div class="pointer"></div>
+								
+								<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
+									<div class="droplistcountry">
+										<div>
+											<?php wp_nav_menu( array('menu' => 'country-menu')); ?>
+										</div>
+									</div>
+								</div>
+								</div>
+
+								<div class="dropcategory">
+								<div class="pointer"></div>
+								<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
+									<div class="droplistcategory">
+										<div>
+											<?php wp_nav_menu( array('menu' => 'category-menu')); ?>
+										</div>
+										<div></div>
+									</div>
+								
+								</div>
+								</div>
+							</div>
+						</form>
+						</div>
+				</div>
 	<div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 		<div class="contentbox">
 			<h2 class="whatsnew">ー最新情報ー</h2>
