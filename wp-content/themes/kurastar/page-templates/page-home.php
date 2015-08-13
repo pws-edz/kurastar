@@ -20,8 +20,7 @@ get_header(); ?>
 								<div class="transwrap">
 									<input id="cat" type="text" value="select category" readonly />
 								</div>
-								<input type="submit" class="search-btn" value="" />
-								
+								<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
 								<div class="dropcountry">
 								<div class="pointer"></div>
 								
@@ -133,7 +132,7 @@ get_header(); ?>
 
 			<a href="http://wpkurastar.local/curators-cat/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
 			<div class="sideboxcontent ad300">
-				<img src="images/300x300.jpg" />
+				<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
 			</div>
 			<div class="sideboxcontent rankwrap">
 				<h3 class="sidetitle">Ranking Article</h3>
@@ -166,17 +165,21 @@ get_header(); ?>
 					<li>
 						<a href="<?php echo get_permalink(); ?>">
 							<span class="rank rank1">1</span>
-							<?php
-		                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-		                    ?>
-							<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
-							<h4 class="ranktitle"><?php the_title(); ?></h4>
+							<?php $row = 1; if(get_field('features')): ?>
+      							<?php while(has_sub_field('features')): ?>
+									<div class="siderankimage2"style="background-image:url(<?php the_sub_field('featured_image');?>);"></div>
+								<?php $row++; endwhile; ?>
+							<?php endif; ?>
+							<h4 class="ranktitle">
+							<?php the_title(); ?>
+							</h4>
 							<span class="smallpoints smallpoints-right">9 articles</span>
 						</a>
 					</li>
-				<?php endwhile; endif; wp_reset_query(); ?>	
+				<?php endwhile; endif; wp_reset_query(); ?>
 				</ul>
 			</div>
 		</div>	
 	</div>
+
 <?php get_footer(); ?>

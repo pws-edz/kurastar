@@ -74,7 +74,7 @@ p {
 
 .head1 {
 	border-top:solid 3px #ee7500;
-	background-color:#242424;
+	background-color:#272727;
 }
 .headwrap { overflow:auto; }
 .logo {
@@ -291,7 +291,7 @@ p {
 	font-size:17px;
 	font-weight:bold;
 	margin:4px;
-	height:32px;
+	height:44px;
 	text-transform: Capitalize;
 }
 .transwrap input:hover {
@@ -810,6 +810,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	font-size:16px;
 	line-height:22px;
 	margin-bottom:6px;
+	font-weight: 400;
 }
 .desc p {
 	font-size:14px;
@@ -911,7 +912,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	font-size: 12px;
 }
 .profile-thumb-wrap h3 {
-	font-size:13px;
+	font-size:12px;
 	line-height:16px;
 	color:#a7a7a7;
 	font-weight:normal;
@@ -978,6 +979,13 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	float:left;
 	margin-right:6px;
 }
+.siderankimage2 {
+	width:16px;
+	height:11px;
+	float:left;
+	margin-right:6px;
+	margin-top: 7px;
+}
 .sidebox .widget > ul > li > a:nth-child(1) {
 	font-weight: normal;
 	color: #ed7500;
@@ -997,6 +1005,8 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .rankcountry .ranktitle {
 	color:#929292;
 	height:auto;
+	line-height: 24px;
+	width: auto;
 }
 .rankcountry .ranktitle img {
 	margin-right:5px;

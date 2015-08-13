@@ -180,6 +180,7 @@ function create_post_type() {
       'singular_name' => __('Country'),
       'add_new_item' => __('Add New Country'),
       'edit_item' => __('Edit Country'),
+
            ),
       'public' => true,
 	  '_builtin' => false,
