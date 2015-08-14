@@ -1,6 +1,7 @@
 <?php 
 /*Template Name: Home*/
 get_header(); ?>
+
 	<div class="mainbanner">
 						<div class="flexslider">
 							<ul class="slides">
@@ -52,6 +53,7 @@ get_header(); ?>
 	<div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 		<div class="contentbox">
 			<h2 class="whatsnew">ー最新情報ー</h2>
+
 			<!----- start pagination ------>
 
 			<ul class="post-list-thumb">
@@ -66,18 +68,18 @@ get_header(); ?>
 	                    ?>
 	                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
 	                      <div class="labels">
-	                        <span class="countrylabel"><i class="fa fa-map-marker"></i> フィリピン</span>
-	                        <span class="catlabel"><i class="fa fa-hotel"></i> 観光</span>
+	                        <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php the_field('select_country'); //フィリピン ?></span>
+	                        <span class="catlabel"><i class="fa fa-hotel"></i> <?php the_field('category'); //観光 ?> </span>
 	                      </div>
 	                      <div class="desc">
-	                        <h2><?php the_title(); ?></h2>
+	                        <h2><?php the_title(); ?> </h2>
 	                        <p><?php the_content(); ?></p>
 	                      </div>
 	                      <div class="infobelow">
 	                        <i class="fa fa-heart"></i>
 	                        <span class="smallpoints smallpoints-left">14,091 likes</span>
 	                        <div class="profile-thumb-wrap">
-	                          <span class="smallpoints smallpoints-left">999 views</span>
+	                          <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 	                          <?php $row = 1; if(get_field('article_curator_profile')): ?>
 	                              <?php while(has_sub_field('article_curator_profile')): ?>
 	                                <img src="<?php the_sub_field('article_curator_profile_image'); ?>">
@@ -123,6 +125,9 @@ get_header(); ?>
           <!----- start pagination ------>
 		</div>
 		<!---- start sidebar ---->
+
+
+
 		<div class="sidebox">
 			<div class="socketlabs">
 				<a href="#">
@@ -131,14 +136,22 @@ get_header(); ?>
 			</div>
 
 			<a href="http://wpkurastar.local/curators-cat/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
+			<?php echo do_shortcode( '[most_view]' ); ?> 
 			<div class="sideboxcontent ad300">
 				<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
 			</div>
 			<div class="sideboxcontent rankwrap">
+
 				<h3 class="sidetitle">Ranking Article</h3>
 				<ul class="rankarticle">
+
 					<?php
-					  query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => '5' ) );
+					  query_posts( array( 'post_type' => 'acme_article', 
+					  	'orderby' => 'meta_key', 
+					  	'meta_key' => '_count-views_all',
+ 						'order' => 'DESC', 
+ 						'posts_per_page' => '5' ) );
+
 					  if ( have_posts() ) : while ( have_posts() ) : the_post();
 					?>
 					<li>
@@ -149,7 +162,7 @@ get_header(); ?>
 		                    ?>
 							<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
 							<h4 class="ranktitle"><?php the_title(); ?></h4>
-							<span class="smallpoints smallpoints-right">14,091 views</span>
+							<span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 						</a>
 					</li>
 				<?php endwhile; endif; wp_reset_query(); ?>	

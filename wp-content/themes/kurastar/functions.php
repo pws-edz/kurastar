@@ -270,7 +270,6 @@ function create_post_type() {
 
 }
 
-
 /**
  * Register widget area.
  *

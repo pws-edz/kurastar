@@ -9,6 +9,8 @@
  * @since Twenty Fifteen 1.0
  */
 ?>
+
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="defaultWidth center clear-auto bodycontent article-detail-page">
 					<div class="contentbox">
@@ -30,7 +32,8 @@
 						</div>
 						<div class="curator-info">
 							<h4><?php the_title(); ?></h4>
-							<p><?php the_content(); ?></p>
+							<p><?php the_content();  ?></p>
+						
 						</div>
 						<div class="infobelow">
 							<ul class="social_reviews">
@@ -44,7 +47,7 @@
 								<?php endif; ?>
 							</ul>
 							<div class="profile-thumb-wrap">
-								<span class="smallpoints smallpoints-left-views">966 views</span>
+								<span class="smallpoints smallpoints-left-views"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 								<a href="#"><i class="fa fa-heart"></i></a>
 								<span class="smallpoints smallpoints-left">14,091 likes</span>
 								<?php $row = 1; if(get_field('article_curator_profile')): ?>
