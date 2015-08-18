@@ -17,7 +17,9 @@
  */
 
 get_header(); ?>
-
+<?php
+$menu_slug = my_get_menu_item_slug();
+?>
 <div class="mainbanner">
             <div class="flexslider">
               <ul class="slides">
@@ -26,7 +28,7 @@ get_header(); ?>
               </ul>
             </div>
             <div class="defaultWidth center searchwrap">
-            <form>
+            <form method="POST" action="<?php ?>">
               <div class="searchwrap-inner">
                 <div class="transwrap">
                   <input id="cty" type="text" value="select country" readonly />
@@ -73,17 +75,28 @@ get_header(); ?>
                 <?php if(function_exists('bcn_display'))
                 {
                     bcn_display();
+          
                 }?>
             </div>
             <span class="search-results">
-              フィリピン, グルメ result (6 items):
+            <?php 
+            $post_count = count_posts($menu_slug);
+            // $published_posts = $count_posts->publish;
+            // echo $published_posts;
+            $total = count_country_articles();
+            ?>
+            <?php echo $total; ?> フィリピン, グルメ result (<?php echo $post_count; ?> items):
             </span>
 
             <!-- Tab panes -->
             <ul class="post-list-thumb">
               <?php
             // Start the Loop.
-            while ( have_posts() ) : the_post(); ?>
+              query_posts( array( 'post_type' => 'acme_article', '' => '', 
+                'meta_value' => $menu_slug,) );
+            while ( have_posts() ) : the_post(); 
+            ?>
+
                 <li>
                     <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
                     <?php
@@ -91,18 +104,19 @@ get_header(); ?>
                     ?>
                     <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
                       <div class="labels">
-                        <span class="countrylabel"><i class="fa fa-map-marker"></i> フィリピン</span>
-                        <span class="catlabel"><i class="fa fa-hotel"></i> 観光</span>
+                        <span class="countrylabel"><i class="fa fa-map-marker"></i><?php the_field('select_country'); ?></span>
+                       <span class="catlabel"><i class="fa fa-hotel"></i> <?php the_field('category'); ?></span>
                       </div>
                       <div class="desc">
                         <h2><?php the_title(); ?></h2>
                         <p><?php the_content(); ?></p>
+
                       </div>
                       <div class="infobelow">
                         <i class="fa fa-heart"></i>
                         <span class="smallpoints smallpoints-left">14,091 likes</span>
                         <div class="profile-thumb-wrap">
-                          <span class="smallpoints smallpoints-left">999 views</span>
+                          <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
                           <?php $row = 1; if(get_field('article_curator_profile')): ?>
                               <?php while(has_sub_field('article_curator_profile')): ?>
                                 <img src="<?php the_sub_field('article_curator_profile_image'); ?>">
@@ -161,7 +175,11 @@ get_header(); ?>
         <h3 class="sidetitle">Ranking Article</h3>
         <ul class="rankarticle">
           <?php
-            query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => '5' ) );
+            query_posts( array( 'post_type' => 'acme_article', 
+              'orderby' => 'meta_value', 
+              'meta_key' => '_count-views_all',
+              'order' => 'DESC',
+              'posts_per_page' => '5' ) );
             if ( have_posts() ) : while ( have_posts() ) : the_post();
           ?>
           <li>
@@ -172,7 +190,7 @@ get_header(); ?>
                         ?>
               <div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
               <h4 class="ranktitle"><?php the_title(); ?></h4>
-              <span class="smallpoints smallpoints-right">14,091 views</span>
+              <span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
             </a>
           </li>
         <?php endwhile; endif; wp_reset_query(); ?> 

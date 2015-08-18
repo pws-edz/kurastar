@@ -11,6 +11,7 @@
 ?>
 
 
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="defaultWidth center clear-auto bodycontent article-detail-page">
 					<div class="contentbox">
@@ -27,8 +28,8 @@
 		                   ?>
 		                   <a class="example-image-link" href="<?php echo $src[0]; ?>" data-lightbox="example-1"><div class="postimg postimg2" style="background: url(<?php echo $src[0]; ?> )"></div></a>
 						<div class="labels">
-							<span class="countrylabel"><i class="fa fa-map-marker"></i> フィリピン</span>
-							<span class="catlabel"><i class="fa fa-hotel"></i> 観光</span>
+							<span class="countrylabel"><i class="fa fa-map-marker"></i>  <?php the_field('select_country'); ?></span>
+							<span class="catlabel"><i class="fa fa-hotel"></i> <?php the_field('category'); ?></span>
 						</div>
 						<div class="curator-info">
 							<h4><?php the_title(); ?></h4>
@@ -76,18 +77,18 @@
 	                    ?>
 	                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
 	                      <div class="labels">
-	                        <span class="countrylabel"><i class="fa fa-map-marker"></i> フィリピン</span>
-	                        <span class="catlabel"><i class="fa fa-hotel"></i> 観光</span>
+	                        <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php the_field('select_country'); ?></span>
+	                        <span class="catlabel"><i class="fa fa-hotel"></i> <?php the_field('category'); ?></span>
 	                      </div>
 	                      <div class="desc">
 	                        <h2><?php the_title(); ?></h2>
 	                        <p><?php the_content(); ?></p>
 	                      </div>
-	                      <div class="infobelow">
+	                      <div class="infobelow"> 
 	                        <i class="fa fa-heart"></i>
 	                        <span class="smallpoints smallpoints-left">14,091 likes</span>
 	                        <div class="profile-thumb-wrap">
-	                          <span class="smallpoints smallpoints-left">999 views</span>
+	                          <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 	                          <?php $row = 1; if(get_field('article_curator_profile')): ?>
 	                              <?php while(has_sub_field('article_curator_profile')): ?>
 	                                <img src="<?php the_sub_field('article_curator_profile_image'); ?>">
@@ -146,7 +147,11 @@
 				<h3 class="sidetitle">Ranking Article</h3>
 				<ul class="rankarticle">
 					<?php
-					  query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => '5' ) );
+					  query_posts( array( 'post_type' => 'acme_article', 
+					  	'orderby' => 'meta_key', 
+					  	'meta_key' => '_count-views_all',
+ 						'order' => 'DESC', 
+ 						'posts_per_page' => '5' ) );
 					  if ( have_posts() ) : while ( have_posts() ) : the_post();
 					?>
 					<li>
@@ -157,7 +162,7 @@
 		                    ?>
 							<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
 							<h4 class="ranktitle"><?php the_title(); ?></h4>
-							<span class="smallpoints smallpoints-right">14,091 views</span>
+							<span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 						</a>
 					</li>
 				<?php endwhile; endif; wp_reset_query(); ?>	

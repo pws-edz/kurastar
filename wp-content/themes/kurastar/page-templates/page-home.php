@@ -1,5 +1,7 @@
 <?php 
+
 /*Template Name: Home*/
+
 get_header(); ?>
 
 	<div class="mainbanner">
@@ -13,13 +15,13 @@ get_header(); ?>
 							</ul>
 						</div>
 						<div class="defaultWidth center searchwrap">
-						<form>
+						<form method="POST" action="search-results/">
 							<div class="searchwrap-inner">
 								<div class="transwrap">
-									<input id="cty" type="text" value="select country" readonly />
+									<input id="cty" type="text" name="country" value="select country" readonly />
 								</div>
 								<div class="transwrap">
-									<input id="cat" type="text" value="select category" readonly />
+									<input id="cat" type="text" name="category" value="select category" readonly />
 								</div>
 								<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
 								<div class="dropcountry">
@@ -36,15 +38,15 @@ get_header(); ?>
 
 								<div class="dropcategory">
 								<div class="pointer"></div>
-								<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
-									<div class="droplistcategory">
-										<div>
-											<?php wp_nav_menu( array('menu' => 'category-menu')); ?>
+									<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
+										<div class="droplistcategory">
+											<div>
+												<?php wp_nav_menu( array('menu' => 'category-menu')); ?>
+											</div>
+											<div></div>
 										</div>
-										<div></div>
+									
 									</div>
-								
-								</div>
 								</div>
 							</div>
 						</form>
@@ -58,6 +60,7 @@ get_header(); ?>
 
 			<ul class="post-list-thumb">
 			<?php
+				  get_wpposts();
 				  query_posts( array( 'post_type' => 'acme_article', '' => '' ) );
 				  if ( have_posts() ) : while ( have_posts() ) : the_post();
 			?>
@@ -147,7 +150,7 @@ get_header(); ?>
 
 					<?php
 					  query_posts( array( 'post_type' => 'acme_article', 
-					  	'orderby' => 'meta_key', 
+					  	'orderby' => 'meta_value', 
 					  	'meta_key' => '_count-views_all',
  						'order' => 'DESC', 
  						'posts_per_page' => '5' ) );

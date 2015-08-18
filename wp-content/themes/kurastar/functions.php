@@ -270,6 +270,7 @@ function create_post_type() {
 
 }
 
+
 /**
  * Register widget area.
  *
@@ -362,6 +363,56 @@ function twentyfifteen_fonts_url() {
 	return $fonts_url;
 }
 endif;
+
+function my_get_menu_item_slug() {
+$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+echo $actual_link;
+$slug = trim($actual_link, "/");
+$link = explode("/", $slug);
+
+var_dump($link);
+
+return end($link);
+}
+
+function count_posts($menu_slug){
+
+	$count = 0;
+	query_posts( array( 'post_type' => 'acme_article', 
+						'' => '', 
+                		'meta_value' => $menu_slug,) );
+        	while ( have_posts() ) : the_post(); 
+            	$count = $count + 1;
+ 			endwhile;
+ return $count;
+}
+
+function get_wpposts(){
+
+	if (isset($_POST['country']) && isset($_POST['category']) ){
+
+   $country = $_POST['country'];
+   $category = $_POST['category'];
+
+   $cat = "category";
+   global $wpdb;
+   $results = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `meta_key` = "category" AND `meta_value` = "'.$category.'" ' );
+   foreach ($results as $post){
+              
+      $myresults = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `meta_key` = "select_country" AND `meta_value` = "'.$country.'" ' );
+          foreach ($myresults as $mypost){
+
+               echo $post->meta_value.'|'.$mypost->meta_value.'|'.$mypost->post_id.'<br>';
+               get_post($mypost->post_id);
+
+              return $mypost->id;
+           }
+             
+   }
+}
+ return $country;
+}
 
 /**
  * JavaScript Detection.
