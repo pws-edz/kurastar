@@ -30,7 +30,55 @@ get_header(); ?>
 								<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
 									<div class="droplistcountry">
 										<div>
-											<?php wp_nav_menu( array('menu' => 'country-menu')); ?>
+
+											<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
+											<ul id="menu-country-menu" class="menu">
+												
+											<?php
+
+											$taxonomy = array( 
+											    'country_cat'
+											);
+
+											$args = array(
+											    'orderby'           => 'name', 
+											    'order'             => 'ASC',
+											    'hide_empty'        => false, 
+											    'hierarchical'      => true, 
+											    'pad_counts'        => false,
+											    'parent'			=> 0
+											); 
+
+											$parents = get_terms($taxonomy, $args);
+
+											foreach ($parents as $key => $parent):
+											?>
+													<li class="menu-continent disabled menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $parent->term_id ?>">
+														<a><?php echo $parent->name ?></a>
+													</li>
+
+
+													<?php
+													$param = array(
+												 				'orderby'           => 'name', 
+											    				'order'             => 'ASC',
+											                    'taxonomy' => $taxonomy,
+											                    'parent'   => $parent->term_id,
+											                    'hide_empty'        => false, 
+											                  );
+
+											        $subcategories = get_categories($param);      
+											        foreach($subcategories as $sub):
+											        ?>
+											           <li class="option menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $parent->term_id ?>"><a><?php echo $sub->name ?></a></li>
+											        <?php
+											        endforeach;
+
+											endforeach;
+											?>
+
+											</ul>
+
 										</div>
 									</div>
 								</div>
@@ -41,7 +89,42 @@ get_header(); ?>
 									<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
 										<div class="droplistcategory">
 											<div>
-												<?php wp_nav_menu( array('menu' => 'category-menu')); ?>
+												<?php //wp_nav_menu( array('menu' => 'category-menu')); ?>
+
+												<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
+											<ul id="menu-category-menu" class="menu">
+												
+											<?php
+											$taxonomy = '';
+											$args = '';
+
+											$taxonomy = array( 
+											    'article_cat'
+											);
+
+											$args = array(
+											    'orderby'           => 'name', 
+											    'order'             => 'ASC',
+											    'hide_empty'        => false, 
+											    'hierarchical'      => true, 
+											    'child_of'          => 0,
+											    'childless'         => false,
+											    'pad_counts'        => false
+											); 
+
+											$categories = get_terms($taxonomy, $args);
+
+
+											foreach ($categories as $key => $category):
+											?>
+												<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $category->term_id ?>">
+													<a><?php echo $category->name ?></a>
+												</li>
+											<?php 		
+											endforeach;
+											?>
+											
+											</ul>
 											</div>
 											<div></div>
 										</div>
@@ -197,5 +280,4 @@ get_header(); ?>
 			</div>
 		</div>	
 	</div>
-
 <?php get_footer(); ?>
