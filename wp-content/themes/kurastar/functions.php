@@ -163,7 +163,7 @@ function create_post_type() {
   );
 
   $args = array(
-      'hierarchical'          => false,
+      'hierarchical'          => true,
       'labels'                => $labels,
       'show_ui'               => true,
       'show_admin_column'     => true,
@@ -174,39 +174,23 @@ function create_post_type() {
 
   register_taxonomy( 'article_cat', 'acme_article', $args );
 
-  register_post_type( 'acme_country',
-    array(
-      'labels' => array('name' => __('Country'),
-      'singular_name' => __('Country'),
-      'add_new_item' => __('Add New Country'),
-      'edit_item' => __('Edit Country'),
-
-           ),
-      'public' => true,
-	  '_builtin' => false,
-	  'query_var' => true,
-	  'rewrite' => array('slug' => 'country', 'with_front' => false),
-      'show_ui' => true,
-      'supports' => array('title','editor','thumbnail' )
-  ));
-
-  $labels = array(
-      'name'                       => _x( 'Categories', 'taxonomy general name' ),
-      'singular_name'              => _x( 'Category', 'taxonomy singular name' ),
-      'search_items'               => __( 'Search Categories' ),
-      'popular_items'              => __( 'Popular Categories' ),
-      'all_items'                  => __( 'All Categories' ),
+    $labels = array(
+      'name'                       => _x( 'Countries', 'taxonomy general name' ),
+      'singular_name'              => _x( 'Country', 'taxonomy singular name' ),
+      'search_items'               => __( 'Search Countries' ),
+      'popular_items'              => __( 'Popular Countries' ),
+      'all_items'                  => __( 'All Countries' ),
       'parent_item'                => null,
       'parent_item_colon'          => null,
-      'edit_item'                  => __( 'Edit Category' ),
-      'update_item'                => __( 'Update Category' ),
-      'add_new_item'               => __( 'Add New Category' ),
-      'new_item_name'              => __( 'New Category Name' ),
+      'edit_item'                  => __( 'Edit Country' ),
+      'update_item'                => __( 'Update Country' ),
+      'add_new_item'               => __( 'Add New Country' ),
+      'new_item_name'              => __( 'New Country Name' ),
       'separate_items_with_commas' => __( 'Separate categories with commas' ),
-      'add_or_remove_items'        => __( 'Add or remove catedgories' ),
+      'add_or_remove_items'        => __( 'Add or remove categories' ),
       'choose_from_most_used'      => __( 'Choose from the most used categories' ),
       'not_found'                  => __( 'No categories found.' ),
-      'menu_name'                  => __( 'Categories' ),
+      'menu_name'                  => __( 'Countries' ),
   );
 
   $args = array(
@@ -216,57 +200,137 @@ function create_post_type() {
       'show_admin_column'     => true,
       'update_count_callback' => '_update_post_term_count',
       'query_var'             => true,
-      'rewrite'               => array( 'slug' => 'country-cat' ),
+      'rewrite'               => array( 'slug' => 'article-country-cat' ),
   );
 
-  register_taxonomy( 'country_cat', 'acme_country', $args );
+  register_taxonomy( 'article_country_cat', 'acme_article', $args );
 
 
-  register_post_type( 'acme_curator',
-    array(
-      'labels' => array('name' => __('Curator'),
-      'singular_name' => __('Curator'),
-      'add_new_item' => __('Add New Curator'),
-      'edit_item' => __('Edit Curator'),
-           ),
-      'public' => true,
-	  '_builtin' => false,
-	  'query_var' => true,
-	  'rewrite' => array('slug' => 'curator', 'with_front' => false),
-      'show_ui' => true,
-      'supports' => array('title','editor','thumbnail' )
-  ));
-
-  $labels = array(
-      'name'                       => _x( 'Categories', 'taxonomy general name' ),
-      'singular_name'              => _x( 'Category', 'taxonomy singular name' ),
-      'search_items'               => __( 'Search Categories' ),
-      'popular_items'              => __( 'Popular Categories' ),
-      'all_items'                  => __( 'All Categories' ),
+   $labels = array(
+      'name'                       => _x( 'Curators', 'taxonomy general name' ),
+      'singular_name'              => _x( 'Curator', 'taxonomy singular name' ),
+      'search_items'               => __( 'Search Curators' ),
+      'popular_items'              => __( 'Popular Curators' ),
+      'all_items'                  => __( 'All Curators' ),
       'parent_item'                => null,
       'parent_item_colon'          => null,
-      'edit_item'                  => __( 'Edit Category' ),
-      'update_item'                => __( 'Update Category' ),
-      'add_new_item'               => __( 'Add New Category' ),
-      'new_item_name'              => __( 'New Category Name' ),
+      'edit_item'                  => __( 'Edit Curator' ),
+      'update_item'                => __( 'Update Curator' ),
+      'add_new_item'               => __( 'Add New Curator' ),
+      'new_item_name'              => __( 'New Curator Name' ),
       'separate_items_with_commas' => __( 'Separate categories with commas' ),
-      'add_or_remove_items'        => __( 'Add or remove catedgories' ),
+      'add_or_remove_items'        => __( 'Add or remove categories' ),
       'choose_from_most_used'      => __( 'Choose from the most used categories' ),
       'not_found'                  => __( 'No categories found.' ),
-      'menu_name'                  => __( 'Categories' ),
+      'menu_name'                  => __( 'Curator' ),
   );
 
   $args = array(
-      'hierarchical'          => false,
+      'hierarchical'          => true,
       'labels'                => $labels,
       'show_ui'               => true,
       'show_admin_column'     => true,
       'update_count_callback' => '_update_post_term_count',
       'query_var'             => true,
-      'rewrite'               => array( 'slug' => 'curators-cat' ),
+      'rewrite'               => array( 'slug' => 'article-curator-cat' ),
   );
 
-  register_taxonomy( 'curator_cat', 'acme_curator', $args );
+  register_taxonomy( 'article_curator_cat', 'acme_article', $args );
+
+
+  // register_post_type( 'acme_country',
+  //   array(
+  //     'labels' => array('name' => __('Country'),
+  //     'singular_name' => __('Country'),
+  //     'add_new_item' => __('Add New Country'),
+  //     'edit_item' => __('Edit Country'),
+
+  //          ),
+  //     'public' => true,
+	 //  '_builtin' => false,
+	 //  'query_var' => true,
+	 //  'rewrite' => array('slug' => 'country', 'with_front' => false),
+  //     'show_ui' => true,
+  //     'supports' => array('title','editor','thumbnail' )
+  // ));
+
+  // $labels = array(
+  //     'name'                       => _x( 'Categories', 'taxonomy general name' ),
+  //     'singular_name'              => _x( 'Category', 'taxonomy singular name' ),
+  //     'search_items'               => __( 'Search Categories' ),
+  //     'popular_items'              => __( 'Popular Categories' ),
+  //     'all_items'                  => __( 'All Categories' ),
+  //     'parent_item'                => null,
+  //     'parent_item_colon'          => null,
+  //     'edit_item'                  => __( 'Edit Category' ),
+  //     'update_item'                => __( 'Update Category' ),
+  //     'add_new_item'               => __( 'Add New Category' ),
+  //     'new_item_name'              => __( 'New Category Name' ),
+  //     'separate_items_with_commas' => __( 'Separate categories with commas' ),
+  //     'add_or_remove_items'        => __( 'Add or remove catedgories' ),
+  //     'choose_from_most_used'      => __( 'Choose from the most used categories' ),
+  //     'not_found'                  => __( 'No categories found.' ),
+  //     'menu_name'                  => __( 'Categories' ),
+  // );
+
+  // $args = array(
+  //     'hierarchical'          => true,
+  //     'labels'                => $labels,
+  //     'show_ui'               => true,
+  //     'show_admin_column'     => true,
+  //     'update_count_callback' => '_update_post_term_count',
+  //     'query_var'             => true,
+  //     'rewrite'               => array( 'slug' => 'country-cat' ),
+  // );
+
+  // register_taxonomy( 'country_cat', 'acme_country', $args );
+
+
+  // register_post_type( 'acme_curator',
+  //   array(
+  //     'labels' => array('name' => __('Curator'),
+  //     'singular_name' => __('Curator'),
+  //     'add_new_item' => __('Add New Curator'),
+  //     'edit_item' => __('Edit Curator'),
+  //          ),
+  //     'public' => true,
+	 //  '_builtin' => false,
+	 //  'query_var' => true,
+	 //  'rewrite' => array('slug' => 'curator', 'with_front' => false),
+  //     'show_ui' => true,
+  //     'supports' => array('title','editor','thumbnail' )
+  // ));
+
+  // $labels = array(
+  //     'name'                       => _x( 'Categories', 'taxonomy general name' ),
+  //     'singular_name'              => _x( 'Category', 'taxonomy singular name' ),
+  //     'search_items'               => __( 'Search Categories' ),
+  //     'popular_items'              => __( 'Popular Categories' ),
+  //     'all_items'                  => __( 'All Categories' ),
+  //     'parent_item'                => null,
+  //     'parent_item_colon'          => null,
+  //     'edit_item'                  => __( 'Edit Category' ),
+  //     'update_item'                => __( 'Update Category' ),
+  //     'add_new_item'               => __( 'Add New Category' ),
+  //     'new_item_name'              => __( 'New Category Name' ),
+  //     'separate_items_with_commas' => __( 'Separate categories with commas' ),
+  //     'add_or_remove_items'        => __( 'Add or remove catedgories' ),
+  //     'choose_from_most_used'      => __( 'Choose from the most used categories' ),
+  //     'not_found'                  => __( 'No categories found.' ),
+  //     'menu_name'                  => __( 'Categories' ),
+  // );
+
+  // $args = array(
+  //     'hierarchical'          => false,
+  //     'labels'                => $labels,
+  //     'show_ui'               => true,
+  //     'show_admin_column'     => true,
+  //     'update_count_callback' => '_update_post_term_count',
+  //     'query_var'             => true,
+  //     'rewrite'               => array( 'slug' => 'curators-cat' ),
+  // );
+
+  // register_taxonomy( 'curator_cat', 'acme_curator', $args );
 
 }
 

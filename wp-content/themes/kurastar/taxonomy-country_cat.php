@@ -151,7 +151,7 @@ get_header(); ?>
         <?php endwhile; endif; wp_reset_query(); ?> 
         </ul>
       </div>
-      <div class="sideboxcontent rankwrap">
+      <!-- <div class="sideboxcontent rankwrap">
         <h3 class="sidetitle">Ranking Country</h3>
         <ul class="rankarticle rankcountry">
           <?php
@@ -170,6 +170,42 @@ get_header(); ?>
             </a>
           </li>
         <?php endwhile; endif; wp_reset_query(); ?> 
+        </ul>
+      </div> -->
+
+      <?php     
+        $taxonomy = 'article_country_cat';
+        $args = array(
+            'orderby'           => 'count', 
+            'order'             => 'DESC',
+            'hide_empty'        => true, 
+        ); 
+
+
+        $countries = get_terms($taxonomy, $args);
+
+      ?>
+
+      <div class="sideboxcontent rankwrap">
+        <h3 class="sidetitle">Ranking Country</h3>
+        <ul class="rankarticle rankcountry">
+          <?php
+           foreach($countries as $key => $country):
+            
+            if($country->count > 0):
+            ?>
+              <li>
+                <a href="country-cat/<?php echo $country->slug ?>">
+                  <span class="rank rank1"><?php echo $key ?></span>
+                  <div class="siderankimage2"style="background-image:url(<?php if (function_exists('z_taxonomy_image_url')) echo z_taxonomy_image_url($country->term_id); ?>);"></div>
+                  <h4 class="ranktitle">
+                  <?php echo $country->name; ?>
+                  </h4>
+                  <span class="smallpoints smallpoints-right"><?php echo $country->count ?> <?php echo $country->count > 1 ? 'articles' : 'article';?></span>
+                </a>
+              </li>
+          <?php endif; ?>
+        <?php endforeach; ?>
         </ul>
       </div>
     </div>
