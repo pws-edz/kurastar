@@ -1,6 +1,6 @@
 <?php
 	/* 
-	Template Name: Curator
+	Template Name: Curator OLD
 	*/
 get_header();?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

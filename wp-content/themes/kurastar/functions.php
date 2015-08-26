@@ -140,7 +140,7 @@ function create_post_type() {
 	  'query_var' => true,
 	  'rewrite' => array('slug' => 'article', 'with_front' => false),
       'show_ui' => true,
-      'supports' => array('title','editor','thumbnail' )
+      'supports' => array('title','editor','thumbnail', 'author' )
   ));
 
   $labels = array(
@@ -205,37 +205,38 @@ function create_post_type() {
 
   register_taxonomy( 'article_country_cat', 'acme_article', $args );
 
+  //Removed Category Curators, the curators now are the wp users.
 
-   $labels = array(
-      'name'                       => _x( 'Curators', 'taxonomy general name' ),
-      'singular_name'              => _x( 'Curator', 'taxonomy singular name' ),
-      'search_items'               => __( 'Search Curators' ),
-      'popular_items'              => __( 'Popular Curators' ),
-      'all_items'                  => __( 'All Curators' ),
-      'parent_item'                => null,
-      'parent_item_colon'          => null,
-      'edit_item'                  => __( 'Edit Curator' ),
-      'update_item'                => __( 'Update Curator' ),
-      'add_new_item'               => __( 'Add New Curator' ),
-      'new_item_name'              => __( 'New Curator Name' ),
-      'separate_items_with_commas' => __( 'Separate categories with commas' ),
-      'add_or_remove_items'        => __( 'Add or remove categories' ),
-      'choose_from_most_used'      => __( 'Choose from the most used categories' ),
-      'not_found'                  => __( 'No categories found.' ),
-      'menu_name'                  => __( 'Curator' ),
-  );
+  //  $labels = array(
+  //     'name'                       => _x( 'Curators', 'taxonomy general name' ),
+  //     'singular_name'              => _x( 'Curator', 'taxonomy singular name' ),
+  //     'search_items'               => __( 'Search Curators' ),
+  //     'popular_items'              => __( 'Popular Curators' ),
+  //     'all_items'                  => __( 'All Curators' ),
+  //     'parent_item'                => null,
+  //     'parent_item_colon'          => null,
+  //     'edit_item'                  => __( 'Edit Curator' ),
+  //     'update_item'                => __( 'Update Curator' ),
+  //     'add_new_item'               => __( 'Add New Curator' ),
+  //     'new_item_name'              => __( 'New Curator Name' ),
+  //     'separate_items_with_commas' => __( 'Separate categories with commas' ),
+  //     'add_or_remove_items'        => __( 'Add or remove categories' ),
+  //     'choose_from_most_used'      => __( 'Choose from the most used categories' ),
+  //     'not_found'                  => __( 'No categories found.' ),
+  //     'menu_name'                  => __( 'Curator' ),
+  // );
 
-  $args = array(
-      'hierarchical'          => true,
-      'labels'                => $labels,
-      'show_ui'               => true,
-      'show_admin_column'     => true,
-      'update_count_callback' => '_update_post_term_count',
-      'query_var'             => true,
-      'rewrite'               => array( 'slug' => 'article-curator-cat' ),
-  );
+  // $args = array(
+  //     'hierarchical'          => true,
+  //     'labels'                => $labels,
+  //     'show_ui'               => true,
+  //     'show_admin_column'     => true,
+  //     'update_count_callback' => '_update_post_term_count',
+  //     'query_var'             => true,
+  //     'rewrite'               => array( 'slug' => 'article-curator-cat' ),
+  // );
 
-  register_taxonomy( 'article_curator_cat', 'acme_article', $args );
+  // register_taxonomy( 'article_curator_cat', 'acme_article', $args );
 
 
   // register_post_type( 'acme_country',
@@ -428,18 +429,6 @@ function twentyfifteen_fonts_url() {
 }
 endif;
 
-function my_get_menu_item_slug() {
-$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-echo $actual_link;
-$slug = trim($actual_link, "/");
-$link = explode("/", $slug);
-
-var_dump($link);
-
-return end($link);
-}
-
 function count_posts($menu_slug){
 
 	$count = 0;
@@ -627,3 +616,30 @@ require get_template_directory() . '/inc/template-tags.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
+
+/**
+ * Custom shortcodes.
+ */
+require get_template_directory() . '/inc/shortcode.php';
+
+
+/**
+ * Custom functions.
+ */
+require get_template_directory() . '/inc/custom-function.php';
+
+
+
+function posts_for_current_author($query) {
+  
+  global $user_ID;
+
+
+    if(!is_super_admin( $user_ID )) {
+
+          $query->set('author',  $user_ID);
+    }
+
+  return $query;
+}
+add_filter('pre_get_posts', 'posts_for_current_author');

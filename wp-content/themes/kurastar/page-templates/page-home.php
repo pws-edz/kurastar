@@ -5,214 +5,126 @@
 get_header(); ?>
 
 	<div class="mainbanner">
-						<div class="flexslider">
-							<ul class="slides">
-								<?php $row = 1; if(get_field('home_slider')): ?>
-									 <?php while(has_sub_field('home_slider')): ?>
-									 	<li><img src="<?php the_sub_field('slider_image'); ?>" /></li>
-									 <?php $row++; endwhile; ?>
-								<?php endif; ?>
-							</ul>
-						</div>
-						<div class="defaultWidth center searchwrap">
-						<form method="POST" action="search-results/">
-							<div class="searchwrap-inner">
-								<div class="transwrap">
-									<input id="cty" type="text" name="country" value="select country" readonly />
-								</div>
-								<div class="transwrap">
-									<input id="cat" type="text" name="category" value="select category" readonly />
-								</div>
-								<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
-								<div class="dropcountry">
-								<div class="pointer"></div>
-								
-								<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
-									<div class="droplistcountry">
-										<div>
+		<div class="flexslider">
+			<ul class="slides">
+				<?php $row = 1; if(get_field('home_slider')): ?>
+					 <?php while(has_sub_field('home_slider')): ?>
+					 	<li><img src="<?php the_sub_field('slider_image'); ?>" /></li>
+					 <?php $row++; endwhile; ?>
+				<?php endif; ?>
+			</ul>
+		</div>
+		<div class="defaultWidth center searchwrap">
+			<form method="get" action="search-results/">
+				<div class="searchwrap-inner">
+					<div class="transwrap">
+						<input id="cty" type="text" name="country" value="select country" readonly />
+					</div>
+					<div class="transwrap">
+						<input id="cat" type="text" name="category" value="select category" readonly />
+					</div>
+					<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+					
+					<?php 
+						/*
+						* Country Dropdown
+						* @hook: dropdown_country_func
+						*/
+					 ?>
+					 <?php echo do_shortcode( '[dropdown_country]' ) ?>
 
-											<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
-											<ul id="menu-country-menu" class="menu">
-												
-											<?php
+					 <?php 
+						/*
+						* Category Dropdown
+						* @hook: dropdown_category_func
+						*/
+					 ?>
+					 <?php echo do_shortcode( '[dropdown_category]' ) ?>
 
-											$taxonomy = array( 
-											    'article_country_cat'
-											);
-
-											$args = array(
-											    'orderby'           => 'name', 
-											    'order'             => 'ASC',
-											    'hide_empty'        => false, 
-											    'hierarchical'      => true, 
-											    'pad_counts'        => false,
-											    'parent'			=> 0
-											); 
-
-											$parents = get_terms($taxonomy, $args);
-
-											foreach ($parents as $key => $parent):
-											?>
-													<li class="menu-continent disabled menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $parent->term_id ?>">
-														<a><?php echo $parent->name ?></a>
-													</li>
-
-
-													<?php
-													$param = array(
-												 				'orderby'           => 'name', 
-											    				'order'             => 'ASC',
-											                    'taxonomy' => $taxonomy,
-											                    'parent'   => $parent->term_id,
-											                    'hide_empty'        => false, 
-											                  );
-
-											        $subcategories = get_categories($param);      
-											        foreach($subcategories as $sub):
-											        ?>
-											           <li class="option menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $parent->term_id ?>"><a><?php echo $sub->name ?></a></li>
-											        <?php
-											        endforeach;
-
-											endforeach;
-											?>
-
-											</ul>
-
-										</div>
-									</div>
-								</div>
-								</div>
-
-								<div class="dropcategory">
-								<div class="pointer"></div>
-									<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
-										<div class="droplistcategory">
-											<div>
-												<?php //wp_nav_menu( array('menu' => 'category-menu')); ?>
-
-												<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
-											<ul id="menu-category-menu" class="menu">
-												
-											<?php
-											$taxonomy = '';
-											$args = '';
-
-											$taxonomy = array( 
-											    'article_cat'
-											);
-
-											$args = array(
-											    'orderby'           => 'name', 
-											    'order'             => 'ASC',
-											    'hide_empty'        => false, 
-											    'hierarchical'      => true, 
-											    'child_of'          => 0,
-											    'childless'         => false,
-											    'pad_counts'        => false
-											); 
-
-											$categories = get_terms($taxonomy, $args);
-
-
-											foreach ($categories as $key => $category):
-											?>
-												<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-<?php echo $category->term_id ?>">
-													<a><?php echo $category->name ?></a>
-												</li>
-											<?php 		
-											endforeach;
-											?>
-											
-											</ul>
-											</div>
-											<div></div>
-										</div>
-									
-									</div>
-								</div>
-							</div>
-						</form>
-						</div>
 				</div>
+			</form>
+		</div>
+	</div>
 	<div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 		<div class="contentbox">
 			<h2 class="whatsnew">ー最新情報ー</h2>
 
-			<!----- start pagination ------>
-
 			<ul class="post-list-thumb">
 			<?php
 				  get_wpposts();
-				  query_posts( array( 'post_type' => 'acme_article', '' => '' ) );
+				  query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => 9, 'paged' => get_query_var('page')) );
 				  if ( have_posts() ) : while ( have_posts() ) : the_post();
 			?>
 				<li>
 				  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
 	                    <?php
 	                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+	                      
+	                      //Returns All Term Items for "my_taxonomy"
+							$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+							$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+
+							$authorID = get_the_author_meta($post->ID);
+							$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
 	                    ?>
 	                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
 	                      <div class="labels">
-	                        <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php the_field('select_country'); //フィリピン ?></span>
-	                        <span class="catlabel"><i class="fa fa-hotel"></i> <?php the_field('category'); //観光 ?> </span>
+
+	                      	<?php if($countries): ?>
+	                      		<?php foreach($countries as $country): ?>
+	                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+	                      		<?php endforeach; ?>
+	                      	<?php else: ?>
+	                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+	                      	<?php endif; ?>
+
+	                      	<?php if($category): ?>
+	                      		<?php foreach($category as $cat): ?>
+	                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+	                      		<?php endforeach; ?>
+	                      	<?php else: ?>
+	                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+	                      	<?php endif; ?>               
 	                      </div>
 	                      <div class="desc">
-	                        <h2><?php the_title(); ?> </h2>
+	                        <h2><?php the_title(); ?></h2>
 	                        <p><?php the_content(); ?></p>
 	                      </div>
 	                      <div class="infobelow">
 	                        <i class="fa fa-heart"></i>
 	                        <span class="smallpoints smallpoints-left">14,091 likes</span>
 	                        <div class="profile-thumb-wrap">
-	                          <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-	                          <?php $row = 1; if(get_field('article_curator_profile')): ?>
-	                              <?php while(has_sub_field('article_curator_profile')): ?>
-	                                <img src="<?php the_sub_field('article_curator_profile_image'); ?>">
-	                                <div class="curator">
+
+                          		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
+
+	              				<img src="<?php echo $curator_profile ?>">
+	                            <div class="curator">
 	                                <span>CURATORS</span><br>
-	                                <h3><?php the_sub_field('article_curator_profile_name'); ?></h3>
+	                                <h3><?php the_author() ?></h3>
 	                            </div>
-	                            <?php $row++; endwhile; ?>
-	                          <?php endif; ?>
+	       
+
 	                        </div>
 	                      </div>
 	                    </a>
 				</li>
+
 			
-			<?php endwhile ; endif; wp_reset_query();?>
+			<?php endwhile ;   endif;  
+
+			//wp pagenavi plugin for pagination		
+			  if(function_exists("wp_pagenavi")):
+
+			  	wp_pagenavi(); 
+
+			  endif;	
+
+			 wp_reset_query();?>
 			</ul>
 
-			<ul class="pagination pagination-desktop">
-                <a href="#" aria-label="Previous">
-                      <span aria-hidden="true"><i class="fa fa-angle-left"></i> Previous</span>
-                  </a>
-                <a href="#" class="selected">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">Next <i class="fa fa-angle-right"></i></span>
-                </a>
-              </ul>
-
-              <ul class="pagination pagination-mobile">
-                <a href="#" aria-label="Previous">
-                      <span aria-hidden="true"><i class="fa fa-angle-left"></i></span>
-                  </a>
-                <a href="#" class="selected">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true"><i class="fa fa-angle-right"></i></span>
-                </a>
-              </ul>
-          <!----- start pagination ------>
 		</div>
 		<!---- start sidebar ---->
-
-
 
 		<div class="sidebox">
 			<div class="socketlabs">
@@ -221,99 +133,26 @@ get_header(); ?>
 				</a>
 			</div>
 
-			<a href="http://wpkurastar.local/curators-cat/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
+			<a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
 			<?php echo do_shortcode( '[most_view]' ); ?> 
 			<div class="sideboxcontent ad300">
 				<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
 			</div>
-			<div class="sideboxcontent rankwrap">
-
-				<h3 class="sidetitle">Ranking Article</h3>
-				<ul class="rankarticle">
-
-					<?php
-					  query_posts( array( 'post_type' => 'acme_article', 
-					  	'orderby' => 'meta_value', 
-					  	'meta_key' => '_count-views_all',
- 						'order' => 'DESC', 
- 						'posts_per_page' => '5' ) );
-
-					  if ( have_posts() ) : while ( have_posts() ) : the_post();
-					?>
-					<li>
-						<a href="<?php echo get_permalink(); ?>">
-							<span class="rank rank1">1</span>
-							<?php
-		                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-		                    ?>
-							<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
-							<h4 class="ranktitle"><?php the_title(); ?></h4>
-							<span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-						</a>
-					</li>
-				<?php endwhile; endif; wp_reset_query(); ?>	
-				</ul>
-			</div>
-			<!-- <div class="sideboxcontent rankwrap">
-				<h3 class="sidetitle">Ranking Country</h3>
-				<ul class="rankarticle rankcountry">
-					<?php
-					  query_posts( array( 'post_type' => 'acme_country', 'posts_per_page' => '5' ) );
-					  if ( have_posts() ) : while ( have_posts() ) : the_post();
-					?>
-					<li>
-						<a href="<?php echo get_permalink(); ?>">
-							<span class="rank rank1">1</span>
-							<?php $row = 1; if(get_field('features')): ?>
-      							<?php while(has_sub_field('features')): ?>
-									<div class="siderankimage2"style="background-image:url(<?php the_sub_field('featured_image');?>);"></div>
-								<?php $row++; endwhile; ?>
-							<?php endif; ?>
-							<h4 class="ranktitle">
-							<?php the_title(); ?>
-							</h4>
-							<span class="smallpoints smallpoints-right">9 articles</span>
-						</a>
-					</li>
-				<?php endwhile; endif; wp_reset_query(); ?>
-				</ul>
-			</div> -->
-			<?php			
-				$taxonomy = 'article_country_cat';
-				$args = array(
-				    'orderby'           => 'count', 
-				    'order'             => 'DESC',
-				    'hide_empty'        => true, 
-				); 
-
-
-				$countries = get_terms($taxonomy, $args);
-
-			?>
-
-			<div class="sideboxcontent rankwrap">
-				<h3 class="sidetitle">Ranking Country</h3>
-				<ul class="rankarticle rankcountry">
-					<?php
-					 foreach($countries as $key => $country):
-					 	
-						if($country->count > 0):
-						?>
-							<li>
-								<a href="<?php echo get_term_link($country) ?>">
-									<span class="rank rank1"><?php echo $key ?></span>
-									<div class="siderankimage2"style="background-image:url(<?php if (function_exists('z_taxonomy_image_url')) echo z_taxonomy_image_url($country->term_id); ?>);"></div>
-									<h4 class="ranktitle">
-									<?php echo $country->name; ?>
-									</h4>
-									<span class="smallpoints smallpoints-right"><?php echo $country->count ?> <?php echo $country->count > 1 ? 'articles' : 'article';?></span>
-								</a>
-							</li>
-					<?php endif; ?>
-				<?php endforeach; ?>
-				</ul>
-			</div>
-
+			
+ 			<?php 
+ 				/*
+ 				* Ranking article sidebar
+ 				*  @hook: ranking_article_func
+ 				*/
+ 			 ?>
+			<?php echo do_shortcode( '[ranking_article]' ) ?>
+			<?php 
+ 				/*
+ 				* Ranking country sidebar
+ 				*  @hook: ranking_country_func
+ 				*/
+ 			 ?>
+			<?php echo do_shortcode( '[ranking_country]' ) ?>
 			?>
 		</div>	
 	</div>
