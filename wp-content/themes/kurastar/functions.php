@@ -633,13 +633,17 @@ require get_template_directory() . '/inc/custom-function.php';
 function posts_for_current_author($query) {
   
   global $user_ID;
+    
+    if(is_admin()) {
 
-
-    if(!is_super_admin( $user_ID )) {
+        if(!is_super_admin( $user_ID )) {
 
           $query->set('author',  $user_ID);
-    }
+        }
 
-  return $query;
+      return $query;
+
+    }
+  
 }
 add_filter('pre_get_posts', 'posts_for_current_author');
