@@ -15,7 +15,7 @@ get_header(); ?>
 			</ul>
 		</div>
 		<div class="defaultWidth center searchwrap">
-			<form method="get" action="search-results/">
+			<form method="get" action="<?php echo site_url() ?>/search-results/">
 				<div class="searchwrap-inner">
 					<div class="transwrap">
 						<input id="cty" type="text" name="country" value="select country" readonly />
@@ -51,7 +51,7 @@ get_header(); ?>
 
 			<ul class="post-list-thumb">
 			<?php
-				  get_wpposts();
+				 # get_wpposts();
 				  query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => 9, 'paged' => get_query_var('page')) );
 				  if ( have_posts() ) : while ( have_posts() ) : the_post();
 			?>

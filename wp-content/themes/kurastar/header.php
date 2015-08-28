@@ -54,9 +54,10 @@
 							<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="株式会社 デュナレイト" title="株式会社 デュナレイト" /></a>
 						</div>
 						<div class="actions">
-							<a href="<?php the_permalink(); ?>user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
-							<a href="<?php the_permalink(); ?>user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup.png" />REGISTER</a>
-							<a href="<?php the_permalink(); ?>user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
+	
+							<a href="/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
+							<a href="/user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup.png" />REGISTER</a>
+							<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 						</div>
 					</div>
 				</div>

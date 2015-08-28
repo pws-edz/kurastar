@@ -617,16 +617,22 @@ require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/customizer.php';
 
 
-/**
- * Custom shortcodes.
- */
-require get_template_directory() . '/inc/shortcode.php';
-
 
 /**
  * Custom functions.
  */
 require get_template_directory() . '/inc/custom-function.php';
+
+/**
+ * Custom messages.
+ */
+require get_template_directory() . '/inc/flash-message.php';
+
+
+/**
+ * Custom shortcodes.
+ */
+require get_template_directory() . '/inc/shortcode.php';
 
 
 

@@ -32,11 +32,6 @@ get_header(); ?>
 
     			//this will save the data in the 'acme_article' custom post type.
 				$result =  post_acme_article($_POST);
-
-				// if($result && $result['status'] == 'success'){
-				// 	wp_redirect( '/success' ); exit();
-				// }
-
     		 ?>
 
 			<?php endif; ?>
@@ -53,7 +48,7 @@ get_header(); ?>
 				  	<div class="user-register">
 				  		<p class="reg-copy">
 				  			<?php if($result && $result['image_url'] != ''): ?>
-				  				<img class="featured" src="<?php echo $result['image_url'] ?>">
+				  				<img class="featured" src="<?php echo $result['set_image'] == '' ? '/wp-content/uploads/2015/07/img1.jpg' : $result['image_url'] ?>">
 				  			<?php else: ?>
 				  				<img class="featured" src="<?php echo site_url() ?>/wp-content/uploads/2015/07/img1.jpg">
 				  			<?php endif; ?>
@@ -80,23 +75,25 @@ get_header(); ?>
 							<?php wp_nonce_field( '_wp_custom_post','_wp_custom_post_nonce_field' ); ?>
 			    			<input type="hidden" name="custom_post_type" id="post-type" value="acme_article" />
 							<input type="hidden" name="action" value="save_custom_post" />
-							<input type="hidden" name="trigger_set_image" id="trigger-set-image" value="" />
+							<input type="hidden" name="trigger_set_image" id="trigger-set-image"/>
 							<?php if($result): ?>
-				  				<input type="hidden" name="featured_img" id="featured_image" value="<?php echo $result['featured_img'] ?>" />
+				  				<input type="hidden" name="featured_img" id="featured_image" value="<?php echo $result['set_image'] == '' ? '' : $result['featured_img']; ?>" />
 				  			<?php else: ?>
 				  				<input type="hidden" name="featured_img" id="featured_image" value=""/>
 				  			<?php endif; ?>
 							
 						
 							<?php if($result): ?>
-				  				<input type="hidden" name="post_id" value="<?php echo $result['post_id'] ?>" />
+				  				<input type="hidden" name="post_id" value="<?php echo $result['set_image'] == '' ? '' : $result['post_id']; ?>" />
 				  			<?php else: ?>
 				  				<input type="hidden" name="post_id" value="" />
 				  			<?php endif; ?>
 
 							<p>
-								<input type="submit" value="Save" class="btn btn-default" name="form_save">
-								<input type="submit" value="Publish" class="btn btn-default" name="form_publish">
+								<!-- <input type="submit" value="Save" class="btn btn-default" name="form_save"> -->
+								<a href="#" class="btn btn-default save">Save</a>
+								<a href="#" class="btn btn-default save">Publish</a>
+								<!-- <input type="submit" value="Publish" class="btn btn-default" name="form_publish"> -->
 							</p>
 
 						</p>
@@ -121,13 +118,22 @@ $('#upload-image').change(function(e) {
     console.log(file);
   }
 
-  $('#trigger-set-image').val('');
+  $('#trigger-set-image').val('1');
   $('#acme-article-post-type').submit();
+
 });
 
 $('.setImage').click(function() {
+
   $('#trigger-set-image').val('1');
   $('#acme-article-post-type').submit();
+
 });
 
+$('.save').click(function() {
+
+  $('#trigger-set-image').val('');
+  $('#acme-article-post-type').submit();
+
+});
 </script>
