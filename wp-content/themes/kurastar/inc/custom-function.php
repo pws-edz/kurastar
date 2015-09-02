@@ -1,5 +1,15 @@
 <?php 
 
+function getFacebookDetails($source_url){
+  #  $source_url = 'https://www.facebook.com/stepblogging';
+    $rest_url = "http://api.facebook.com/restserver.php?format=json&method=links.getStats&urls=".urlencode($source_url);
+    $json = json_decode(file_get_contents($rest_url),true);
+return $json;
+}
+
+
+
+
 if ( ! function_exists('array_get') ) {
   function array_get($arr, $key, $default = null, $echo = false) {
     $out = $default;

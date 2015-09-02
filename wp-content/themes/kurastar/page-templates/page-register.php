@@ -34,7 +34,7 @@ get_header(); ?>
 				<ul class="list-inline">
 					<?php $row = 1; if(get_field('sns_log_in_list')): ?>
 	      				<?php while(has_sub_field('sns_log_in_list')): ?>
-							<li><a href="<?php the_sub_field('sns_social_link'); ?>"><?php the_sub_field('sns_social'); ?></a></li>
+							<li><?php the_sub_field('sns_social_link'); ?><?php the_sub_field('sns_social'); ?></a></li>
 						<?php $row++; endwhile; ?>
 					<?php endif; ?>
 				</ul>

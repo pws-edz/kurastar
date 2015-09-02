@@ -653,3 +653,23 @@ function posts_for_current_author($query) {
   
 }
 add_filter('pre_get_posts', 'posts_for_current_author');
+
+
+/* Fix nextend facebook connect doesn't remove cookie after logout */
+if (!function_exists('clear_nextend_uniqid_cookie')) {
+    function clear_nextend_uniqid_cookie(){
+        setcookie( 'nextend_uniqid',' ', time() - YEAR_IN_SECONDS, '/', COOKIE_DOMAIN );
+        return 0;
+    }
+}
+
+add_action('clear_auth_cookie', 'clear_nextend_uniqid_cookie');
+
+
+/*Fix custom taxonomy term page not found*/
+
+add_action('init', 'custom_taxonomy_flush_rewrite');
+function custom_taxonomy_flush_rewrite() {
+    global $wp_rewrite;
+    $wp_rewrite->flush_rules();
+}

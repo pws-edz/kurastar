@@ -23,13 +23,15 @@
 	<div class="defaultWidth center clear-auto block-footer2-wrap">
 		<div class="footcountry">
 			<h3 class="footlabel">Countries</h3>
-			<?php wp_nav_menu( array('menu' => 'country-menu-footer')); ?>
+			<?php// wp_nav_menu( array('menu' => 'country-menu-footer')); ?>
+			<?php echo do_shortcode( '[footer_country]' ) ?>
 		</div>
 		<div class="footcategory">
 			<h3 class="footlabel">Categories</h3>
 			<div>
 				<h4>Menu</h4>
-				<?php wp_nav_menu( array('menu' => 'header-menu')); ?>
+				<?php #wp_nav_menu( array('menu' => 'header-menu')); ?>
+				<?php echo do_shortcode( '[footer_category]' ) ?>
 			</div>
 		</div>
 	</div>
