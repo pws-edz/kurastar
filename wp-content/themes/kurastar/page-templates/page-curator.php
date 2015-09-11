@@ -1,51 +1,242 @@
 <?php 
 /*Template Name: Curator Page
 */
-get_header(); ?>
+get_header(); 
+  
+ $user_id = $_GET['id'];
+
+ if(!$user_id) {
+    wp_redirect( '/curators' ); exit();
+ } 
+
+$user = get_userdata( $user_id );
+if ( $user === false ) {
+  wp_redirect( '/curators' ); exit();
+} 
+
+
+$user_posts = count_user_posts($user->ID, 'acme_article');
+
+
+$args = array(
+    'post_type' => 'acme_article',
+    'author'        =>  $user->ID,
+    'orderby'       =>  'post_date',
+    'order'         =>  'ASC',
+    'posts_per_page' => -1
+    );
+
+$posts = get_posts($args);
+
+?>
+
+
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 	<div class="contentbox">
-		<div class="contentbox">
-            <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-                <?php if(function_exists('bcn_display'))
-                {
-                    bcn_display();
-                }?>
-            </div>
+      <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+          <?php if(function_exists('bcn_display'))
+          {
+              bcn_display();
+          }?>
+      </div>
 
-            <span class="search-results">
-              Curator:
-            </span>
+      <div class="curator-detail-wrap">
+        <div class="pointer2"></div>
+        <img src="<?php echo get_cupp_meta($user->ID, 'thumbnail') ?>" />
+        <div class="labels labels2">
+          <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
+          <span class="catlabel"><b>3</b> Favorites</span>
+        </div>
+        <div class="curator-info">
+          <h4><?php echo $user->display_name ?></h4>
+          <p><?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
+          <div class="clear"></div>
+        </div>
+        <div class="points-detail">
+          11,600<span>points</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+              
+      <div id="tabs" class="tab1">
+        <ul>
+          <li><a href="#tabs-1">ARTICLES</a></li>
+          <li><a href="#tabs-2">FAVORITES</a></li>
+        </ul>
+        <div id="tabs-1">
+          <ul class="post-list-thumb">
+          <?php
+             # get_wpposts();
+            $args = array( 
+                    'post_type'       => 'acme_article', 
+                    'posts_per_page'  => 2, 
+                    'paged'           => get_query_var('page'), 
+                    'author'          => $user->ID, 
+                    'orderby'         => 'post_date',
+                    'order'           => 'ASC');
 
-            <!-- Tab panes -->
-            <ul class="post-list-thumb curator-list-thumb">
-              	<?php
+              query_posts( $args );
+              if ( have_posts() ) : while ( have_posts() ) : the_post();
+          ?>
+            <li>
+              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
+              <?php
+                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+                
+                          //Returns All Term Items for "my_taxonomy"
+                $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+                $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-				$users = get_users( 'orderby=nicename&role=subscriber&post_per_page=2' );
+                $authorID = get_the_author_meta($post->ID);
+                $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-           		// Start the Loop.
-           		foreach($users as $user):
-           			$curator_profile = get_cupp_meta($user->ID, 'thumbnail');
-           			$post_count = count_user_posts($user->ID, 'acme_article');
-           		?>
-                <li>
-                  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap curator-list">
-                  <div class="infobelow">
-                    <?php
-                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                    ?>
-                    <div class="postimg" style="background: url(<?php echo $curator_profile; ?> )"></div>
-                      <div class="curator-info">
-                        <h4><?php echo $user->display_name; ?></h4>
-                        <p><?php echo get_user_meta($user->ID, 'description', true); ?></p>
-                        <div class="clear"></div>
+              ?>
+              <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+                <div class="labels">
+
+                  <?php if($countries): ?>
+                    <?php foreach($countries as $country): ?>
+                      <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                  <?php endif; ?>
+
+                  <?php if($category): ?>
+                    <?php foreach($category as $cat): ?>
+                      <span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                  <?php endif; ?>               
+                </div>
+                <div class="desc">
+                  <h2><?php the_title(); ?></h2>
+                  <p><?php the_content(); ?></p>
+                </div>
+                <div class="infobelow">
+                  <i class="fa fa-heart"></i>
+                  <span class="smallpoints smallpoints-left">14,091 likes</span>
+                  <div class="profile-thumb-wrap">
+
+                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
+
+                <img src="<?php echo $curator_profile ?>">
+                      <div class="curator">
+                          <span>CURATORS</span><br>
+                          <h3><?php the_author() ?></h3>
                       </div>
-                    <span class="article-views smallpoints-right"><?php echo $post_count ?> <?php echo $post_count > 1 ? 'articles' : 'article'; ?></span>
+
+
                   </div>
-                </a>
-                </li>
-                 <?php endforeach;?>
-            </ul>
-		</div>
+                </div>
+              </a>
+            </li>
+
+          
+          <?php endwhile ;   endif;  
+
+          //wp pagenavi plugin for pagination   
+            if(function_exists("wp_pagenavi")):
+
+              wp_pagenavi(); 
+
+            endif;  
+
+           wp_reset_query();?>
+          </ul>
+        <!-- <div id="tabs-2">
+          <ul class="post-list-thumb">
+                              <li>
+              <a href class="post-list-thumb-wrap">
+                <div class="postimg" style="background-image:url(images/post/img1.jpg);"></div>
+                <div class="labels">
+                  <span class="countrylabel"><i class="fa fa-map-marker"></i> Philippines</span>
+                  <span class="catlabel"><i class="fa fa-hotel"></i> Hotel</span>
+                </div>
+                <div class="desc">
+                  <h2>Amora Hotel Jamison and Restaurant</h2>
+                  <p>
+                  Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour. Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour...
+                  </p>
+                </div>
+                <div class="infobelow">
+                  <span class="smallpoints smallpoints-left">14,091 pts</span>
+                  <div class="profile-thumb-wrap">
+                    <img src="images/profile/profile1.jpg" />
+                    <div class="curator">
+                      <span>CURATOR</span><br />
+                      <h3>Mitsutaka Suzuki</h3>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+                              <li>
+              <a href class="post-list-thumb-wrap">
+                <div class="postimg" style="background-image:url(images/post/img1.jpg);"></div>
+                <div class="labels">
+                  <span class="countrylabel"><i class="fa fa-map-marker"></i> Philippines</span>
+                  <span class="catlabel"><i class="fa fa-hotel"></i> Hotel</span>
+                </div>
+                <div class="desc">
+                  <h2>Amora Hotel Jamison and Restaurant</h2>
+                  <p>
+                  Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour. Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour...
+                  </p>
+                </div>
+                <div class="infobelow">
+                  <span class="smallpoints smallpoints-left">14,091 pts</span>
+                  <div class="profile-thumb-wrap">
+                    <img src="images/profile/profile1.jpg" />
+                    <div class="curator">
+                      <span>CURATOR</span><br />
+                      <h3>Mitsutaka Suzuki</h3>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+                              <li>
+              <a href class="post-list-thumb-wrap">
+                <div class="postimg" style="background-image:url(images/post/img1.jpg);"></div>
+                <div class="labels">
+                  <span class="countrylabel"><i class="fa fa-map-marker"></i> Philippines</span>
+                  <span class="catlabel"><i class="fa fa-hotel"></i> Hotel</span>
+                </div>
+                <div class="desc">
+                  <h2>Amora Hotel Jamison and Restaurant</h2>
+                  <p>
+                  Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour. Located 3 minutes’ walk from Harbourside Shopping Centre, Novotel Sydney Darling Harbour...
+                  </p>
+                </div>
+                <div class="infobelow">
+                  <span class="smallpoints smallpoints-left">14,091 pts</span>
+                  <div class="profile-thumb-wrap">
+                    <img src="images/profile/profile1.jpg" />
+                    <div class="curator">
+                      <span>CURATOR</span><br />
+                      <h3>Mitsutaka Suzuki</h3>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+                            </ul>
+          
+          <!----- start pagination ------>
+         <!--  
+          <div class="pagination">
+            <a href="#" class="selected">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+          </div> -->
+          <!----- start pagination ------>
+        <!-- </div> --> 
+        
+      </div>  
+    </div>
 	</div>
 
 

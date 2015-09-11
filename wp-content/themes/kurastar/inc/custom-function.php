@@ -141,6 +141,9 @@ function args_func($get, $paged) {
 
 
 function post_acme_article($post){
+
+  print_r($post);
+  
        
    $set = $post['trigger_set_image']; 
 

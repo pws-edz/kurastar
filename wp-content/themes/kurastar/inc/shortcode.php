@@ -532,6 +532,7 @@ class MyShortcode {
             $post = $_POST;				
 
             if ( self::submit_login_form($post) ) {
+
             	unset_post();
             	$post = array();
             	#wp_redirect('/user-registration');
@@ -593,10 +594,11 @@ class MyShortcode {
 		           $user_role = $role;
 		    }
 
-
-		   # $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
+		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
+			
 	        wp_redirect(admin_url());
-	        die();
+	     	die();
+		    #return false;
 	       
 	    } else {
 	    	$flash_messages->set(__('Wrong username or password.', 'wp'), 'error');
@@ -606,6 +608,8 @@ class MyShortcode {
 	    }
 	    
 	}
+
+
 
 
 
