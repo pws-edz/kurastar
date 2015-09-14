@@ -19,6 +19,8 @@ get_header(); ?>
 				</p>
 			  <?php// echo do_shortcode('[contact-form-7 id="10" title="User Registration"]'); ?>
 			  <?php echo do_shortcode('[do_registration]'); ?>
+
+
 			</div>
 		  </div>
 		  <div class="col-md-6 form-right">
@@ -30,6 +32,8 @@ get_header(); ?>
 			 	</p>
 			</div>
 			<div class="sns-login sns-desktop">
+				<div><?php //echo do_shortcode('[wordpress_social_login]'); ?></div>
+				
 				<h2>SNS Login:</h2>
 				<ul class="list-inline">
 					<?php $row = 1; if(get_field('sns_log_in_list')): ?>
@@ -40,7 +44,9 @@ get_header(); ?>
 				</ul>
 			</div>
 			<div class="sns-login sns-mobile">
+
 				<h2>SNS Login:</h2>
+
 				<ul class="list-inline">
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
