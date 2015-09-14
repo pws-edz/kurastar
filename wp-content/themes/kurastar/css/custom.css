@@ -2026,3 +2026,116 @@ body:after {
   opacity: 1;
 }
 
+
+/*create article*/
+.form-content {
+    overflow: hidden;
+    margin-bottom: 2%;
+}
+
+.form-content p.title{
+	border-bottom: 1px solid #CACACA;
+}
+
+.gap-30{
+	height: 30px;
+}
+
+.img-holder img {
+	width:100%;
+}
+
+.fileUpload {
+    background: #fff;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid #CACACA;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.form-grp {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.select-form {
+    width: 48%;
+    float: left;
+    margin-right: 10px;
+}
+.select-form:last-child {
+    margin: 0;
+    width: 50%;
+}
+.select-form select {
+    background: #FFF;
+    border: solid 1px #e6e6e6;
+    border-radius: 4px;
+    width: 100%;
+    padding: 6px 2%;
+    color: #747474;
+    font-size: 15px;
+    line-height: 24px;
+    height: 50px;
+}
+
+.form-grp input, .form-grp textarea {
+    background: #FFF;
+    border: solid 1px #e6e6e6;
+    border-radius: 4px;
+    width: 100%;
+    padding: 6px 2%;
+    color: #747474;
+    font-size: 15px;
+    line-height: 24px;
+    height: 50px;
+}
+
+textarea.text-height {
+    height: 190px;
+}
+
+.tab-form-panel {
+    margin-top: 20px;
+}
+
+.tab-form-panel ul {
+    font-size: 12px;
+    margin: 0 auto;
+    overflow: auto;
+}
+.tab-form-panel li {
+    float: left;
+    width: 145px;
+    margin: 1px;
+    text-align: center;
+}
+
+.tab-form-panel a {
+    background: #d1d1d1;
+    color: #FFF;
+    display: block;
+    padding: 5px 0;
+    border: solid 1px #CCC!important;
+    margin-right: 1px!important;
+    border-radius: 0!important;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: 'Kozuka Gothic Pr6N','Kozuka Gothic STD', 'ＭＳ Ｐゴシック', 'MS PGothic', 'メイリオ', Meiryo, sans-serif;
+}
+
+.tab-form-panel a:hover {
+    background: #ee7500!important;
+    color: #fff!important;
+}
+
+.tab-content {
+	border: solid 1px #CCC;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+input.form-control.ref-url {
+    height: 60px;
+    margin-top: 10px;
+}
