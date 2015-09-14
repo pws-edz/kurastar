@@ -11,10 +11,16 @@ get_header(); ?>
                     bcn_display();
                 }?>
             </div>
+
 <!-- 
             <span class="search-results">
               Curator:
             </span> -->
+
+            <span class="search-results">
+              Curator:
+            </span>
+
 
             <!-- Tab panes -->
             <ul class="post-list-thumb curator-list-thumb">

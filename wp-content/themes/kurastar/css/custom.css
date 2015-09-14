@@ -2126,6 +2126,26 @@ textarea.text-height {
     background: #d1d1d1;
     color: #FFF;
     display: block;
+}
+
+.tab-form-panel ul {
+    font-size: 12px;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.tab-form-panel li {
+    float: left;
+    width: 145px;
+    margin: 1px;
+    text-align: center;
+}
+
+.tab-form-panel a {
+    background: #d1d1d1;
+    color: #FFF;
+    display: block;
+    padding: 5px 0;
     border: solid 1px #CCC!important;
     margin-right: 1px!important;
     border-radius: 0!important;
