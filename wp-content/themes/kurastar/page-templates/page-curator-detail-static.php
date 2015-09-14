@@ -34,7 +34,7 @@ get_header();
 			<div class="pointer2-curactor"></div>
 			<img src="http://kurastar.dev/wp-content/uploads/2015/09/profile1.jpg"/>
 			<div class="labels labels2">
-				<span class="countrylabel"><b>8</b> 1</span>
+				<span class="countrylabel"><b>8</b>Articles</span>
 				<span class="catlabel"><b>3</b> Favorites</span>
 			</div>
 			<div class="curator-info info-custom">
