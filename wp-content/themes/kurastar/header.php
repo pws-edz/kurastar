@@ -61,13 +61,13 @@
 						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 						
 					<?php else: ?>
-
+						<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
 						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 						<?php  
 							$current_user = wp_get_current_user(); 
 							$curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
 						?>
-						<a href="#"><img src="<?php echo $curator_profile ?>" /><?php echo $current_user->user_login ?></a>
+						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>"><img src="<?php echo $curator_profile ?>" /><?php echo $current_user->user_login ?></a>
 
 					<?php endif; ?>
 

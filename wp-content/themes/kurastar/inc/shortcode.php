@@ -596,7 +596,7 @@ class MyShortcode {
 
 		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
 			
-	        wp_redirect(admin_url());
+	        wp_redirect(site_url().'/curator-detail/?id='.$user->ID);
 	     	die();
 		    #return false;
 	       

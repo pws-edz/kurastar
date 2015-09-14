@@ -673,3 +673,6 @@ function custom_taxonomy_flush_rewrite() {
     global $wp_rewrite;
     $wp_rewrite->flush_rules();
 }
+
+function my_function_admin_bar(){ return false; }
+add_filter( 'show_admin_bar' , 'my_function_admin_bar');
