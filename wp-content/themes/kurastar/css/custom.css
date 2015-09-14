@@ -2028,6 +2028,7 @@ body:after {
 
 
 /*create article*/
+/*new css*/
 :focus {
     outline: none!important;
     text-decoration: none!important;
@@ -2102,13 +2103,14 @@ textarea.text-height {
 .tab-form-panel {
     margin-top: 20px;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs {
     font-size: 12px;
     margin: 0 auto;
     border: 0;
     overflow: hidden;
 }
+/*new css*/
 .tab-form-panel ul.nav-tabs li {
     float: left;
     width: 145px;
@@ -2116,18 +2118,18 @@ textarea.text-height {
     margin-bottom: -1px;
     text-align: center;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs li.active > a {
 	background-color: #F5F5F5!important;
 	color: #ee7500!important;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs li a {
     background: #d1d1d1;
     color: #FFF;
     display: block;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs li a{
     background: #d1d1d1;
     color: #FFF;
@@ -2139,7 +2141,7 @@ textarea.text-height {
     font-size: 12px;
     font-family: 'Kozuka Gothic Pr6N','Kozuka Gothic STD', 'ＭＳ Ｐゴシック', 'MS PGothic', 'メイリオ', Meiryo, sans-serif;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs li a:hover {
     background: #ee7500!important;
     color: #fff!important;
@@ -2151,7 +2153,7 @@ textarea.text-height {
     padding: 20px;
     margin-top: -1px;
 }
-
+/*new css*/
 .tab-form-panel ul.nav-tabs li.curator-tab-list.active a {
     background-color: #EE753D!important;
     color: #fff!important;
@@ -2161,7 +2163,7 @@ input.form-control.ref-url {
     height: 60px;
     margin-top: 10px;
 }
-
+/*new css*/
 a.search-twitter {
 	background-color: #fff!important;
 	margin-top: 5px;
@@ -2175,17 +2177,17 @@ a.search-twitter {
 	font-size: 12px;
 	font-family:'Kozuka Gothic Pr6N', 'Kozuka Gothic STD', 'ＭＳ Ｐゴシック', 'MS PGothic', 'メイリオ', Meiryo, sans-serif;
 }
-
+/*new css*/
 a.search-twitter:hover {
 	background: #FFFFFF!important;
     color: #919191!important;
     text-decoration: none;
 }
-
+/*new css*/
 a.search-twitter span {
 	padding-right: 5px;
 }
-
+/*new css*/
 /*curator page*/
 .curator-detail-wrap > img {
     width: 200px;
