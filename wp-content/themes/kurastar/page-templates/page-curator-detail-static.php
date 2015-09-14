@@ -34,7 +34,7 @@ get_header();
 			<div class="pointer2-curactor"></div>
 			<img src="http://kurastar.dev/wp-content/uploads/2015/09/profile1.jpg"/>
 			<div class="labels labels2">
-				<span class="countrylabel"><b>8</b> Articles</span>
+				<span class="countrylabel"><b>8</b> 1</span>
 				<span class="catlabel"><b>3</b> Favorites</span>
 			</div>
 			<div class="curator-info info-custom">
@@ -51,16 +51,16 @@ get_header();
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs curator-tabs" role="tablist">
 				<li role="presentation" class="active curator-tab-list">
-					<a href="#articles" aria-controls="articles" role="tab" data-toggle="tab">Articles</a>
+					<a href="#1" aria-controls="1" role="tab" data-toggle="tab">Articles</a>
 				</li>
 				<li role="presentation" class="curator-tab-list">
-					<a href="#favorites" aria-controls="favorites" role="tab" data-toggle="tab">Favorites</a>
+					<a href="#2" aria-controls="2" role="tab" data-toggle="tab">Favorites</a>
 				</li>
 			</ul>
 
 			<!-- Tab panes -->
 			<div class="tab-content curator-tab-content">
-				<div role="tabpanel" class="tab-pane active" id="articles">
+				<div role="tabpanel" class="tab-pane active" id="1">
 					<ul class="post-list-thumb">
 						<li>
 							<a href class="post-list-thumb-wrap">
@@ -214,7 +214,7 @@ get_header();
 						</li>
 					</ul>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="favorites">
+				<div role="tabpanel" class="tab-pane" id="2">
 					<ul class="post-list-thumb">
 						<li>
 							<a href class="post-list-thumb-wrap">
