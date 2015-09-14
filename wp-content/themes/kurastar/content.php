@@ -50,11 +50,11 @@
 					<a href="#"><i class="fa fa-heart"></i></a>
 					<span class="smallpoints smallpoints-left">14,091 likes</span>
 					<?php $row = 1; if(get_field('article_curator_profile')): ?>
-							<?php while(has_sub_field('article_curator_profile')): ?>
+						<?php while(has_sub_field('article_curator_profile')): ?>
 							<img src="<?php the_sub_field('article_curator_profile_image'); ?>">
 							<div class="curator">
-								<span>CURATORS</span><br>
-								<h3><?php the_sub_field('article_curator_profile_name'); ?></h3>
+							<span>CURATORS</span><br>
+							<h3><?php the_sub_field('article_curator_profile_name'); ?></h3>
 							</div>
 						<?php $row++; endwhile; ?>
 					<?php endif; ?>

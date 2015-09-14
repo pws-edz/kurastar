@@ -190,9 +190,9 @@ endif;
 				<div role="tabpanel" class="tab-pane" id="twitter">
 					<form>
 						<input type="text" class="form-control ref-url" placeholder="Put the URL of a tweet here">
-						<!-- <a href="javascript:void(0)" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
+						<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
 							<span class="glyphicon glyphicon-search"></span>Search for tweets.
-						</a> --><br><br>
+						</a><br><br>
 						<input type="button" class="btn btn-default check-tweet" onclick="addItem('0', 'twitter', 'new')" value="Add">
 						<input type="button" class="btn btn-default" onclick="cancel_add('0', 'twitter', 'new')" value="Cancel">
 					</form>

@@ -32,6 +32,7 @@ get_header(); ?>
 					 ?>
 					 <?php echo do_shortcode( '[dropdown_country]' ) ?>
 
+
 					 <?php 
 						/*
 						* Category Dropdown
@@ -56,57 +57,54 @@ get_header(); ?>
 			?>
 				<li>
 				  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
-	                    <?php
-	                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-	                      
-	                      //Returns All Term Items for "my_taxonomy"
-							$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-							$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+                    <?php
+                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+                  
+                 	//Returns All Term Items for "my_taxonomy"
+					$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+					$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-							$authorID = get_the_author_meta($post->ID);
-							$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+					$authorID = get_the_author_meta($post->ID);
+					$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+                    ?>
+                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+                      <div class="labels">
 
-	                    ?>
-	                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
-	                      <div class="labels">
+                      	<?php if($countries): ?>
+                      		<?php foreach($countries as $country): ?>
+                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                      		<?php endforeach; ?>
+                      	<?php else: ?>
+                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                      	<?php endif; ?>
 
-	                      	<?php if($countries): ?>
-	                      		<?php foreach($countries as $country): ?>
-	                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
-	                      		<?php endforeach; ?>
-	                      	<?php else: ?>
-	                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
-	                      	<?php endif; ?>
+                      	<?php if($category): ?>
+                      		<?php foreach($category as $cat): ?>
+                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+                      		<?php endforeach; ?>
+                      	<?php else: ?>
+                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                      	<?php endif; ?>               
+                      </div>
+                      <div class="desc">
+                        <h2><?php the_title(); ?></h2>
+                        <p><?php the_content(); ?></p>
+                      </div>
+                      <div class="infobelow">
+                        <i class="fa fa-heart"></i>
+                        <span class="smallpoints smallpoints-left">14,091 likes</span>
+                        <div class="profile-thumb-wrap">
 
-	                      	<?php if($category): ?>
-	                      		<?php foreach($category as $cat): ?>
-	                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
-	                      		<?php endforeach; ?>
-	                      	<?php else: ?>
-	                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
-	                      	<?php endif; ?>               
-	                      </div>
-	                      <div class="desc">
-	                        <h2><?php the_title(); ?></h2>
-	                        <p><?php the_content(); ?></p>
-	                      </div>
-	                      <div class="infobelow">
-	                        <i class="fa fa-heart"></i>
-	                        <span class="smallpoints smallpoints-left">14,091 likes</span>
-	                        <div class="profile-thumb-wrap">
+                      		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                          		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-	              				<img src="<?php echo $curator_profile ?>">
-	                            <div class="curator">
-	                                <span>CURATORS</span><br>
-	                                <h3><?php the_author() ?></h3>
-	                            </div>
-	       
-
-	                        </div>
-	                      </div>
-	                    </a>
+              				<img src="<?php echo $curator_profile ?>">
+                            <div class="curator">
+                                <span>CURATORS</span><br>
+                                <h3><?php the_author() ?></h3>
+                            </div>
+                        </div>
+                      </div>
+	                </a>
 				</li>
 
 			
