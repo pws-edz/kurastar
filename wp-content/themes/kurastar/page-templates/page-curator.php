@@ -67,31 +67,35 @@ $posts = get_posts($args);
           <ul class="post-list-thumb">
           <?php
              # get_wpposts();
-            $args = array( 
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+            $param = array( 
                     'post_type'       => 'acme_article', 
-                    'posts_per_page'  => 2, 
-                    'paged'           => get_query_var('page'), 
+                    'posts_per_page'  => 6, 
+                    'paged'           => $paged, 
                     'author'          => $user->ID, 
                     'orderby'         => 'post_date',
-                    'order'           => 'ASC');
+                    'order'           => 'DESC');
 
-              query_posts( $args );
+              query_posts( $param );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
           ?>
             <li>
-              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
+              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
                 $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
                 
-                          //Returns All Term Items for "my_taxonomy"
+                //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
+                $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
               ?>
-              <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
@@ -134,7 +138,11 @@ $posts = get_posts($args);
             </li>
 
           
-          <?php endwhile ;   endif;  
+          <?php 
+          endwhile ;   
+          else:?>
+          <li><p> No available articles.</p></li>
+          <?php endif;  
 
           //wp pagenavi plugin for pagination   
             if(function_exists("wp_pagenavi")):

@@ -141,15 +141,15 @@ function args_func($get, $paged) {
 
 
 function post_acme_article($post){
-         
-    $set = $post['trigger_set_image']; 
+      
+  $set = $post['trigger_set_image']; 
 
   if($post['post_title']) {
 
     if( empty($post['post_id'])) {
 
     
-        $post = array(
+        $post_data = array(
             'post_title' => wp_strip_all_tags( $post['post_title'] ),
             'post_content' => $post['post_desc'],
             'tax_input'      => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
@@ -159,23 +159,27 @@ function post_acme_article($post){
         );
 
       
-      $post_id =  wp_insert_post( $post );
+      $post_id =  wp_insert_post( $post_data );
 
-      add_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] );
-      add_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] );
-      add_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] );
-      add_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] );
+      add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
 
-      add_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] );
-      add_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] );
-      add_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] );
-      add_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] );
+      add_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] , true);
+      add_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] , true);
+      add_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] , true);
+      add_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] , true);
+
+      add_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] , true);
+      add_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] , true);
+      add_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] , true);
+      add_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] , true);
+      
+
 
     } else {
 
       
        // Add the content of the form to $post as an array
-      $post = array(
+      $post_data = array(
         'ID' => $post['post_id'],
         'post_title' => wp_strip_all_tags( $post['post_title'] ),
         'post_content' => $post['post_desc'],
@@ -185,19 +189,21 @@ function post_acme_article($post){
         'post_author' => get_current_user_id() // Use a custom post type if you want to
       );
 
-      $post_id =  wp_update_post( $post );
+      $post_id =  wp_update_post( $post_data );
 
 
-      update_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] );
-      update_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] );
-      update_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] );
-      update_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] );
+      update_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
+      update_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] ,true);
+      update_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] ,true);
+      update_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] ,true);
+      update_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] ,true);
 
-      update_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] );
-      update_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] );
-      update_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] );
-      update_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] );
+      update_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] ,true);
+      update_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] ,true);
+      update_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] ,true);
+      update_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] ,true);
 
+      unset_post();
     }
 
 
@@ -229,13 +235,17 @@ function post_acme_article($post){
         $attach_id = media_handle_upload( $file, $post_id );            
         set_post_thumbnail( $post_id , $attach_id);
         update_post_meta($post_id,'_thumbnail_id',$attach_id);
-       
 
       }
 
+       $image_url = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
+       
+    } else {
+      
+       $image_url = '';
     }
 
-   $image_url = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
+  
 
    $result = array( 'status' => 'success', 'set_image' => $set, 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
 
