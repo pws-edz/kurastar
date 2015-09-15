@@ -22,7 +22,7 @@ get_header(); ?>
                 }?>
             </div>
 
-	    	<div class="row">
+	    	<div class="form-results">
 		    	<?php $result =  ''; ?>	
 	    		<?php 
 	    		  if(!empty( $_POST['action'] )):
@@ -251,7 +251,7 @@ get_header(); ?>
 						<option value="normal">Normal Heading</option>
 						<option value="sub">Subheading</option>
 					</select>
-					<span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span>
+					<!-- <span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span> -->
 					<input name="tab_7_tag_title" type="text" class="form-control ref-url" placeholder="Tag Title">
 					<hr class="tag-hr" style="border-color: rgba(237, 113, 0, 1)">
 					<a href="#" class="btn btn-default tab_add">Add</a>

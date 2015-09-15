@@ -27,13 +27,10 @@ get_header(); ?>
 		  	<div class="user-login">
 		  		<h2>Login:</h2>
 			 	<?php //echo do_shortcode('[contact-form-7 id="16" title="Log in"]'); ?>
-			 	<p>
-			 		<?php echo do_shortcode( '[do_login]') ?>
-			 	</p>
+			 	<?php echo do_shortcode( '[do_login]') ?>
 			</div>
 			<div class="sns-login sns-desktop">
 				<div><?php //echo do_shortcode('[wordpress_social_login]'); ?></div>
-				
 				<h2>SNS Login:</h2>
 				<ul class="list-inline">
 					<?php $row = 1; if(get_field('sns_log_in_list')): ?>

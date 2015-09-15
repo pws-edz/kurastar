@@ -196,7 +196,7 @@ class MyShortcode {
 		        foreach($subcategories as $sub):
 		        ?>
 					<li>
-						<a href="<?php echo get_term_link( $sub ) ?>">
+						<a href="<?php echo get_term_link( $sub ); ?>">
 							<img src="<?php if (function_exists('z_taxonomy_image_url')) echo z_taxonomy_image_url($sub->term_id); ?>" alt="">
 							<?php echo $sub->name; ?>
 						</a>
@@ -365,48 +365,32 @@ class MyShortcode {
 
 				<?php wp_nonce_field( 'wp_custom_registration' ) ?>
 
+				<!-- new register-form-template -->
 				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="first_name"><?php _e('First Name', 'wp') ?></label>
-							<input type="text" name="first_name" class="form-control form-control-stroked" id="first_name" value="<?php echo $first_name ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="text" name="first_name" class="form-control form-control-stroked" id="first_name" placeholder="First Name" value="<?php echo $first_name ?>" required>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="last_name"><?php _e('Last Name', 'wp') ?></label>
-							<input type="text" name="last_name" class="form-control form-control-stroked" id="last_name" value="<?php echo $last_name ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="text" name="last_name" class="form-control form-control-stroked" id="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" required>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="email_address"><?php _e('Email-address', 'wp') ?></label>
-							<input type="email" name="email_address" class="form-control form-control-stroked" id="email_address" value="<?php echo $email_address ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="email" name="email_address" class="form-control form-control-stroked" id="email_address" placeholder="Email Address" value="<?php echo $email_address ?>" required>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="username"><?php _e('Username', 'wp') ?></label>
-							<input type="text" class="form-control form-control-stroked" name="username" id="username" value="<?php echo $username ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="text" class="form-control form-control-stroked" name="username" id="username" placeholder="Username" value="<?php echo $username ?>" required>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="password"><?php _e('Password', 'wp') ?></label>
-							<input type="password" name="password" class="form-control form-control-stroked" id="password" value="<?php echo $password ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="password" name="password" class="form-control form-control-stroked" id="password" placeholder="Password" value="<?php echo $password ?>" required>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-group-lg form-placeholder-offset">
-							<label for="password_confirm"><?php _e('Confirm Password', 'wp') ?></label>
-							<input type="password" name="password_confirm" class="form-control form-control-stroked" id="password_confirm" value="<?php echo $password2 ?>" required>
-						</div>
+					<div class="form-grp form-placeholder-offset">
+						<input type="password" name="password_confirm" class="form-control form-control-stroked" id="password_confirm" placeholder="Confirm Password" value="<?php echo $password2 ?>" required>
 					</div>
 				</div>
+				<!-- end new-register-form-template -->
 				<button type="submit" name="submit_user_registration" class="btn-action btn btn-orange btn-orange-secondary"><?php _e('Submit', 'wp') ?></button>
 			</form>
 			<?php
@@ -541,11 +525,8 @@ class MyShortcode {
 
 		?>
 		<form method="post">
-
 			<?php $flash_messages->flash_messages(); ?>
-
-			<?php wp_nonce_field( 'wp-custom-login' ) ?>
-
+			<?php wp_nonce_field( 'wp-custom-login' ); ?>
 			<div class="form-group">
 				<label for="username"><?php _e('Username', 'wp') ?></label>
 				<input type="text" class="form-control" name="username" id="username" value="<?php echo $username ?>" required>

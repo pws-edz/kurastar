@@ -1708,15 +1708,17 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .registration-page label {
 	font-size: 14px;
   	float: left;
-  	width: 110px;
+  	width: 100%;
   	line-height: 35px;
   	font-family: 'Proxima Nova';
 }
+/*new height form-control*/
 .registration-page .form-control {
-	width: 72%;
 	border-radius: 0;
 	font-family: 'Proxima Nova';
+	height: 50px;
 }
+/*end new height*/
 .register-fillup {
 	width: 402px;
 }
@@ -2238,4 +2240,14 @@ li.curator-tab-list.active a {
 .group2:last-child div.origdiv {
     float: right;
     margin-right: 32px;
+}
+
+div#picture img {
+    width: 50%;
+}
+
+/*registration new css*/
+.registration-page .form-grp {
+    margin-right: 20px;
+    margin-left: 20px;
 }
