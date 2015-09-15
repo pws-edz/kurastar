@@ -163,60 +163,54 @@ class MyShortcode {
 		return ob_get_clean();
 	}
 
+	// new template shortcode for footer_country
 	public static function footer_country_func() {
 		ob_start();
 		?>
-		<div class="menu-country-menu-footer-container">
-			<ul id="menu-country-menu-footer" class="menu">
+		<?php
+		$taxonomy = array( 
+		    'article_country_cat'
+		);
+
+		$args = array(
+		    'hide_empty'        => false, 
+		    'hierarchical'      => true, 
+		    'pad_counts'        => false,
+		    'parent'			=> 0
+		); 
+		$parents = get_terms($taxonomy, $args);
+		foreach ($parents as $key => $parent):
+		?>
+		<div class="group2">
+			<div class="origdiv">
+				<h4><?php echo $parent->name; ?></h4>
+				<ul>
 				<?php
+				$param = array(
+                'taxonomy' => $taxonomy,
+                'parent'   => $parent->term_id,
+                'hide_empty'        => false
+                );
 
-				$taxonomy = array( 
-				    'article_country_cat'
-				);
-
-				$args = array(
-				    'orderby'           => 'name', 
-				    'order'             => 'ASC',
-				    'hide_empty'        => false, 
-				    'hierarchical'      => true, 
-				    'pad_counts'        => false,
-				    'parent'			=> 0
-				); 
-
-				$parents = get_terms($taxonomy, $args);
-
-				foreach ($parents as $key => $parent):
-				?>
-
-				<li id="menu-item-<?php echo $parent->term_id?>" class="disabled menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-<?php echo $parent->term_id?>"><a><?php echo $parent->name ?></a>
-					<?php
-								$param = array(
-							 				'orderby'           => 'name', 
-						    				'order'             => 'ASC',
-						                    'taxonomy' => $taxonomy,
-						                    'parent'   => $parent->term_id,
-						                    'hide_empty'        => false, 
-						                  );
-
-						        $subcategories = get_categories($param);      
-						        foreach($subcategories as $sub):
-						        ?>
-						
-						<li id="menu-item-<?php echo $sub->term_id?>" class="option menu-item menu-item-type-post_type menu-item-object-page menu-item-<?php echo $sub->term_id?>">
-							<div class="siderankimage2"style="background-image:url(<?php if (function_exists('z_taxonomy_image_url')) echo z_taxonomy_image_url($sub->term_id); ?>);"></div>
-							<a href="<?php echo get_term_link( $sub ) ?>"><?php echo $sub->name ?></a>
-						</li>
-						
+		        $subcategories = get_categories($param);      
+		        foreach($subcategories as $sub):
+		        ?>
+					<li>
+						<a href="<?php echo get_term_link( $sub ) ?>">
+							<img src="<?php if (function_exists('z_taxonomy_image_url')) echo z_taxonomy_image_url($sub->term_id); ?>" alt="">
+							<?php echo $sub->name; ?>
+						</a>
+					</li>
 				<?php endforeach; ?>
-				</li>
-			<?php endforeach; ?>
-			</ul>
-			
+				</ul>
+			</div>
 		</div>
+		<?php endforeach; ?>
+		<!-- // end new template shortcode  -->
 		<?php
 		return ob_get_clean();
 	}
-
+	
 
 	public static function dropdown_category_func() {
 		ob_start();

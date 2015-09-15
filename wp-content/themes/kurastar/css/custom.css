@@ -1076,9 +1076,10 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	float:right;
 	width:200px;
 }
-.footcategory #menu-header-menu-1 > li:first-child {
+/*new css comment display none*/
+/*.footcategory #menu-header-menu-1 > li:first-child {
 	display: none;
-}
+}*/
 .footlabel {
 	color:#e4e4e4;
 	font-size:26px;
@@ -2028,6 +2029,10 @@ body:after {
 
 
 /*create article*/
+/*new css-1*/
+a {
+	text-decoration: none!important;
+}
 /*new css*/
 :focus {
     outline: none!important;
@@ -2224,4 +2229,13 @@ ul.nav.nav-tabs.curator-tabs {
 li.curator-tab-list.active a {
     background-color: #EE753D!important;
     color: #fff!important;
+}
+
+/*new css -footer-country-*/
+.group2:last-child {
+	float: none;
+}
+.group2:last-child div.origdiv {
+    float: right;
+    margin-right: 32px;
 }
