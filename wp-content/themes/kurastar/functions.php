@@ -676,3 +676,27 @@ function custom_taxonomy_flush_rewrite() {
 
 function my_function_admin_bar(){ return false; }
 add_filter( 'show_admin_bar' , 'my_function_admin_bar');
+
+
+
+function send_like_request(){
+   
+ # add_post_meta( $_POST['postid'], '_article_owned', $_POST['owned'], true );
+  $meta_id = add_post_meta( $_POST['postid'], '_user_liked', $_POST['user'], true );
+
+  if($meta_id) {
+    $success = true;
+    $msg = '<span class="success"> Successfully like this article. </span>';
+  } else {
+     $success = false;
+     $msg = '<span class="error"> Unable to like this article. Please try again later.</span>';
+  }
+    
+  echo json_encode(array('success'=>$success, 'msg'=>$msg, 'post' => $_POST, 'meta_id' => $meta_id ));
+
+  die();
+
+}
+
+add_action('wp_ajax_send-like', 'send_like_request');
+add_action('wp_ajax_nopriv_send-like', 'send_like_request');

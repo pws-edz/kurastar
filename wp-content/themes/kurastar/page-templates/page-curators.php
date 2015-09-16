@@ -26,8 +26,8 @@ get_header(); ?>
             <ul class="post-list-thumb curator-list-thumb">
               	<?php
 
-				$users = get_users( 'orderby=nicename&role=subscriber&post_per_page=2' );
-
+				      #$users = get_users( 'orderby=nicename&role=subscriber&post_per_page=2' );
+              $users = get_users( 'orderby=nicename&post_per_page=2' );   
            		// Start the Loop.
            		foreach($users as $user):
            			$curator_profile = get_cupp_meta($user->ID, 'thumbnail');

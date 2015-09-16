@@ -8,7 +8,7 @@
  */
 
 get_header(); ?>
-<div class="mainbanner">
+<!-- <div class="mainbanner">
             <div class="flexslider">
               <ul class="slides">
                 <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image.jpg" /></li>
@@ -53,7 +53,7 @@ get_header(); ?>
               </div>
             </form>
             </div>
-</div>
+</div> -->
 	<div id="primary" class="content-area container">
 		<main id="main" class="site-main" role="main">
 		<?php

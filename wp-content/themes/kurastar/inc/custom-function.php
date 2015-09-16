@@ -262,3 +262,4 @@ function post_acme_article($post){
 function unset_post() {
   unset($_POST);
 }
+

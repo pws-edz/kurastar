@@ -125,7 +125,7 @@ $posts = get_posts($args);
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                <img src="<?php echo $curator_profile ?>">
+                      <img src="<?php echo $curator_profile ?>">
                       <div class="curator">
                           <span>CURATORS</span><br>
                           <h3><?php the_author() ?></h3>

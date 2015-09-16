@@ -42,6 +42,11 @@
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/custom.css" />
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css" />
 
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
+/* ]]> */
+</script>
 <?php wp_head(); ?>
 </head>
 	<body>
