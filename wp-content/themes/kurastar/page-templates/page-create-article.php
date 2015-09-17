@@ -240,9 +240,9 @@ get_header(); ?>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="twitter">
 					<input type="text" value="<?php echo isset($_POST['tab_5_twitter_url']) ? $_POST['tab_5_twitter_url'] : ''  ?>" name="tab_5_twitter_url" class="form-control ref-url" placeholder="Put the URL of a tweet here">
-					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
+<!-- 					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
 						<span class="glyphicon glyphicon-search"></span>Search for tweets.
-					</a><br><br>
+					</a><br><br> -->
 					<a href="#" class="btn btn-default tab_add">Add</a>
 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
 				</div>

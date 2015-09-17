@@ -32,8 +32,21 @@
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
+               # $custom_image = get_post_meta($post->ID, '_custom_image_link', false);
+
+                //diplay reference post data
+                $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+                $tab_1_text = get_post_meta( $post->ID, '_tab_1_text', true);
+                $tab_3_desc = get_post_meta( $post->ID, '_tab_3_desc', true);
+                $tab_3_url = get_post_meta( $post->ID, '_tab_3_url', true);
+                $tab_4_link = get_post_meta( $post->ID, '_tab_4_link', true);
+                $twitter_url = get_post_meta( $post->ID, '_tab_5_twitter_url', true);
+                $youtube_url = get_post_meta( $post->ID, '_tab_6_youtube_url', true);
+                $heading = get_post_meta( $post->ID, '_tab_7_heading', true);
+                $tag_title = get_post_meta( $post->ID, '_tab_7_tag_title', true);
+                
                ?>
-				<div class="postimg postimg2" style="background-image:url(<?php echo $src[0]; ?>);"></div>
+				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>);"></div>
 				<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
@@ -121,7 +134,7 @@
 							<div class="article-curator">
 								<span class="social-sample"><img src="<?php echo get_template_directory_uri(); ?>/images/social-sample.png"></span>
 								<a href="#" class="curator-detail-wrap" style="box-shadow:none; border:solid 1px #ee7500; margin-top:50px;">
-									<img src="<?php echo $curator_profile ?>">
+									<img src="<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>">
 									<div class="labels labels2">
 										<span class="countrylabel"><b><?php echo count_user_posts(get_the_author_meta( 'ID' ), 'acme_article') ?></b> Articles</span>
 										<span class="catlabel"><b>3</b> Favorites</span>
