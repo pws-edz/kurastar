@@ -225,8 +225,8 @@ get_header(); ?>
 						<p><img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
 					<?php endif; ?>
 
-					<div class="fileUpload">
-					    <input type="file" class="upload" id="reference_img" name="reference_img"/>
+					<div class="fileUpload2">
+					    <input type="file" class="upload" id="reference_img" name="reference_img" style="width:50%"/>
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="reference">
