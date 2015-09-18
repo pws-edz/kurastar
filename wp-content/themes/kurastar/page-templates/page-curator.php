@@ -80,7 +80,7 @@ $posts = get_posts($args);
 
             $param = array( 
                     'post_type'       => 'acme_article', 
-                    'posts_per_page'  => 2, 
+                    'posts_per_page'  => 6, 
                     'paged'           => $paged, 
                     'author'          => $user->ID, 
                     'orderby'         => 'post_date',
@@ -185,7 +185,7 @@ $posts = get_posts($args);
             <ul class="post-list-thumb">
              
                 <?php 
-          
+
                  query_posts( $fav_args );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
               ?>  
