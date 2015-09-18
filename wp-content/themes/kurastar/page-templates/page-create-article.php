@@ -224,6 +224,10 @@ get_header(); ?>
 					<?php else: ?>
 						<p><img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
 					<?php endif; ?>
+
+					<div class="fileUpload">
+					    <input type="file" class="upload" id="reference_img" name="reference_img"/>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="reference">
 					<textarea name="tab_3_desc" class="form-control ref-desc text-height" name="ref-desc" placeholder="Add a description"><?php echo isset($_POST['tab_3_desc']) ? $_POST['tab_3_desc'] : ''  ?></textarea>

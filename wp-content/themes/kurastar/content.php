@@ -32,8 +32,6 @@
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-               # $custom_image = get_post_meta($post->ID, '_custom_image_link', false);
-
                 //diplay reference post data
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
                 $tab_1_text = get_post_meta( $post->ID, '_tab_1_text', true);
@@ -44,9 +42,13 @@
                 $youtube_url = get_post_meta( $post->ID, '_tab_6_youtube_url', true);
                 $heading = get_post_meta( $post->ID, '_tab_7_heading', true);
                 $tag_title = get_post_meta( $post->ID, '_tab_7_tag_title', true);
-                
+
+
+                $meta_id =  get_post_meta( $post->ID, '_thumbnail_id', true);
+                $meta_img =  get_post_meta( $meta_id, '_wp_attached_file', true);
+         	                
                ?>
-				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>);"></div>
+				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>);"></div>
 				<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
@@ -70,7 +72,7 @@
 				</div>
 				<div class="infobelow">
 					<span class="smallpoints smallpoints-left">
-
+						<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
 						<form class="form-send-like" method="POST">
 							<p class="message"></p>
                             <div class="form-group">
@@ -79,11 +81,14 @@
                          	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
                          	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
                          	    <input type="hidden" name="action" value="send-like">
-                                <button type="submit" class="btn btn-default">Like Me</button>
+                                <button type="submit" class="btn btn-default">Like Me (<?php echo count_total_favorites($post->ID) ?>)</button>
                             </div>
                         </form>
-                        	
-					</span>
+                    	<?php else: ?>
+                    	<i class="fa fa-heart"></i>
+	                        	<span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+	                        <?php endif; ?>	
+						</span>
 					<div class="profile-thumb-wrap">
 						<img src="<?php echo $curator_profile ?>">
 						<div class="curator">
@@ -104,7 +109,14 @@
 										<h2 class="<?php echo $heading ?>"><?php echo $tag_title ?></h2>
 									</div>
 									<div class="detail-content">
-										<img src="<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>" />
+										<?php if($meta_img): ?>
+											<img src="<?php echo site_url() ?>/wp-content/uploads/<?php echo ($meta_img != '') ? $meta_img : '' ;  ?>" />
+										<?php else: ?>
+											<img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
+										<?php endif; ?>
+										
+
+										
 										<a class="weblink" href="<?php echo $tab_3_url ?>" target="_blank"><?php echo $tab_3_desc ?></a>
 										<p><?php echo $tab_1_text ?></p>
 										<p><a href="<?php echo $youtube_url ?>">Youtube</a></p>

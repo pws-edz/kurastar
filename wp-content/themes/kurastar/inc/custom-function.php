@@ -141,7 +141,9 @@ function args_func($get, $paged) {
 
 
 function post_acme_article($post){
-      
+
+
+ #  print_r($_FILES['reference_img']); die();   
   $set = $post['trigger_set_image']; 
 
   if($post['post_title']) {
@@ -245,7 +247,54 @@ function post_acme_article($post){
        $image_url = '';
     }
 
-  
+
+
+      // Make sure the file array isn't empty
+    if(!empty($_FILES['reference_img']['name'])) {
+         
+     // Options array for the wp_handle_upload function. 'test_upload' => false
+    $upload_overrides = array( 'test_form' => false ); 
+
+    // Handle the upload using WP's wp_handle_upload function. Takes the posted file and an options array
+    $uploaded_file = wp_handle_upload($_FILES['reference_img'], $upload_overrides);
+
+    // If the wp_handle_upload call returned a local path for the image
+    if(isset($uploaded_file['file'])) {
+
+        // The wp_insert_attachment function needs the literal system path, which was passed back from wp_handle_upload
+        $file_name_and_location = $uploaded_file['file'];
+
+        // Generate a title for the image that'll be used in the media library
+        $file_title_for_media_library = 'reference image';
+
+        // Set up options array to add this file as an attachment
+        $attachment = array(
+            'post_mime_type' => $uploaded_file_type,
+            'post_title' => 'Uploaded image ' . addslashes($file_title_for_media_library),
+            'post_content' => '',
+            'post_status' => 'inherit'
+        );
+
+        // Run the wp_insert_attachment function. This adds the file to the media library and generates the thumbnails. If you wanted to attch this image to a post, you could pass the post id as a third param and it'd magically happen.
+        $attach_id = wp_insert_attachment( $attachment, $file_name_and_location );
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $file_name_and_location );
+        wp_update_attachment_metadata($attach_id,  $attach_data);
+
+        // Before we update the post meta, trash any previously uploaded image for this post.
+        // You might not want this behavior, depending on how you're using the uploaded images.
+        $existing_uploaded_image = (int) get_post_meta($post_id,'_xxxx_attached_image', true);
+        if(is_numeric($existing_uploaded_image)) {
+            wp_delete_attachment($existing_uploaded_image);
+        }
+
+        // Now, update the post meta to associate the new image with the post
+        add_post_meta($post_id,'_xxxx_attached_image',$attach_id);
+
+         
+    } // end if
+
+    }
 
    $result = array( 'status' => 'success', 'set_image' => $set, 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
 
@@ -283,30 +332,29 @@ function count_user_favorites($user_id) {
 }
 
 function count_total_favorites($id) {
-
-     $fav_args = array(
+global $wpdb;
+     // $fav_args = array(
       
-                  'post_type'       => 'acme_article', 
-                  'post__in' => $id,
-                  'posts_per_page'  => -1, 
-                  'meta_query'        => array(
-                    'relation'  => 'AND',
-                      array(
-                          'key' => '_user_liked',
-                          'compare' => 'EXISTS'
-
-                      )
-                  )
-              );
-
-     // $query = new WP_Query( array( 
-     //  'post_type'       => 'acme_article', 
-     //           'post__in' => $id,
+     //              'post_type'       => 'acme_article', 
+     //              'post__in' => $id,
      //              'posts_per_page'  => -1, 
-     //      'meta_key' => '_user_liked',
-     //     'meta_value' => '',
-     //                      'meta_compare' => '!=' 
-     //  ) );
+     //              'meta_query'        => array(
+     //                'relation'  => 'AND',
+     //                  array(
+     //                      'key' => '_user_liked',
+     //                      'compare' => 'EXISTS'
 
-     return count(query_posts($fav_args));
+     //                  )
+     //              )
+     //          );
+
+
+
+$fav = $wpdb->get_results(
+    "SELECT DISTINCT * 
+    FROM  $wpdb->postmeta
+    WHERE $wpdb->postmeta.post_id = '$id'
+    AND $wpdb->postmeta.meta_key ='_user_liked' ");
+
+     return count($fav);
 }

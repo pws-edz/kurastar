@@ -2251,3 +2251,19 @@ div#picture img {
     margin-right: 20px;
     margin-left: 20px;
 }
+ /*login and footer*/
+#post-602 {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#post-602 .form-control {
+	height: 48px;
+}
+#post-602 input.btn.btn-default {
+    height: 45px;
+}
+
+.group2:last-child {
+	float: left !important;
+}
