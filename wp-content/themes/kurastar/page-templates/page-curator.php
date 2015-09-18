@@ -45,7 +45,7 @@ $posts = get_posts($args);
         <img src="<?php echo get_cupp_meta($user->ID, 'thumbnail') ?>" />
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-          <span class="catlabel"><b>3</b> Favorites</span>
+          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites</span>
         </div>
         <div class="curator-info">
           <h4><?php echo $user->display_name ?></h4>
@@ -185,6 +185,7 @@ $posts = get_posts($args);
             <ul class="post-list-thumb">
              
                 <?php 
+          
                  query_posts( $fav_args );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
               ?>  

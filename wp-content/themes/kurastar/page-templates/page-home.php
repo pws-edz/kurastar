@@ -66,8 +66,11 @@ get_header(); ?>
 
 					$authorID = get_the_author_meta($post->ID);
 					$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+					$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
                     ?>
-                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+                    <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>)"></div>
                       <div class="labels">
 
                       	<?php if($countries): ?>
@@ -92,7 +95,7 @@ get_header(); ?>
                       </div>
                       <div class="infobelow">
                         <i class="fa fa-heart"></i>
-                        <span class="smallpoints smallpoints-left">14,091 likes</span>
+                        <span class="smallpoints smallpoints-left"><?php //echo count_total_favorites($post->ID) ?> 3 likes</span>
                         <div class="profile-thumb-wrap">
 
                       		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>

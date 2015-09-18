@@ -79,7 +79,7 @@
                          	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
                          	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
                          	    <input type="hidden" name="action" value="send-like">
-                                <button type="submit" class="btn btn-default">Like Me <span class="count-like">(3)</span></button>
+                                <button type="submit" class="btn btn-default">Like Me</button>
                             </div>
                         </form>
                         	
@@ -101,43 +101,25 @@
 							<ul class="post-detail-list">
 								<li>
 									<div class="detail-title">
-										<span>1</span>
-										<h3>ダイエットスタートドリンク①【朝ココア】で体質改善</h3>
+										<h2 class="<?php echo $heading ?>"><?php echo $tag_title ?></h2>
 									</div>
 									<div class="detail-content">
-										<img src="<?php echo get_template_directory_uri(); ?>/images/detail-img1.jpg" />
-										<a class="weblink" href="#" target="_blank">monapan.com</a>
-										<p>ココアは、甘いためダイエットに不向きと思われがちなドリンクですが、実は、栄養たっぷりで体に良いドリンクなのです。
-<br /><br />
-ココアの原料であるカカオには、代謝をアップするビタミンB群、細胞を若返らせるビタミンE、貧血予防になる鉄分が豊富に含まれているのです♪
-<br /><br />
-また、食物繊維のリグニンによって腸内の乳酸菌を育てられ、お通じを改善することができちゃうのです！コーヒーや紅茶に比べるとカロリーが高いドリンクですが、代謝の良い朝に飲めば大丈夫なのです♡</p>
-									</div>
-								</li>
-								<li>
-									<div class="detail-title">
-										<span>2</span>
-										<h3>ダイエットスタートドリンク①【朝ココア】で体質改善</h3>
-									</div>
-									<div class="detail-content">
-										<img src="<?php echo get_template_directory_uri(); ?>/images/detail-img2.jpg" />
-										<a class="weblink" href="#" target="_blank">monapan.com</a>
-										<p>ココアは、甘いためダイエットに不向きと思われがちなドリンクですが、実は、栄養たっぷりで体に良いドリンクなのです。
-<br /><br />
-ココアの原料であるカカオには、代謝をアップするビタミンB群、細胞を若返らせるビタミンE、貧血予防になる鉄分が豊富に含まれているのです♪
-<br /><br />
-また、食物繊維のリグニンによって腸内の乳酸菌を育てられ、お通じを改善することができちゃうのです！コーヒーや紅茶に比べるとカロリーが高いドリンクですが、代謝の良い朝に飲めば大丈夫なのです♡</p>
+										<img src="<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>" />
+										<a class="weblink" href="<?php echo $tab_3_url ?>" target="_blank"><?php echo $tab_3_desc ?></a>
+										<p><?php echo $tab_1_text ?></p>
+										<p><a href="<?php echo $youtube_url ?>">Youtube</a></p>
+										<p><a href="<?php echo $twitter_url ?>">Twitter</a></p>
 									</div>
 								</li>
 							</ul>
 							
 							<div class="article-curator">
-								<span class="social-sample"><img src="<?php echo get_template_directory_uri(); ?>/images/social-sample.png"></span>
+								<!-- <span class="social-sample"><img src="<?php echo get_template_directory_uri(); ?>/images/social-sample.png"></span> -->
 								<a href="#" class="curator-detail-wrap" style="box-shadow:none; border:solid 1px #ee7500; margin-top:50px;">
 									<img src="<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>">
 									<div class="labels labels2">
 										<span class="countrylabel"><b><?php echo count_user_posts(get_the_author_meta( 'ID' ), 'acme_article') ?></b> Articles</span>
-										<span class="catlabel"><b>3</b> Favorites</span>
+										<span class="catlabel"><b><?php echo count_user_favorites(get_the_author_meta( 'ID' )) ?></b> Favorites</span>
 									</div>
 									<div class="curator-info">
 										<h4><?php the_author() ?></h4>
@@ -150,8 +132,6 @@
 									<div class="clear"></div>
 								</a>
 							</div>
-							
-							<!-- <a href="#" class="reportpost"><i class="fa fa-exclamation-triangle"></i>&nbsp; REPORT POST</a> -->
 							
 							<div class="clear"></div>
 							

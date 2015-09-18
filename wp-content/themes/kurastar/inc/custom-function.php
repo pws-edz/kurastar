@@ -263,3 +263,50 @@ function unset_post() {
   unset($_POST);
 }
 
+
+function count_user_favorites($user_id) {
+
+     $fav_args = array(
+                  'post_type'       => 'acme_article', 
+                  'posts_per_page'  => -1, 
+                  'meta_query'        => array(
+                    'relation'  => 'AND',
+                      array(
+                          'key' => '_user_liked',
+                          'value' => $user_id,
+                          'compare' => '='
+                      )
+                  )
+                  );
+
+     return count(query_posts($fav_args));
+}
+
+function count_total_favorites($id) {
+
+     $fav_args = array(
+      
+                  'post_type'       => 'acme_article', 
+                  'post__in' => $id,
+                  'posts_per_page'  => -1, 
+                  'meta_query'        => array(
+                    'relation'  => 'AND',
+                      array(
+                          'key' => '_user_liked',
+                          'compare' => 'EXISTS'
+
+                      )
+                  )
+              );
+
+     // $query = new WP_Query( array( 
+     //  'post_type'       => 'acme_article', 
+     //           'post__in' => $id,
+     //              'posts_per_page'  => -1, 
+     //      'meta_key' => '_user_liked',
+     //     'meta_value' => '',
+     //                      'meta_compare' => '!=' 
+     //  ) );
+
+     return count(query_posts($fav_args));
+}
