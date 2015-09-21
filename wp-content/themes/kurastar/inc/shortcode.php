@@ -460,6 +460,15 @@ class MyShortcode {
 
 	    	$flash_messages->set(__('Successfully saved the information!', 'wp'), 'updated');
 
+			// $creds = array();
+			// $creds['user_login'] = $username;
+			// $creds['user_password'] = $password2;
+			// $creds['remember'] = false;
+
+			// $user = wp_signon( $creds, false );
+
+	    	wp_redirect(home_url().'/user-login/');
+
 	    	return true;
 
 	    } else {
@@ -529,11 +538,11 @@ class MyShortcode {
 			<?php wp_nonce_field( 'wp-custom-login' ); ?>
 			<div class="form-group">
 				<label for="username"><?php _e('Username', 'wp') ?></label>
-				<input type="text" class="form-control" name="username" id="username" value="<?php echo $username ?>" required>
+				<input type="text" class="form-control" name="username" id="username" placeholder="username" value="<?php echo $username ?>" required>
 			</div>
 			<div class="form-group">
 				<label for="password"><?php _e('Password', 'wp') ?></label>
-				<input type="password" name="password" class="form-control" id="password" value="<?php echo $password ?>" required>
+				<input type="password" name="password" class="form-control" id="password" placeholder="password" value="<?php echo $password ?>" required>
 			</div>
 			<div class="checkbox">
 				<label>

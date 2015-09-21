@@ -49,14 +49,15 @@ get_header(); ?>
 	    		<p>image preview</p>
 	    		<div class="img-holder">
 	    		<?php if($result && $result['image_url'] != ''): ?>
-	  				<img src="<?php echo $result['image_url'] ?>" alt="">
+	  				<img id="article_featured_image_preview" src="<?php echo $result['image_url'] ?>" alt="">
 	  			<?php else: ?>
-	  				<img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
+	  				<img id="article_featured_image_preview" src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
 	  			<?php endif; ?>
 	  			</div>
 
 	    		<div class="fileUpload">
-				    <input type="file" class="upload" id="upload-image" name="post_featured_img"/>
+					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
+				    <!-- <input type="file" class="upload" id="upload-image" name="post_featured_img"/> -->
 				</div>
 				<?php if( empty($_POST['image_action']) ): ?>
 
@@ -274,7 +275,6 @@ get_header(); ?>
 	</form>
 </div>
 
-
 <?php
 get_footer();?>
 <script type="text/javascript">
@@ -304,7 +304,6 @@ $('#upload-image').change(function(e) {
   
 
 });
-
 $('.setImage').click(function() {
 
   $('#trigger-set-image').val('1');
@@ -323,4 +322,23 @@ $('.tab_add').click(function(){
 
 	$('#acme-article-post-type').submit();
 });
+
+// Changes
+function getImageContent(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+		$('#article_featured_image_preview').attr('src', e.target.result);
+		}
+
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$("#upload-image").change(function(){
+	getImageContent(this);
+});
+
+    
 </script>

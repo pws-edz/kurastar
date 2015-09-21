@@ -27,6 +27,7 @@ $args = array(
     );
 
 $posts = get_posts($args);
+$curator_profile   = get_avatar( $current_user->ID );
 
 ?>
 
@@ -42,7 +43,7 @@ $posts = get_posts($args);
 
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
-        <img src="<?php echo get_cupp_meta($user->ID, 'thumbnail') ?>" />
+        <?php echo $curator_profile ?>
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites</span>
@@ -195,13 +196,12 @@ $posts = get_posts($args);
                 $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
                 
                 //Returns All Term Items for "my_taxonomy"
-                $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-                $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
-
-                $authorID = get_the_author_meta($post->ID);
-                $curator_profile = get_cupp_meta($authorID, 'thumbnail');
-
-                $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+                $category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+                $countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+                $authorID          = get_the_author_meta($post->ID);
+                // $curator_profile   = get_cupp_meta($authorID, 'thumbnail');
+                $curator_profile   = get_avatar( $authorID );
+                $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
@@ -234,10 +234,10 @@ $posts = get_posts($args);
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                      <img src="<?php echo $curator_profile ?>">
+                      <?php echo $curator_profile ?>
                       <div class="curator">
                           <span>CURATORS</span><br>
-                          <h3><?php the_author() ?></h3>
+                          <h3><?php the_author() ?>s</h3>
                       </div>
 
 
