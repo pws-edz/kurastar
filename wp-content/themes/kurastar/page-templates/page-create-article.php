@@ -286,20 +286,20 @@ $('#upload-image').change(function(e) {
   //   console.log(file);
   // }
 
-  if($('#post-title').val() == '') {
+  // if($('#post-title').val() == '') {
 
-  	  alert('Pleae fill-up required fields first before uploading a file.');
-  	 return false;
+  // 	  alert('Pleae fill-up required fields first before uploading a file.');
+  // 	 return false;
 
-  } else {
+  // } else {
 
 	$('#trigger-set-image').val('1');
 
 	$('#image-action').val('upload_file');
 
-	$('#acme-article-post-type').submit();
-	return true;
-  }
+	//$('#acme-article-post-type').submit();
+	// return true;
+ //  }
 
   
 
