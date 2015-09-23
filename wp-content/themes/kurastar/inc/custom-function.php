@@ -69,74 +69,74 @@ function my_get_menu_item_slug() {
 */
 function args_func($get, $paged) {
 
-	if($get['country'] == 'select country' && $get['category'] == 'select category') {
+  if($get['country'] == 'select country' && $get['category'] == 'select category'){
 
-            $args = array('post_type' => 'acme_article','posts_per_page' => '9', 'paged' => $paged);
+      $args = array(
+          'post_type'      => 'acme_article',
+          'posts_per_page' => '9', 
+          'paged'          => $paged
+      );
 
-         } else {
+  }else{
 
-            if($get['country'] != 'select country' && $get['category'] == 'select category') {
+      if($get['country'] != 'select country' && $get['category'] == 'select category'){
 
-            	$args = array(
-                  'post_type' => 'acme_article',
-                  'tax_query' => array(
-                    'relation' => 'OR',
-                    array(
-                      'taxonomy' => 'article_country_cat',
-                      'field'    => 'name',
-                      'terms'    => $get['country'],
-                    ),
-                  ),
-                   'posts_per_page' => '9', 'paged' => $paged
-                );
+          $args = array(
+            'post_type'      => 'acme_article',
+            'posts_per_page' => '9', 
+            'paged'          => $paged,
+            'tax_query'      => array(
+                                    'relation' => 'OR',
+                                    array(
+                                        'taxonomy' => 'article_country_cat',
+                                        'field'    => 'name',
+                                        'terms'    => $get['country'],
+                                    ),
+                                )
+          );
 
+      }elseif($get['country'] == 'select country' && $get['category'] != 'select category'){
 
+          $args = array(
+                  'post_type'      => 'acme_article',
+                  'posts_per_page' => '9', 
+                  'paged'          => $paged,
+                  'tax_query'      => array(
+                                          'relation' => 'OR',
+                                          array(
+                                              'taxonomy' => 'article_cat',
+                                              'field'    => 'name',
+                                              'terms'    =>  $get['category'],
+                                          ),
+                                      )
+          );
 
-            } else if ($get['country'] == 'select country' && $get['category'] != 'select category') {
+      }else{
 
-            	$args = array(
-                  'post_type' => 'acme_article',
-                  'tax_query' => array(
-                    'relation' => 'OR',
-                    array(
-                      'taxonomy' => 'article_cat',
-                      'field'    => 'name',
-                      'terms'    =>  $get['category'],
-                    ),
-                  ),
-                   'posts_per_page' => '9', 'paged' => $paged
-                );
+          $args = array(
+              'post_type'      => 'acme_article',
+              'posts_per_page' => '9', 
+              'paged'          => $paged,
+              'tax_query'      => array(
+                                      'relation' => 'AND',
+                                      array(
+                                          'taxonomy' => 'article_country_cat',
+                                          'field'    => 'name',
+                                          'terms'    => $get['country'],
+                                      ),
+                                      array(
+                                          'taxonomy' => 'article_cat',
+                                          'field'    => 'name',
+                                          'terms'    =>  $get['category'],
+                                      ),
+                                  )
+          );
 
+      }
 
-            }  else {
+  }
 
-	    		$args = array(
-	                  'post_type' => 'acme_article',
-	                  'tax_query' => array(
-	                    'relation' => 'OR',
-	                    array(
-	                      'taxonomy' => 'article_country_cat',
-	                      'field'    => 'name',
-	                      'terms'    => $get['country'],
-	                    ),
-	                    array(
-	                      'taxonomy' => 'article_cat',
-	                      'field'    => 'name',
-	                      'terms'    =>  $get['category'],
-	                    ),
-	                  ),
-	                   'posts_per_page' => '9', 'paged' => $paged
-	                );
-
-            }
-               
-
-
-         }
-
-
-        return $args;
-
+  return $args;
 }
 
 

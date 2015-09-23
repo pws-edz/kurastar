@@ -26,27 +26,27 @@
                  $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 
                  //Returns All Term Items for "my_taxonomy"
-                $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-                $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+                $category  = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+                $countries = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-                $authorID = get_the_author_meta($post->ID);
+                $authorID        = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
                 //diplay reference post data
-                $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
-                $tab_1_text = get_post_meta( $post->ID, '_tab_1_text', true);
-                $tab_3_desc = get_post_meta( $post->ID, '_tab_3_desc', true);
-                $tab_3_url = get_post_meta( $post->ID, '_tab_3_url', true);
-                $tab_4_link = get_post_meta( $post->ID, '_tab_4_link', true);
-                $twitter_url = get_post_meta( $post->ID, '_tab_5_twitter_url', true);
-                $youtube_url = get_post_meta( $post->ID, '_tab_6_youtube_url', true);
-                $heading = get_post_meta( $post->ID, '_tab_7_heading', true);
-                $tag_title = get_post_meta( $post->ID, '_tab_7_tag_title', true);
+                $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
+                $tab_1_text        = get_post_meta( $post->ID, '_tab_1_text', true);
+                $tab_3_desc        = get_post_meta( $post->ID, '_tab_3_desc', true);
+                $tab_3_url         = get_post_meta( $post->ID, '_tab_3_url', true);
+                $tab_4_link        = get_post_meta( $post->ID, '_tab_4_link', true);
+                $twitter_url       = get_post_meta( $post->ID, '_tab_5_twitter_url', true);
+                $youtube_url       = get_post_meta( $post->ID, '_tab_6_youtube_url', true);
+                $heading           = get_post_meta( $post->ID, '_tab_7_heading', true);
+                $tag_title         = get_post_meta( $post->ID, '_tab_7_tag_title', true);
 
 
-                $meta_id =  get_post_meta( $post->ID, '_thumbnail_id', true);
-                $meta_img =  get_post_meta( $meta_id, '_wp_attached_file', true);
-         	                
+                $meta_id  = get_post_meta( $post->ID, '_thumbnail_id', true);
+                $meta_img = get_post_meta( $meta_id, '_wp_attached_file', true);
+       
                ?>
 				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>);"></div>
 				<div class="labels">

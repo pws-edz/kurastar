@@ -19,18 +19,17 @@ $user_posts = count_user_posts($user->ID, 'acme_article');
 
 
 $args = array(
-    'post_type' => 'acme_article',
-    'author'        =>  $user->ID,
-    'orderby'       =>  'post_date',
-    'order'         =>  'ASC',
-    'posts_per_page' => -1
+      'post_type'      => 'acme_article',
+      'author'         => $user->ID,
+      'orderby'        => 'post_date',
+      'order'          => 'ASC',
+      'posts_per_page' => -1
     );
 
 $posts = get_posts($args);
 $curator_profile   = get_avatar( $current_user->ID );
 
 ?>
-
 
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 	<div class="contentbox">
@@ -137,7 +136,7 @@ $curator_profile   = get_avatar( $current_user->ID );
 
                       <img src="<?php echo $curator_profile ?>">
                       <div class="curator">
-                          <span>CURATORS</span><br>
+                          <span>CURATORssssS</span><br>
                           <h3><?php the_author() ?></h3>
                       </div>
 
