@@ -221,6 +221,9 @@ class MyShortcode {
 				<div class="droplistcategory">
 					<div>
 					<ul id="menu-category-menu" class="menu">
+						<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-all">
+							<a>all</a>
+						</li>
 						
 					<?php
 					$taxonomy = '';

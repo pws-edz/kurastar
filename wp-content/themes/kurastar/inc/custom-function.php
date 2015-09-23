@@ -69,6 +69,8 @@ function my_get_menu_item_slug() {
 */
 function args_func($get, $paged) {
 
+  $get['category'] = $get['category'] == 'all' ? 'select category' : $get['category'];
+
   if($get['country'] == 'select country' && $get['category'] == 'select category'){
 
       $args = array(

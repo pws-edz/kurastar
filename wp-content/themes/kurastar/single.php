@@ -55,10 +55,10 @@ get_header(); ?>
             </div>
 </div> -->
 	<div id="primary" class="content-area container">
-		<main id="main" class="site-main" role="main">
+		<main id="main" class="site-main" role="main">adasdasdasdasdasdadsa
 		<?php
 		// Start the loop.
-		while ( have_posts() ) : the_post();
+		while ( have_posts() ) : the_post(); echo 'adasd';
 
 			/*
 			 * Include the post format-specific template for the content. If you want to

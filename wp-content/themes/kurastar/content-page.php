@@ -9,29 +9,67 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php
-		// Post thumbnail.
-		twentyfifteen_post_thumbnail();
-	?>
 
-	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
+	<div class="defaultWidth center clear-auto bodycontent bodycontent-index">
+		<div class="searchbox">
+			<form method="get" action="<?php echo site_url() ?>/search-results/">
+				<div class="searchwrap-inner">
+					<div class="transwrap">
+						<input id="cty" type="text" name="country" value="select country" readonly />
+					</div>
+					<div class="transwrap">
+						<input id="cat" type="text" name="category" value="select category" readonly />
+					</div>
+					<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+					
+					<?php 
+						/*
+						* Country Dropdown
+						* @hook: dropdown_country_func
+						*/
+					 ?>
+					 <?php echo do_shortcode( '[dropdown_country]' ) ?>
 
-	<div class="entry-content">
-		<?php the_content(); ?>
-		<?php
-			wp_link_pages( array(
-				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfifteen' ) . '</span>',
-				'after'       => '</div>',
-				'link_before' => '<span>',
-				'link_after'  => '</span>',
-				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>%',
-				'separator'   => '<span class="screen-reader-text">, </span>',
-			) );
-		?>
-	</div><!-- .entry-content -->
 
-	<?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>
+					 <?php 
+						/*
+						* Category Dropdown
+						* @hook: dropdown_category_func
+						*/
+					 ?>
+					 <?php echo do_shortcode( '[dropdown_category]' ) ?>
 
+				</div>
+			</form>   
+		</div>
+
+		<div class="contentbox">
+			<h2 class="whatsnew"><?php the_title() ?></h2>
+
+			<p> <?php the_content(); ?></p>
+
+	 	</div>
+	
+
+	    <div class="sidebox">
+
+			<div class="socketlabs">
+				<a href="#">
+				  <img src="<?php echo get_template_directory_uri(); ?>/images/socketlabs.jpg" alt="">
+				</a>
+			</div>
+
+			<div class="sideboxcontent ad300">
+			</div>
+
+			<?php 
+			/*
+			* Ranking article sidebar
+			*  @hook: ranking_article_func
+			*/
+			?>
+			<?php echo do_shortcode( '[ranking_article]' ) ?>
+
+	    </div>
+  	</div>
 </article><!-- #post-## -->
