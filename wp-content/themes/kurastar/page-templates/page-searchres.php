@@ -6,6 +6,7 @@ get_header(); ?>
 
 <?php  
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    
     $args = args_func($_GET, $paged); 
     $query = new WP_Query($args);
 
@@ -48,11 +49,11 @@ get_header(); ?>
 
                     $authorID = get_the_author_meta($post->ID);
                     $curator_profile = get_cupp_meta($authorID, 'thumbnail');
-
+                    
                   ?>
                   <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
                     <div class="labels">
-
+                        
                       <?php if($countries): ?>
                         <?php foreach($countries as $country): ?>
                           <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>

@@ -126,7 +126,7 @@ get_header(); ?>
 			</ul>
 
 		</div>
-		<!---- start sidebar ---->
+		<!-- start sidebar -->
 
 		<div class="sidebox">
 			<div class="socketlabs">
@@ -155,7 +155,7 @@ get_header(); ?>
  				*/
  			 ?>
 			<?php echo do_shortcode( '[ranking_country]' ) ?>
-			?>
+			
 		</div>	
 	</div>
 <?php get_footer(); ?>

@@ -1,7 +1,9 @@
 <?php 
 /*Template Name: Create Article
 */
+acf_form_head(); 
 get_header(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <?php 
 	global $wp_query;
@@ -9,6 +11,7 @@ get_header(); ?>
 	if (!is_user_logged_in()):
 		wp_redirect( '/user-registration' ); exit();
 	endif;
+
 ?>
 
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
@@ -41,12 +44,15 @@ get_header(); ?>
     </div>
 </div>
 <div class="container">
+
 	<form data-toggle="validator" role="form" class="createform" id="acme-article-post-type" name="acme_article_post_type" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" enctype="multipart/form-data">
+
+
 		<div class="form-content">
-	    	<p class="text-center title">fill up  custom post below</p>
+	    	<p class="text-center title"><!-- fill up  custom post below --></p>
 	    	<div class="gap-30"></div>
 	    	<div class="col-md-4">
-	    		<p>image preview</p>
+	    		<!-- <p>image preview</p> -->
 	    		<div class="img-holder">
 	    		<?php if($result && $result['image_url'] != ''): ?>
 	  				<img id="article_featured_image_preview" src="<?php echo $result['image_url'] ?>" alt="">
@@ -152,11 +158,11 @@ get_header(); ?>
 					</div>
 	    		</div>
 	    		<div class="form-grp">
-					<p>details <span>(required)</span></p>
+				<!-- 	<p>details <span>(required)</span></p> -->
 					<input type="text" name="post_title" id="post-title" required="required"  placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
 				</div>
 				<div class="form-grp">
-					<p>limit to 150 characters only</p>
+					<!-- <p>limit to 150 characters only</p> -->
 					<textarea name="post_desc" class="text-height" placeholder="Description"><?php echo isset($_POST['post_desc']) ? $_POST['post_desc'] : ''  ?></textarea>
 				</div>
 	    	</div>
@@ -184,97 +190,120 @@ get_header(); ?>
 			
 	    </div>
 	    
-	    <div class="form-content">
-    	<p class="text-center title">or fill up reference post below</p>
-    	<div class="tab-form-panel">
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active">
-					<a href="#text" aria-controls="home" role="tab" data-toggle="tab">Text</a>
-				</li>
-				<li role="presentation">
-					<a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Picture</a>
-				</li>
-				<li role="presentation">
-					<a href="#reference" aria-controls="reference" role="tab" data-toggle="tab">Reference</a>
-				</li>
-				<li role="presentation">
-					<a href="#link" aria-controls="link" role="tab" data-toggle="tab">Link</a>
-				</li>
-				<li role="presentation">
-					<a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">Twitter</a>
-				</li>
-				<li role="presentation">
-					<a href="#youtube" aria-controls="youtube" role="tab" data-toggle="tab">Youtube</a>
-				</li>
-				<li role="presentation">
-					<a href="#h2-tag" aria-controls="h2-tag" role="tab" data-toggle="tab">H2 Tag</a>
-				</li>
-			</ul>
+	    <?php
+			// <div class="form-content">
+			//     	<p class="text-center title">or fill up reference post below</p>
+			//     	<div class="tab-form-panel">
+			// 			<!-- Nav tabs -->
+			// 			<ul class="nav nav-tabs" role="tablist">
+			// 				<li role="presentation" class="active">
+			// 					<a href="#text" aria-controls="home" role="tab" data-toggle="tab">Text</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Picture</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#reference" aria-controls="reference" role="tab" data-toggle="tab">Reference</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#link" aria-controls="link" role="tab" data-toggle="tab">Link</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">Twitter</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#youtube" aria-controls="youtube" role="tab" data-toggle="tab">Youtube</a>
+			// 				</li>
+			// 				<li role="presentation">
+			// 					<a href="#h2-tag" aria-controls="h2-tag" role="tab" data-toggle="tab">H2 Tag</a>
+			// 				</li>
+			// 			</ul>
 
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="text">
-					<textarea name="tab_1_text" placeholder="Put your text here" class="form-control texts text-height"><?php echo isset($_POST['tab_1_text']) ? $_POST['tab_1_text'] : ''  ?></textarea>
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="picture">
-					<?php if($result): ?>
-						<p><img src="<?php echo $result['image_url'] ?>"></p>
-					<?php else: ?>
-						<p><img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
-					<?php endif; ?>
+			// 			<!-- Tab panes -->
+			// 			<div class="tab-content">
+			// 				<div role="tabpanel" class="tab-pane active" id="text">
+			// 					<textarea name="tab_1_text" placeholder="Put your text here" class="form-control texts text-height">< ? php echo isset($_POST['tab_1_text']) ? $_POST['tab_1_text'] : ''  ? > </textarea>
+			// 					<a href="#" class="btn btn-default tab_add">Add</a>
+			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="picture">
+			// 					< ? php if($result): ? > 
+			// 						<p><img src="< ? php echo $result['image_url'] ? > "></p>
+			// 					< ? php else: ? > 
+			// 						<p><img src="< ? php echo site_url() ? > /wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
+			// 					< ? php endif; ? > 
 
-					<div class="fileUpload2">
-					    <input type="file" class="upload" id="reference_img" name="reference_img" style="width:50%"/>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="reference">
-					<textarea name="tab_3_desc" class="form-control ref-desc text-height" name="ref-desc" placeholder="Add a description"><?php echo isset($_POST['tab_3_desc']) ? $_POST['tab_3_desc'] : ''  ?></textarea>
-					<input name="tab_3_url" type="text" placeholder="Please put the URL of the reference" class="form-control ref-url" value="<?php echo isset($_POST['tab_3_url']) ? $_POST['tab_3_url'] : ''  ?>">
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="link">
-					<div class="link-wrap">
-						<input name="tab_4_link" type="text" class="form-control ref-url" placeholder="URL of the Link" name="<?php echo isset($_POST['tab_4_link']) ? $_POST['tab_4_link'] : ''  ?>">
-						<a href="#" class="btn btn-default tab_add">Add</a>
-						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="twitter">
-					<input type="text" value="<?php echo isset($_POST['tab_5_twitter_url']) ? $_POST['tab_5_twitter_url'] : ''  ?>" name="tab_5_twitter_url" class="form-control ref-url" placeholder="Put the URL of a tweet here">
-<!-- 					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
-						<span class="glyphicon glyphicon-search"></span>Search for tweets.
-					</a><br><br> -->
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="youtube">				
-					<div class="vid-url-container">
-						<input value="<?php echo isset($_POST['tab_6_youtube_url']) ? $_POST['tab_6_youtube_url'] : ''  ?>" name="tab_6_youtube_url" type="text" class="ref-url form-control" placeholder="Video URL">
-						<a href="#" class="btn btn-default tab_add">Add</a>
-						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="h2-tag">
-					<select class="form-control tag-heading ref-url" name="tab_7_heading">
-						<option value="normal" <?php echo isset($_POST['tab_7_heading']) == 'normal' ? 'selected="selected"' : ''  ?>>Normal Heading</option>
-						<option value="sub" <?php echo isset($_POST['tab_7_heading']) == 'sub' ? 'selected="selected"' : ''  ?>>Subheading</option>
-					</select>
-					<!-- <span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span> -->
-					<input value="<?php echo isset($_POST['tab_7_tag_title']) ? $_POST['tab_7_tag_title'] : ''  ?>" name="tab_7_tag_title" type="text" class="form-control ref-url" placeholder="Tag Title">
-					<hr class="tag-hr" style="border-color: rgba(237, 113, 0, 1)">
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-			</div>
-		</div>
-    </div>
+			// 					<div class="fileUpload2">
+			// 					    <input type="file" class="upload" id="reference_img" name="reference_img" style="width:50%"/>
+			// 					</div>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="reference">
+			// 					<textarea name="tab_3_desc" class="form-control ref-desc text-height" name="ref-desc" placeholder="Add a description">< ? php echo isset($_POST['tab_3_desc']) ? $_POST['tab_3_desc'] : ''  ? > </textarea>
+			// 					<input name="tab_3_url" type="text" placeholder="Please put the URL of the reference" class="form-control ref-url" value="< ? php echo isset($_POST['tab_3_url']) ? $_POST['tab_3_url'] : ''  ? > ">
+			// 					<a href="#" class="btn btn-default tab_add">Add</a>
+			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="link">
+			// 					<div class="link-wrap">
+			// 						<input name="tab_4_link" type="text" class="form-control ref-url" placeholder="URL of the Link" name="< ? php echo isset($_POST['tab_4_link']) ? $_POST['tab_4_link'] : ''  ? > ">
+			// 						<a href="#" class="btn btn-default tab_add">Add</a>
+			// 						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 					</div>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="twitter">
+			// 					<input type="text" value="< ? php echo isset($_POST['tab_5_twitter_url']) ? $_POST['tab_5_twitter_url'] : ''  ? > " name="tab_5_twitter_url" class="form-control ref-url" placeholder="Put the URL of a tweet here">
+			// <!-- 					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
+			// 						<span class="glyphicon glyphicon-search"></span>Search for tweets.
+			// 					</a><br><br> -->
+			// 					<a href="#" class="btn btn-default tab_add">Add</a>
+			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="youtube">				
+			// 					<div class="vid-url-container">
+			// 						<input value="< ? php echo isset($_POST['tab_6_youtube_url']) ? $_POST['tab_6_youtube_url'] : ''  ? > " name="tab_6_youtube_url" type="text" class="ref-url form-control" placeholder="Video URL">
+			// 						<a href="#" class="btn btn-default tab_add">Add</a>
+			// 						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 					</div>
+			// 				</div>
+			// 				<div role="tabpanel" class="tab-pane" id="h2-tag">
+			// 					<select class="form-control tag-heading ref-url" name="tab_7_heading">
+			// 						<option value="normal" < ? php echo isset($_POST['tab_7_heading']) == 'normal' ? 'selected="selected"' : ''  ? > >Normal Heading</option>
+			// 						<option value="sub" < ? php echo isset($_POST['tab_7_heading']) == 'sub' ? 'selected="selected"' : ''  ? > >Subheading</option>
+			// 					</select>
+			// 					<!-- <span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span> -->
+			// 					<input value="< ? php echo isset($_POST['tab_7_tag_title']) ? $_POST['tab_7_tag_title'] : ''  ? >" name="tab_7_tag_title" type="text" class="form-control ref-url" placeholder="Tag Title">
+			// 					<hr class="tag-hr" style="border-color: rgba(237, 113, 0, 1)">
+			// 					<a href="#" class="btn btn-default tab_add">Add</a>
+			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
+			// 				</div>
+			// 			</div>
+			// 		</div>
+			//     </div>
+
+	    ?>
 	</form>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	var maxField = 10; //Input fields increment limitation
+	var addButton = $('.add_button'); //Add button selector
+	var wrapper = $('.field_wrapper'); //Input field wrapper
+	var fieldHTML = '<div><input type="text" name="title[]" value=""/><input type="file" name="image[]" value=""/><input type="text" name="body[]" value=""/><input type="text" name="reference[]" value=""/><img src="remove-icon.png"/></a></div>'; //New input field html 
+	var x = 1; //Initial field counter is 1
+	$(addButton).click(function(){ //Once add button is clicked
+		if(x < maxField){ //Check maximum number of input fields
+			x++; //Increment field counter
+			$(wrapper).append(fieldHTML); // Add field html
+		}
+	});
+	$(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+		e.preventDefault();
+		$(this).parent('div').remove(); //Remove field html
+		x--; //Decrement field counter
+	});
+});
+</script>
 <?php
 get_footer();?>
 <script type="text/javascript">
@@ -340,5 +369,4 @@ $("#upload-image").change(function(){
 	getImageContent(this);
 });
 
-    
 </script>

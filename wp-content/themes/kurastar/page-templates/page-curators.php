@@ -2,6 +2,48 @@
 /*Template Name: Curators Page
 */
 get_header(); ?>
+<div class="mainbanner">
+  <div class="flexslider">
+    <ul class="slides">
+      <?php $row = 1; if(get_field('home_slider', 6)): ?>
+         <?php while(has_sub_field('home_slider', 6)): ?>
+          <li><img src="<?php the_sub_field('slider_image'); ?>" /></li>
+         <?php $row++; endwhile; ?>
+      <?php endif; ?>
+    </ul>
+  </div>
+  <div class="defaultWidth center searchwrap">
+    <form method="get" action="<?php echo site_url() ?>/search-results/">
+      <div class="searchwrap-inner">
+        <div class="transwrap">
+          <input id="cty" type="text" name="country" value="select country" readonly />
+        </div>
+        <div class="transwrap">
+          <input id="cat" type="text" name="category" value="select category" readonly />
+        </div>
+        <input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+        
+        <?php 
+          /*
+          * Country Dropdown
+          * @hook: dropdown_country_func
+          */
+         ?>
+         <?php echo do_shortcode( '[dropdown_country]' ) ?>
+
+
+         <?php 
+          /*
+          * Category Dropdown
+          * @hook: dropdown_category_func
+          */
+         ?>
+         <?php echo do_shortcode( '[dropdown_category]' ) ?>
+
+      </div>
+    </form>
+  </div>
+</div>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 	<div class="contentbox">
 		<div class="contentbox">
@@ -11,12 +53,6 @@ get_header(); ?>
                     bcn_display();
                 }?>
             </div>
-
-<!-- 
-            <span class="search-results">
-              Curator:
-            </span> -->
-
             <span class="search-results">
               Curator:
             </span>
@@ -82,9 +118,8 @@ get_header(); ?>
 				*/
 			 ?>
 		<?php echo do_shortcode( '[ranking_country]' ) ?>
-		?>
 	</div>	
 
 	
 </div>
-get_footer();
+<?php  get_footer(); ?>
