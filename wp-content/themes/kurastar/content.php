@@ -71,7 +71,8 @@
 	                         	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
 	                         	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
 	                         	    <input type="hidden" name="action" value="send-like">
-	                                <button type="submit" class="btn btn-default">Like(<?php echo count_total_favorites($post->ID) ?>)</button>
+	                         	    <i class="fa fa-heart"></i>
+	                                <button type="submit" class="smallpoints smallpoints-left">Likes(<?php echo count_total_favorites($post->ID) ?>)</button>
 	                            </div>
 	                        </form>
 
@@ -82,8 +83,8 @@
 
                         <?php endif; ?>	
 
-                     	<a href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">Twitter</a>
-						<a href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">Google +</a>
+                     	<a href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter">Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
+						<a href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" >Google + (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
 						
 					</span>
 

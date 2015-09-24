@@ -247,3 +247,29 @@ $fav = $wpdb->get_results(
 
      return count($fav);
 }
+
+
+function kura_twitter_count( $url ) {
+    /* build the pull URL */
+    $url = 'http://cdn.api.twitter.com/1/urls/count.json?url=' . urlencode( $url );
+  
+    /* get json */
+    $json = json_decode( file_get_contents( $url ), false );
+    if( isset( $json->count ) ) return (int) $json->count;
+  
+    return 0; // else zed
+}
+
+
+function kura_gplus_count( $url ) {
+    /* get source for custom +1 button */
+    $contents = file_get_contents( 'https://plusone.google.com/_/+1/fastbutton?url=' .  $url );
+ 
+    /* pull out count variable with regex */
+    preg_match( '/window\.__SSR = {c: ([\d]+)/', $contents, $matches );
+ 
+    /* if matched, return count, else zed */
+    if( isset( $matches[0] ) ) 
+        return (int) str_replace( 'window.__SSR = {c: ', '', $matches[0] );
+    return 0;
+}
