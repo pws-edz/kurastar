@@ -70,26 +70,6 @@ get_header(); ?>
                         <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                       <?php endif; ?>               
                     </div>
-                    <div class="desc">
-                      <h2><?php the_title(); ?></h2>
-                      <p><?php the_content(); ?></p>
-                    </div>
-                    <div class="infobelow">
-                      <i class="fa fa-heart"></i>
-                      <span class="smallpoints smallpoints-left">14,091 likes</span>
-                      <div class="profile-thumb-wrap">
-
-                          <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                    <img src="<?php echo $curator_profile ?>">
-                          <div class="curator">
-                              <span>CURATORS</span><br>
-                              <h3><?php the_author() ?></h3>
-                          </div>
-     
-
-                      </div>
-                    </div>
                   </a>
               </li>
               <?php  

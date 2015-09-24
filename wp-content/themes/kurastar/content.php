@@ -34,18 +34,6 @@
 
                 //diplay reference post data
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
-                $tab_1_text        = get_post_meta( $post->ID, '_tab_1_text', true);
-                $tab_3_desc        = get_post_meta( $post->ID, '_tab_3_desc', true);
-                $tab_3_url         = get_post_meta( $post->ID, '_tab_3_url', true);
-                $tab_4_link        = get_post_meta( $post->ID, '_tab_4_link', true);
-                $twitter_url       = get_post_meta( $post->ID, '_tab_5_twitter_url', true);
-                $youtube_url       = get_post_meta( $post->ID, '_tab_6_youtube_url', true);
-                $heading           = get_post_meta( $post->ID, '_tab_7_heading', true);
-                $tag_title         = get_post_meta( $post->ID, '_tab_7_tag_title', true);
-
-
-                $meta_id  = get_post_meta( $post->ID, '_thumbnail_id', true);
-                $meta_img = get_post_meta( $meta_id, '_wp_attached_file', true);
        
                ?>
 				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>);"></div>
@@ -71,29 +59,39 @@
 					<p><?php the_content();  ?></p>
 				</div>
 				<div class="infobelow">
+
 					<span class="smallpoints smallpoints-left">
 						<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
-						<form class="form-send-like" method="POST">
-							<p class="message"></p>
-                            <div class="form-group">
-                         	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-                         	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-                         	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-                         	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-                         	    <input type="hidden" name="action" value="send-like">
-                                <button type="submit" class="btn btn-default">Like Me (<?php echo count_total_favorites($post->ID) ?>)</button>
-                            </div>
-                        </form>
+
+							<form class="form-send-like" method="POST">
+								<p class="message"></p>
+	                            <div class="form-group">
+	                         	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+	                         	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+	                         	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+	                         	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+	                         	    <input type="hidden" name="action" value="send-like">
+	                                <button type="submit" class="btn btn-default">Like(<?php echo count_total_favorites($post->ID) ?>)</button>
+	                            </div>
+	                        </form>
+
                     	<?php else: ?>
-                    	<i class="fa fa-heart"></i>
-	                        	<span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-	                        <?php endif; ?>	
-						</span>
+
+	                    	<i class="fa fa-heart"></i>
+	                    	<span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+
+                        <?php endif; ?>	
+
+                     	<a href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">Twitter</a>
+						<a href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">Google +</a>
+						
+					</span>
+
 					<div class="profile-thumb-wrap">
 						<img src="<?php echo $curator_profile ?>">
 						<div class="curator">
 							<span>CURATOR</span><br>
-							<h3><?php the_author() ?></h3>
+							<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
 						</div>
 					</div>
 				</div>
@@ -103,51 +101,108 @@
 				<div class="clear"></div>
 			</div>
 			<div class="curator-detail-wrap article-detail-wrap">
-							<ul class="post-detail-list">
-								<li>
-									<div class="detail-title">
-										<h2 class="<?php echo $heading ?>"><?php echo $tag_title ?></h2>
-									</div>
-									<div class="detail-content">
-										<?php if($meta_img): ?>
-											<img src="<?php echo site_url() ?>/wp-content/uploads/<?php echo ($meta_img != '') ? $meta_img : '' ;  ?>" />
-										<?php else: ?>
-											<img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
-										<?php endif; ?>
-										
 
-										
-										<a class="weblink" href="<?php echo $tab_3_url ?>" target="_blank"><?php echo $tab_3_desc ?></a>
-										<p><?php echo $tab_1_text ?></p>
-										<p><a href="<?php echo $youtube_url ?>">Youtube</a></p>
-										<p><a href="<?php echo $twitter_url ?>">Twitter</a></p>
-									</div>
-								</li>
-							</ul>
-							
-							<div class="article-curator">
-								<!-- <span class="social-sample"><img src="<?php echo get_template_directory_uri(); ?>/images/social-sample.png"></span> -->
-								<a href="#" class="curator-detail-wrap" style="box-shadow:none; border:solid 1px #ee7500; margin-top:50px;">
-									<img src="<?php echo ($custom_image_link != '') ? $custom_image_link : $curator_profile ;  ?>">
-									<div class="labels labels2">
-										<span class="countrylabel"><b><?php echo count_user_posts(get_the_author_meta( 'ID' ), 'acme_article') ?></b> Articles</span>
-										<span class="catlabel"><b><?php echo count_user_favorites(get_the_author_meta( 'ID' )) ?></b> Favorites</span>
-									</div>
-									<div class="curator-info">
-										<h4><?php the_author() ?></h4>
-										<p><?php echo get_the_author_meta( 'description' ) ?></p>
-										<div class="clear"></div>
-									</div>
-									<div class="points-detail">
-										<?php echo do_shortcode( '[post_view]' ); ?><span>points</span>
-									</div>
-									<div class="clear"></div>
-								</a>
-							</div>
-							
-							<div class="clear"></div>
-							
-						</div>
+			
+					<div class="detail-title">
+						<h2 class="<?php echo $heading ?>">Yet Another Related Posts</h2>
+					</div>
+						<ul class="post-detail-list">
+					    <?php
+			             # get_wpposts();					    
+			            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+			            $param = array( 
+			                    'post_type'       => 'acme_article', 
+			                    'posts_per_page'  => 6, 
+			                    'paged'           => $paged, 
+			                    'author'          => get_the_author_meta( 'ID' ), 
+			                    'post__not_in' => array($post->ID),
+			                    'orderby'         => 'post_date',
+			                    'order'           => 'DESC');
+
+			              query_posts( $param );
+			              if ( have_posts() ) : 
+			              	while ( have_posts() ) : the_post();
+			              ?>
+			              	<li>
+							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
+			                    <?php
+			                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+			                  
+			                 	//Returns All Term Items for "my_taxonomy"
+								$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+								$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+
+								$authorID = get_the_author_meta($post->ID);
+								$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+								$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
+
+			                    ?>
+			                    <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
+			                      <div class="labels">
+
+			                      	<?php if($countries): ?>
+			                      		<?php foreach($countries as $country): ?>
+			                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+			                      		<?php endforeach; ?>
+			                      	<?php else: ?>
+			                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+			                      	<?php endif; ?>
+
+			                      	<?php if($category): ?>
+			                      		<?php foreach($category as $cat): ?>
+			                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+			                      		<?php endforeach; ?>
+			                      	<?php else: ?>
+			                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+			                      	<?php endif; ?>               
+			                      </div>
+			                      <div class="desc">
+			                        <h2><?php the_title(); ?></h2>
+			                        <p><?php the_content(); ?></p>
+			                      </div>
+			                      <div class="infobelow">
+			                        <i class="fa fa-heart"></i>
+			                        <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+			                        <div class="profile-thumb-wrap">
+
+			                      		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
+
+			              				<img src="<?php echo $curator_profile ?>">
+			                            <div class="curator">
+			                                <span>CURATORS</span><br>
+			                                <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
+			                            </div>
+			                        </div>
+			                      </div>
+				                </a>
+							</li>
+			              <?php 
+				          	endwhile;   
+				          else:?>
+				          
+				          	<li><p> No related posts yet.</p></li>
+				          
+				          <?php 
+				          endif;  
+
+							//wp pagenavi plugin for pagination   
+							if(function_exists("wp_pagenavi")):
+
+							wp_pagenavi(); 
+
+							endif;  
+
+				           wp_reset_query();
+				        ?>
+					
+				</ul>
+
+				<div class="clear"></div>
+				
+			</div>
 
 		</div>
 

@@ -55,7 +55,7 @@ get_header(); ?>
             </div>
 </div> -->
 	<div id="primary" class="content-area container">
-		<main id="main" class="site-main" role="main">adasdasdasdasdasdadsa
+		<main id="main" class="site-main" role="main">
 		<?php
 		// Start the loop.
 		while ( have_posts() ) : the_post(); echo 'adasd';

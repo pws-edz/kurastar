@@ -168,119 +168,16 @@ get_header(); ?>
 	    	</div>
     	
     		<?php wp_nonce_field( '_wp_custom_post','_wp_custom_post_nonce_field' ); ?>
+
 			<input type="hidden" name="custom_post_type" id="post-type" value="acme_article" />
 			<input type="hidden" name="action" value="save_custom_post" />
 			<input type="hidden" name="image_action" id="image-action" value=""/>
 			<input type="hidden" name="trigger_set_image" id="trigger-set-image"/>
-			<?php if($result): ?>
-  				<input type="hidden" name="featured_img" id="featured_image" value="<?php echo $result['set_image'] == '' ? '' : $result['featured_img']; ?>" />
-  			<?php else: ?>
-  				<input type="hidden" name="featured_img" id="featured_image" value=""/>
-  			<?php endif; ?>
 			
-		
-			<?php if($result): ?>
-  				<input type="hidden" name="post_id" value="<?php echo $result['set_image'] == '' ? '' : $result['post_id']; ?>" />
-  			<?php else: ?>
-  				<input type="hidden" name="post_id" value="" />
-  			<?php endif; ?>
-
-  			<!-- <a href="#" class="btn btn-default save pull-right">Publish</a> -->
-			<a href="#" class="btn btn-default save pull-right">Save</a>
+			<input type="submit" name="publish" value="Publish" class="btn btn-default pull-right">
+			<input type="submit" name="save" value="Save" class="btn btn-default pull-right">
 			
 	    </div>
-	    
-	    <?php
-			// <div class="form-content">
-			//     	<p class="text-center title">or fill up reference post below</p>
-			//     	<div class="tab-form-panel">
-			// 			<!-- Nav tabs -->
-			// 			<ul class="nav nav-tabs" role="tablist">
-			// 				<li role="presentation" class="active">
-			// 					<a href="#text" aria-controls="home" role="tab" data-toggle="tab">Text</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Picture</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#reference" aria-controls="reference" role="tab" data-toggle="tab">Reference</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#link" aria-controls="link" role="tab" data-toggle="tab">Link</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">Twitter</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#youtube" aria-controls="youtube" role="tab" data-toggle="tab">Youtube</a>
-			// 				</li>
-			// 				<li role="presentation">
-			// 					<a href="#h2-tag" aria-controls="h2-tag" role="tab" data-toggle="tab">H2 Tag</a>
-			// 				</li>
-			// 			</ul>
-
-			// 			<!-- Tab panes -->
-			// 			<div class="tab-content">
-			// 				<div role="tabpanel" class="tab-pane active" id="text">
-			// 					<textarea name="tab_1_text" placeholder="Put your text here" class="form-control texts text-height">< ? php echo isset($_POST['tab_1_text']) ? $_POST['tab_1_text'] : ''  ? > </textarea>
-			// 					<a href="#" class="btn btn-default tab_add">Add</a>
-			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="picture">
-			// 					< ? php if($result): ? > 
-			// 						<p><img src="< ? php echo $result['image_url'] ? > "></p>
-			// 					< ? php else: ? > 
-			// 						<p><img src="< ? php echo site_url() ? > /wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
-			// 					< ? php endif; ? > 
-
-			// 					<div class="fileUpload2">
-			// 					    <input type="file" class="upload" id="reference_img" name="reference_img" style="width:50%"/>
-			// 					</div>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="reference">
-			// 					<textarea name="tab_3_desc" class="form-control ref-desc text-height" name="ref-desc" placeholder="Add a description">< ? php echo isset($_POST['tab_3_desc']) ? $_POST['tab_3_desc'] : ''  ? > </textarea>
-			// 					<input name="tab_3_url" type="text" placeholder="Please put the URL of the reference" class="form-control ref-url" value="< ? php echo isset($_POST['tab_3_url']) ? $_POST['tab_3_url'] : ''  ? > ">
-			// 					<a href="#" class="btn btn-default tab_add">Add</a>
-			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="link">
-			// 					<div class="link-wrap">
-			// 						<input name="tab_4_link" type="text" class="form-control ref-url" placeholder="URL of the Link" name="< ? php echo isset($_POST['tab_4_link']) ? $_POST['tab_4_link'] : ''  ? > ">
-			// 						<a href="#" class="btn btn-default tab_add">Add</a>
-			// 						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 					</div>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="twitter">
-			// 					<input type="text" value="< ? php echo isset($_POST['tab_5_twitter_url']) ? $_POST['tab_5_twitter_url'] : ''  ? > " name="tab_5_twitter_url" class="form-control ref-url" placeholder="Put the URL of a tweet here">
-			// <!-- 					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
-			// 						<span class="glyphicon glyphicon-search"></span>Search for tweets.
-			// 					</a><br><br> -->
-			// 					<a href="#" class="btn btn-default tab_add">Add</a>
-			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="youtube">				
-			// 					<div class="vid-url-container">
-			// 						<input value="< ? php echo isset($_POST['tab_6_youtube_url']) ? $_POST['tab_6_youtube_url'] : ''  ? > " name="tab_6_youtube_url" type="text" class="ref-url form-control" placeholder="Video URL">
-			// 						<a href="#" class="btn btn-default tab_add">Add</a>
-			// 						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 					</div>
-			// 				</div>
-			// 				<div role="tabpanel" class="tab-pane" id="h2-tag">
-			// 					<select class="form-control tag-heading ref-url" name="tab_7_heading">
-			// 						<option value="normal" < ? php echo isset($_POST['tab_7_heading']) == 'normal' ? 'selected="selected"' : ''  ? > >Normal Heading</option>
-			// 						<option value="sub" < ? php echo isset($_POST['tab_7_heading']) == 'sub' ? 'selected="selected"' : ''  ? > >Subheading</option>
-			// 					</select>
-			// 					<!-- <span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span> -->
-			// 					<input value="< ? php echo isset($_POST['tab_7_tag_title']) ? $_POST['tab_7_tag_title'] : ''  ? >" name="tab_7_tag_title" type="text" class="form-control ref-url" placeholder="Tag Title">
-			// 					<hr class="tag-hr" style="border-color: rgba(237, 113, 0, 1)">
-			// 					<a href="#" class="btn btn-default tab_add">Add</a>
-			// 					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-			// 				</div>
-			// 			</div>
-			// 		</div>
-			//     </div>
-
-	    ?>
 	</form>
 </div>
 
@@ -308,48 +205,14 @@ $(document).ready(function(){
 get_footer();?>
 <script type="text/javascript">
 
-$('#upload-image').change(function(e) {
+$('#upload-image').change(function() {
 
-  // var files = e.target.files; 
-  // for (var i = 0, file; file = files[i]; i++) {
-  //   console.log(file);
-  // }
-
-  // if($('#post-title').val() == '') {
-
-  // 	  alert('Pleae fill-up required fields first before uploading a file.');
-  // 	 return false;
-
-  // } else {
+	getImageContent(this);
 
 	$('#trigger-set-image').val('1');
-
 	$('#image-action').val('upload_file');
+	$('.link_image').remove();
 
-	//$('#acme-article-post-type').submit();
-	// return true;
- //  }
-
-  
-
-});
-$('.setImage').click(function() {
-
-  $('#trigger-set-image').val('1');
-  $('#acme-article-post-type').submit();
-
-});
-
-$('.save').click(function() {
-
-  $('#trigger-set-image').val('');
-  $('#acme-article-post-type').submit();
-
-});
-
-$('.tab_add').click(function(){
-
-	$('#acme-article-post-type').submit();
 });
 
 // Changes
@@ -365,8 +228,5 @@ function getImageContent(input) {
 	}
 }
 
-$("#upload-image").change(function(){
-	getImageContent(this);
-});
 
 </script>
