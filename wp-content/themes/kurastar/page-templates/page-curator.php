@@ -92,7 +92,7 @@ $curator_profile   = get_avatar( $current_user->ID );
               query_posts( $param );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
           ?>
-            <li>
+            <li class="list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
                 $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
@@ -107,7 +107,7 @@ $curator_profile   = get_avatar( $current_user->ID );
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg postimg3" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
