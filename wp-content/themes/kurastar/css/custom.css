@@ -721,7 +721,7 @@ p {
 }
 .post-list-thumb li {
 	float:left;
-	width:50%;
+	width:33%;
 }
 
 .post-list-thumb-wrap, .curator-detail-wrap {

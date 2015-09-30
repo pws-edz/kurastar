@@ -49,6 +49,7 @@ get_header(); ?>
 		<div class="contentbox">
 			<h2 class="whatsnew">ー最新情報ー</h2>
 
+
 			<ul class="post-list-thumb">
 			<?php
 				 # get_wpposts();
