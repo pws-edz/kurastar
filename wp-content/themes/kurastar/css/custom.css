@@ -248,6 +248,12 @@ p {
 	overflow:hidden;
 	position:relative;
 }
+.subpage-banner {
+	max-height: 290px;
+}
+.subpage-searchwrap {
+	top: 105% !important;
+}
 .slides {
 	overflow:hidden;
 	/*height:450px;*/

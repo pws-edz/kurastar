@@ -1,7 +1,7 @@
 <?php 
 /* Template Name: Login */
 get_header(); ?>
-<div class="mainbanner">
+<div class="mainbanner subpage-banner">
 	<div class="flexslider">
 		<ul class="slides">
 			<?php $row = 1; if(get_field('home_slider', 6)): ?>
@@ -11,7 +11,7 @@ get_header(); ?>
 			<?php endif; ?>
 		</ul>
 	</div>
-	<div class="defaultWidth center searchwrap">
+	<div class="defaultWidth center searchwrap subpage-searchwrap">
 		<form method="get" action="<?php echo site_url() ?>/search-results/">
 			<div class="searchwrap-inner">
 				<div class="transwrap">
