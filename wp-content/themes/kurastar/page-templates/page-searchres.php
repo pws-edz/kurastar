@@ -16,6 +16,48 @@ get_header(); ?>
     $endpost = (9*$paged < $query->found_posts ? 9*$paged : $query->found_posts);
 
  ?>
+<div class="mainbanner">
+  <div class="flexslider">
+    <ul class="slides">
+      <?php $row = 1; if(get_field('home_slider', 6)): ?>
+         <?php while(has_sub_field('home_slider', 6)): ?>
+          <li><img src="<?php the_sub_field('slider_image', 6); ?>" /></li>
+         <?php $row++; endwhile; ?>
+      <?php endif; ?>
+    </ul>
+  </div>
+  <div class="defaultWidth center searchwrap">
+    <form method="get" action="<?php echo site_url() ?>/search-results/">
+      <div class="searchwrap-inner">
+        <div class="transwrap">
+          <input id="cty" type="text" name="country" value="select country" readonly />
+        </div>
+        <div class="transwrap">
+          <input id="cat" type="text" name="category" value="select category" readonly />
+        </div>
+        <input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+        
+        <?php 
+          /*
+          * Country Dropdown
+          * @hook: dropdown_country_func
+          */
+         ?>
+         <?php echo do_shortcode( '[dropdown_country]' ) ?>
+
+
+         <?php 
+          /*
+          * Category Dropdown
+          * @hook: dropdown_category_func
+          */
+         ?>
+         <?php echo do_shortcode( '[dropdown_category]' ) ?>
+
+      </div>
+    </form>
+  </div>
+</div>
 <?php if (  $query->have_posts() ) : ?>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index result-page ">
     <div class="contentbox">
@@ -28,7 +70,30 @@ get_header(); ?>
                 }?>
             </div>
             <span class="search-results">
-            フィリピン, グルメ <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
+            <?php   
+              if(isset($_GET['country'])){
+                if($_GET['country'] != 'all'){
+                  $country = $_GET['country']; 
+                }
+                if($_GET['country'] == 'select country'){
+                  $country = 'All'; 
+                }
+              }
+
+              if(isset($_GET['category'])){
+                if($_GET['category'] != 'all'){
+                  $category = $_GET['category']; 
+                }
+                if($_GET['category'] != 'select category'){
+                  $category = $_GET['category']; 
+                }else{
+                  $category = ''; 
+                }
+              }
+              echo $country.' '.$category; 
+            ?>
+            <!-- フィリピン, グルメ  -->
+            <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
 
             </span>
 

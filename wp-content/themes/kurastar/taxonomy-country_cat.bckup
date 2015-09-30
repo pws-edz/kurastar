@@ -75,7 +75,29 @@ get_header(); ?>
                 }?>
             </div>
             <span class="search-results">
-              フィリピン, グルメ result (6 items):
+            <?php   
+              if(isset($_GET['country'])){
+                if($_GET['country'] != 'all'){
+                  $country = $_GET['country']; 
+                }
+                if($_GET['country'] == 'select country'){
+                  $country = 'All'; 
+                }
+              }
+
+              if(isset($_GET['category'])){
+                if($_GET['category'] != 'all'){
+                  $category = $_GET['category']; 
+                }
+                if($_GET['category'] != 'select category'){
+                  $category = $_GET['category']; 
+                }else{
+                  $category = ''; 
+                }
+              }
+              echo $country.' '.$category; 
+            ?>
+              <!-- フィリピン, グルメ --> result <!-- (6 items): -->
             </span>
 
              <?php wp_nav_menu('header-menu'); ?>

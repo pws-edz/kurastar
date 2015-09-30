@@ -61,7 +61,12 @@ get_header(); ?>
                 }?>
             </div>
             <span class="search-results">
-              フィリピン, グルメ <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
+
+              <?php   
+                $search = explode('/', $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+                echo end($search); 
+              ?>
+              <!-- フィリピン, グルメ --> <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
             </span>
 
             <!-- Tab panes -->

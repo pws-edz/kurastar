@@ -29,13 +29,18 @@ get_header(); ?>
 			 	<?php //echo do_shortcode('[contact-form-7 id="16" title="Log in"]'); ?>
 			 	<?php echo do_shortcode( '[do_login]') ?>
 			</div>
+			<?php if ( !is_user_logged_in() ) { ?>
 			<div class="sns-login sns-desktop">
 				<div><?php //echo do_shortcode('[wordpress_social_login]'); ?></div>
 				<h2>SNS Login:</h2>
 				<ul class="list-inline">
 					<?php $row = 1; if(get_field('sns_log_in_list')): ?>
 	      				<?php while(has_sub_field('sns_log_in_list')): ?>
-							<li><?php the_sub_field('sns_social_link'); ?><?php the_sub_field('sns_social'); ?></a></li>
+							<li>
+								<?php the_sub_field('sns_social_link'); ?>
+									<?php the_sub_field('sns_social'); ?>
+								</a>
+							</li>
 						<?php $row++; endwhile; ?>
 					<?php endif; ?>
 				</ul>
@@ -47,10 +52,11 @@ get_header(); ?>
 				<ul class="list-inline">
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-					<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-					<li><a href="#"><i class="fa fa-yahoo"></i></a></li>
+					<!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+					<li><a href="#"><i class="fa fa-yahoo"></i></a></li> -->
 				</ul>
 			</div>
+			<?php } ?>
 		  </div>
 	  </div>
 </div>
