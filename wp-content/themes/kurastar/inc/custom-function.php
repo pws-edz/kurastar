@@ -145,7 +145,7 @@ function args_func($get, $paged) {
 function post_acme_article($post){
    
 
-  if($post['post_title']) {
+  //if($post['post_title']) {
 
 
     $post_data = array(
@@ -160,7 +160,7 @@ function post_acme_article($post){
       
     $post_id =  wp_insert_post( $post_data );
 
-    add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
+   // add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
 
     if(!empty($_FILES['post_featured_img']['name'])){
 
@@ -202,11 +202,12 @@ function post_acme_article($post){
 
 
    $result = array( 'status' => 'success', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
+  // }
 
-  }  else {
+  // }  else {
 
-    $result = array( 'status' => 'error', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Please fill-up the required fields.');
-  }
+  //   $result = array( 'status' => 'error', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Please fill-up the required fields.');
+  // }
     
 
   return $result; 

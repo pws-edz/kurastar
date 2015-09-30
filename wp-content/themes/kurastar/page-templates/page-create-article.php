@@ -14,6 +14,48 @@ get_header(); ?>
 
 ?>
 
+<div class="mainbanner subpage-banner">
+	<div class="flexslider">
+		<ul class="slides">
+			<?php $row = 1; if(get_field('home_slider', 6)): ?>
+				 <?php while(has_sub_field('home_slider', 6)): ?>
+				 	<li><img src="<?php the_sub_field('slider_image', 6); ?>" /></li>
+				 <?php $row++; endwhile; ?>
+			<?php endif; ?>
+		</ul>
+	</div>
+	<div class="defaultWidth center searchwrap subpage-searchwrap">
+		<form method="get" action="<?php echo site_url() ?>/search-results/">
+			<div class="searchwrap-inner">
+				<div class="transwrap">
+					<input id="cty" type="text" name="country" value="select country" readonly />
+				</div>
+				<div class="transwrap">
+					<input id="cat" type="text" name="category" value="select category" readonly />
+				</div>
+				<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+				
+				<?php 
+					/*
+					* Country Dropdown
+					* @hook: dropdown_country_func
+					*/
+				 ?>
+				 <?php echo do_shortcode( '[dropdown_country]' ) ?>
+
+
+				 <?php 
+					/*
+					* Category Dropdown
+					* @hook: dropdown_category_func
+					*/
+				 ?>
+				 <?php echo do_shortcode( '[dropdown_category]' ) ?>
+
+			</div>
+		</form>
+	</div>
+</div>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 	<div class="contentbox">
 		
@@ -65,16 +107,16 @@ get_header(); ?>
 					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
 				    <!-- <input type="file" class="upload" id="upload-image" name="post_featured_img"/> -->
 				</div>
-				<?php if( empty($_POST['image_action']) ): ?>
+				<?php //if( empty($_POST['image_action']) ): ?>
 
-					<div class="link_image">
+				<!-- 	<div class="link_image">
 						<p>or paste image link below</p>
 						<div class="fileUpload">
-						    <input type="text" class="link" name="paste_featured_img" value="<?php echo isset($_POST['paste_featured_img']) ? $_POST['paste_featured_img'] : ''  ?>"/>
+						    <input type="text" class="link" name="paste_featured_img" value="<?php //echo isset($_POST['paste_featured_img']) ? $_POST['paste_featured_img'] : ''  ?>"/>
 						</div>
-					</div>
+					</div> -->
 
-				<?php endif; ?>
+				<?php// endif; ?>
 	    	</div>
 	    	<div class="col-md-8">
 	    		<div class="form-grp">
@@ -159,7 +201,7 @@ get_header(); ?>
 	    		</div>
 	    		<div class="form-grp">
 				<!-- 	<p>details <span>(required)</span></p> -->
-					<input type="text" name="post_title" id="post-title" required="required"  placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
+					<input type="text" name="post_title" id="post-title" placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
 				</div>
 				<div class="form-grp">
 					<!-- <p>limit to 150 characters only</p> -->
@@ -211,7 +253,7 @@ $('#upload-image').change(function() {
 
 	$('#trigger-set-image').val('1');
 	$('#image-action').val('upload_file');
-	$('.link_image').remove();
+	//$('.link_image').remove();
 
 });
 

@@ -20,6 +20,26 @@
 
   <div class="entry-content">
     <?php the_content(); ?>
+
+    <?php if ( !is_user_logged_in() ): ?>
+
+      <?php $row = 1; if(get_field('sns_log_in_list')): ?>
+        <div class="sns-login sns-desktop">
+          <h2>SNS Login:</h2>
+          <ul class="list-inline">
+            <?php while(has_sub_field('sns_log_in_list')): ?>
+              <li>
+                <?php the_sub_field('sns_social_link'); ?>
+                <?php the_sub_field('sns_social'); ?>
+              </a>
+              </li>
+            <?php $row++; endwhile; ?>
+          </ul>
+        </div>
+      <?php endif; ?>
+
+    <?php endif;  ?>
+
     <?php
       wp_link_pages( array(
         'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfifteen' ) . '</span>',
