@@ -251,6 +251,10 @@ p {
 .subpage-banner {
 	max-height: 260px;
 }
+
+.subpage-banner .flexslider {
+	max-height: 260px;
+}
 .subpage-searchwrap {
 	top: 110% !important;
 }
