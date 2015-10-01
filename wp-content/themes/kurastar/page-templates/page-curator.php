@@ -89,9 +89,19 @@ $curator_profile   = get_avatar( $current_user->ID );
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites</span>
         </div>
         <div class="curator-info">
-          <h4><?php echo $user->display_name ?></h4>
-          <p><?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
-          <div class="clear"></div>
+          <form action="">
+            <span id="edit-form">
+              <h4> <?php echo $user->display_name ?> </h4>
+              <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
+            </span>
+            <?php if ( is_user_logged_in() ) : ?>
+           <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span>
+            <!-- <span id="edit" class="catlabel"><b>Edit</b> </span>
+            <span id="save" class="catlabel"><b>Save</b> </span> -->
+            <?php endif; ?>
+
+            <div class="clear"></div>
+          </form>
         </div>
         <div class="points-detail">
           <?php echo do_shortcode( '[post_view]' ); ?><span>points</span>
@@ -440,5 +450,40 @@ $curator_profile   = get_avatar( $current_user->ID );
 
 	
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+
+    $(document).on('click', "#edit", function(e) {
+      e.preventDefault();
+
+        $( "#edit-form" ).replaceWith( function() {
+            hfpur = "<h4> <input type='text' value='"+ $( "#edit-form > h4" ).text() + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;'/> </h4>";
+            p = "<p> <input type='text' value='" + $( "#edit-form > p" ).text()  + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;' /> </p>";
+
+            return hfpur + p;
+        });
+    });
+    $(document).on('click', "#save", function(e) {
+      e.preventDefault();
+      var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+      post_id = $(this).attr("data-post_id")
+      nonce = $(this).attr("data-nonce")
+
+      $.ajax({
+        url: ajaxurl,
+        data : {action: "my_ajax_callback_function", post_id : post_id, nonce: nonce},
+        success: function( data ) {
+          alert( data );
+        }
+      })
+
+      $( "input[type=text]" ).replaceWith( function() {
+          return $( this ).val();
+      });
+    });
+
+});
+</script>
 <?php 
 get_footer();?>
