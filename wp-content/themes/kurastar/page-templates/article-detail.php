@@ -22,6 +22,7 @@ get_header(); ?>
 							<div class="infobelow">
 								<span class="smallpoints smallpoints-left"><img src="images/social-sample.png" /></span>
 								<div class="profile-thumb-wrap">
+									<h4>hfdhsajhjah</h4>
 									<img src="../../localhost/template/images/profile/profile1.jpg">
 									<div class="curator">
 										<span>CURATOR</span><br>

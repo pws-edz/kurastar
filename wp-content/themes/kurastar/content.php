@@ -126,8 +126,10 @@
 
                         <?php endif; ?>	
 
-                     	<a href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter">Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
-						<a href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" >Google + (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
+            <br><br>
+
+            <a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
+						<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
 						
 					</span>
 
@@ -144,10 +146,13 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="curator-detail-wrap article-detail-wrap">
 
-			
-					<div class="detail-title">
+
+			<!-- RELATED POSTS -->
+
+			<div class="curator-detail-wrap article-detail-wrap related-posts">
+
+				<div class="detail-title">
 						<h2 class="<?php echo $heading ?>">Yet Another Related Posts</h2>
 					</div>
 						<ul class="post-detail-list">
@@ -170,58 +175,58 @@
 			              ?>
 			              	<li>
 							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
-			                    <?php
-			                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+		                    <?php
+		                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 			                  
 			                 	//Returns All Term Items for "my_taxonomy"
-								$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-								$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+												$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+												$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-								$authorID = get_the_author_meta($post->ID);
-								$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+												$authorID = get_the_author_meta($post->ID);
+												$curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-								$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+												$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
+					                ?>
 
-			                    ?>
-			                    <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
-			                      <div class="labels">
+                  <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
+                    <div class="labels">
 
-			                      	<?php if($countries): ?>
-			                      		<?php foreach($countries as $country): ?>
-			                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
-			                      		<?php endforeach; ?>
-			                      	<?php else: ?>
-			                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
-			                      	<?php endif; ?>
+                    	<?php if($countries): ?>
+                    		<?php foreach($countries as $country): ?>
+                    			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                    		<?php endforeach; ?>
+                    	<?php else: ?>
+                    		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                    	<?php endif; ?>
 
-			                      	<?php if($category): ?>
-			                      		<?php foreach($category as $cat): ?>
-			                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
-			                      		<?php endforeach; ?>
-			                      	<?php else: ?>
-			                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
-			                      	<?php endif; ?>               
-			                      </div>
-			                      <div class="desc">
-			                        <h2><?php the_title(); ?></h2>
-			                        <p><?php the_content(); ?></p>
-			                      </div>
-			                      <div class="infobelow">
-			                        <i class="fa fa-heart"></i>
-			                        <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-			                        <div class="profile-thumb-wrap">
+                    	<?php if($category): ?>
+                    		<?php foreach($category as $cat): ?>
+                    			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+                    		<?php endforeach; ?>
+                    	<?php else: ?>
+                    		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                    	<?php endif; ?>               
+                    </div>
+                    <!-- <div class="desc">
+                      <h2><?php the_title(); ?></h2>
+                      <p><?php the_content(); ?></p>
+                    </div> -->
+                    <!-- <div class="infobelow">
+                      <i class="fa fa-heart"></i>
+                      <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+                      <div class="profile-thumb-wrap">
 
-			                      		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
+                    		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-			              				<img src="<?php echo $curator_profile ?>">
-			                            <div class="curator">
-			                                <span>CURATORS</span><br>
-			                                <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-			                            </div>
-			                        </div>
-			                      </div>
-				                </a>
+            				<img src="<?php echo $curator_profile ?>">
+                          <div class="curator">
+                              <span>CURATORS</span><br>
+                              <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
+                          </div>
+                      </div>
+                    </div> -->
+                </a>
 							</li>
 			              <?php 
 				          	endwhile;   
@@ -245,8 +250,8 @@
 				</ul>
 
 				<div class="clear"></div>
-				
 			</div>
+			
 
 		</div>
 

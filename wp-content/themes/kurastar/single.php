@@ -54,11 +54,11 @@ get_header(); ?>
             </form>
             </div>
 </div> -->
-	<div id="primary" class="content-area container">
+	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 		// Start the loop.
-		while ( have_posts() ) : the_post(); echo 'adasd';
+		while ( have_posts() ) : the_post(); 
 
 			/*
 			 * Include the post format-specific template for the content. If you want to
