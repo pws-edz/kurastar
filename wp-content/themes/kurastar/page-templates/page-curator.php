@@ -89,17 +89,36 @@ $curator_profile   = get_avatar( $current_user->ID );
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites</span>
         </div>
         <div class="curator-info">
-          <form action="">
-            <span id="edit-form">
-              <h4> <?php echo $user->display_name ?> </h4>
-              <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
-            </span>
-            <?php if ( is_user_logged_in() ) : ?>
-           <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span>
-            <!-- <span id="edit" class="catlabel"><b>Edit</b> </span>
-            <span id="save" class="catlabel"><b>Save</b> </span> -->
-            <?php endif; ?>
 
+          <form method="POST" id="form-curator-info">
+            <div class="user_details">
+              <span id="edit-form">
+                <h4> <?php echo $user->display_name ?> </h4>
+                <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
+              </span>
+              <?php if ( is_user_logged_in() ) : ?>
+              <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
+              <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
+   <!--       <span id="edit" class="catlabel"><b>Edit</b> </span>
+              <span id="save" class="catlabel"><b>Save</b> </span> -->
+              <?php endif; ?>
+            </div>
+            <div style="display:none;" class="userinfo_section">
+              <div class="row">
+                <div class="form-grp form-placeholder-offset">
+                  <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
+                </div>
+              </div>
+               <div class="row">
+                <div class="form-grp form-placeholder-offset">
+                  <textarea name="user_description" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
+                </div>
+              </div>
+               <input type="hidden" name="update_user_info" value="_update_user_info">
+               <input type="hidden" name="user_id" value="<?php echo $user->ID ?>">
+               <a href="#" class="btn catlabel update_user_info"><?php _e('Save', 'wp') ?></a>
+               <a href="#" class="btn catlabel cancel_user_info"><?php _e('Cancel', 'wp') ?></a>
+            </div>
             <div class="clear"></div>
           </form>
         </div>
@@ -454,34 +473,72 @@ $curator_profile   = get_avatar( $current_user->ID );
 <script type="text/javascript">
 $(function(){
 
-    $(document).on('click', "#edit", function(e) {
-      e.preventDefault();
+  
+     $(document).on('click', ".edit", function(e) {
+         e.preventDefault();
 
-        $( "#edit-form" ).replaceWith( function() {
-            hfpur = "<h4> <input type='text' value='"+ $( "#edit-form > h4" ).text() + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;'/> </h4>";
-            p = "<p> <input type='text' value='" + $( "#edit-form > p" ).text()  + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;' /> </p>";
+         $('.user_details').hide();
+         $('.userinfo_section').show();
 
-            return hfpur + p;
-        });
-    });
-    $(document).on('click', "#save", function(e) {
-      e.preventDefault();
-      var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-      post_id = $(this).attr("data-post_id")
-      nonce = $(this).attr("data-nonce")
+     });
 
-      $.ajax({
-        url: ajaxurl,
-        data : {action: "my_ajax_callback_function", post_id : post_id, nonce: nonce},
-        success: function( data ) {
-          alert( data );
+     $(document).on('click', ".update_user_info", function() {
+
+        if (confirm("Are you sure you want to save the chages?") == true) {
+
+          $('#form-curator-info').submit();
+
+        } else {
+
+          cancellation();
+            
         }
-      })
 
-      $( "input[type=text]" ).replaceWith( function() {
-          return $( this ).val();
-      });
-    });
+     });
+
+    $(document).on('click', ".cancel_user_info", function(e) {
+         e.preventDefault();
+
+         cancellation();
+     });
+
+     
+     function cancellation() {
+
+         $('.userinfo_section').hide();
+         $('.user_details').show();
+
+     }
+
+
+    // $(document).on('click', "#edit", function(e) {
+    //   e.preventDefault();
+
+    //     $( "#edit-form" ).replaceWith( function() {
+    //         hfpur = "<h4> <input type='text' value='"+ $( "#edit-form > h4" ).text() + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;'/> </h4>";
+    //         p = "<p> <input type='text' value='" + $( "#edit-form > p" ).text()  + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;' /> </p>";
+
+    //         return hfpur + p;
+    //     });
+    // });
+    // $(document).on('click', "#save", function(e) {
+    //   e.preventDefault();
+    //   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+    //   post_id = $(this).attr("data-post_id")
+    //   nonce = $(this).attr("data-nonce")
+
+    //   $.ajax({
+    //     url: ajaxurl,
+    //     data : {action: "my_ajax_callback_function", post_id : post_id, nonce: nonce},
+    //     success: function( data ) {
+    //       alert( data );
+    //     }
+    //   })
+
+    //   $( "input[type=text]" ).replaceWith( function() {
+    //       return $( this ).val();
+    //   });
+    // });
 
 });
 </script>

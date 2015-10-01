@@ -274,3 +274,25 @@ function kura_gplus_count( $url ) {
         return (int) str_replace( 'window.__SSR = {c: ', '', $matches[0] );
     return 0;
 }
+
+
+add_action('init', 'update_user_info');
+
+function update_user_info(){
+
+  if(isset($_POST['update_user_info'])) {
+
+
+    $userdata = array(
+            'ID'            => $_POST['user_id'],
+            'user_nicename' => $_POST['full_name'],
+            'display_name' => $_POST['full_name']
+        );
+
+       $result = wp_update_user( $userdata ); //update user info of the $userdata paramter
+
+       update_user_meta( $_POST['user_id'], 'description', $_POST['user_description'] ); //update user meta description
+        
+    }
+
+}

@@ -10,6 +10,13 @@
  */
 ?>
 
+<meta name="Title" content="Creating Custom share buttons: Facebook, Twitter, Google+ " />
+<meta name="og:title" content="Creating Custom share buttons: Facebook, Twitter, Google+" />
+<meta name="description" content="Build your custom share buttons from normal images with examples on each button " />
+<meta name="og:description" content="Build your custom share buttons from normal images with examples on each button " />
+<meta name="og:image" content="http://logicum.co/wp-content/uploads/2013/01/sharetweetbuttons.jpg" />
+<link rel="image_src" href="http://logicum.co/wp-content/uploads/2013/01/sharetweetbuttons.jpg" />
+
 <div class="mainbanner subpage-banner">
     <div class="flexslider">
       <ul class="slides">
