@@ -177,7 +177,7 @@ $curator_profile   = get_avatar( $current_user->ID );
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg postimg3" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>

@@ -281,13 +281,9 @@ p {
 
 /*Articles*/
 
-.infobelow .smallpoints a {
-	padding-left: 18px;
-}
-
 .related-posts .post-detail-list > li {
 	float: left;
-	width: 33%;
+	width: 33.33333%;
 }
 
 .related-posts{
@@ -299,13 +295,9 @@ p {
 	top: -50px !important;
 }
 
-.social-media {
-	padding: 10px;
-	margin-left: 5px;
-}
-
 a.social-media.googleplus {
 	color: #dd4b39;
+	margin-left: 20px;
 }
 
 .searchwrap-inner {
@@ -2330,3 +2322,14 @@ div#picture img {
 .registration-page.loginbox {
 	width: 30%;
 }
+
+.subpage-searchwrap .dropcountry, .subpage-searchwrap .dropcategory {
+	height: 105px;
+}
+.subpage-searchwrap .mCustomScrollbar {
+	height: 101px;
+}
+
+/*.contentbox .breadcrumbs span:last-child {
+	display: none;
+}*/

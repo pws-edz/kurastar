@@ -33,7 +33,7 @@ get_header(); ?>
 				<div class="transwrap">
 					<input id="cat" type="text" name="category" value="select category" readonly />
 				</div>
-				<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+				<input type="submit" class="search-btn" value="" name="post_type" />
 				
 				<?php 
 					/*
@@ -199,12 +199,10 @@ get_header(); ?>
 					    </select>
 					</div>
 	    		</div>
-	    		<div class="form-grp">
-				<!-- 	<p>details <span>(required)</span></p> -->
+	    		<!-- <div class="form-grp">
 					<input type="text" name="post_title" id="post-title" placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
-				</div>
+				</div> -->
 				<div class="form-grp">
-					<!-- <p>limit to 150 characters only</p> -->
 					<textarea name="post_desc" class="text-height" placeholder="Description"><?php echo isset($_POST['post_desc']) ? $_POST['post_desc'] : ''  ?></textarea>
 				</div>
 	    	</div>
