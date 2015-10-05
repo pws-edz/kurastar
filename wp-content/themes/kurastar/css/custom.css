@@ -279,7 +279,8 @@ p {
   z-index: 9999;
 }
 
-//Articles
+/*Articles*/
+
 .infobelow .smallpoints a {
 	padding-left: 18px;
 }
@@ -2322,4 +2323,10 @@ div#picture img {
 
 .postimg3 {
 	height:150px !important;
+}
+
+
+/*LOGINBOX*/
+.registration-page.loginbox {
+	width: 30%;
 }
