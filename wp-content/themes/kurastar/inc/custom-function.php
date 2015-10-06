@@ -69,137 +69,98 @@ function my_get_menu_item_slug() {
 */
 function args_func($get, $paged) {
 
-	if($get['country'] == 'select country' && $get['category'] == 'select category') {
+  $get['category'] = $get['category'] == 'all' ? 'select category' : $get['category'];
 
-            $args = array('post_type' => 'acme_article','posts_per_page' => '9', 'paged' => $paged);
+  if($get['country'] == 'select country' && $get['category'] == 'select category'){
 
-         } else {
+      $args = array(
+          'post_type'      => 'acme_article',
+          'posts_per_page' => '9', 
+          'paged'          => $paged
+      );
 
-            if($get['country'] != 'select country' && $get['category'] == 'select category') {
+  }else{
 
-            	$args = array(
-                  'post_type' => 'acme_article',
-                  'tax_query' => array(
-                    'relation' => 'OR',
-                    array(
-                      'taxonomy' => 'article_country_cat',
-                      'field'    => 'name',
-                      'terms'    => $get['country'],
-                    ),
-                  ),
-                   'posts_per_page' => '9', 'paged' => $paged
-                );
+      if($get['country'] != 'select country' && $get['category'] == 'select category'){
 
+          $args = array(
+            'post_type'      => 'acme_article',
+            'posts_per_page' => '9', 
+            'paged'          => $paged,
+            'tax_query'      => array(
+                                    'relation' => 'OR',
+                                    array(
+                                        'taxonomy' => 'article_country_cat',
+                                        'field'    => 'name',
+                                        'terms'    => $get['country'],
+                                    ),
+                                )
+          );
 
+      }elseif($get['country'] == 'select country' && $get['category'] != 'select category'){
 
-            } else if ($get['country'] == 'select country' && $get['category'] != 'select category') {
+          $args = array(
+                  'post_type'      => 'acme_article',
+                  'posts_per_page' => '9', 
+                  'paged'          => $paged,
+                  'tax_query'      => array(
+                                          'relation' => 'OR',
+                                          array(
+                                              'taxonomy' => 'article_cat',
+                                              'field'    => 'name',
+                                              'terms'    =>  $get['category'],
+                                          ),
+                                      )
+          );
 
-            	$args = array(
-                  'post_type' => 'acme_article',
-                  'tax_query' => array(
-                    'relation' => 'OR',
-                    array(
-                      'taxonomy' => 'article_cat',
-                      'field'    => 'name',
-                      'terms'    =>  $get['category'],
-                    ),
-                  ),
-                   'posts_per_page' => '9', 'paged' => $paged
-                );
+      }else{
 
+          $args = array(
+              'post_type'      => 'acme_article',
+              'posts_per_page' => '9', 
+              'paged'          => $paged,
+              'tax_query'      => array(
+                                      'relation' => 'AND',
+                                      array(
+                                          'taxonomy' => 'article_country_cat',
+                                          'field'    => 'name',
+                                          'terms'    => $get['country'],
+                                      ),
+                                      array(
+                                          'taxonomy' => 'article_cat',
+                                          'field'    => 'name',
+                                          'terms'    =>  $get['category'],
+                                      ),
+                                  )
+          );
 
-            }  else {
+      }
 
-	    		$args = array(
-	                  'post_type' => 'acme_article',
-	                  'tax_query' => array(
-	                    'relation' => 'OR',
-	                    array(
-	                      'taxonomy' => 'article_country_cat',
-	                      'field'    => 'name',
-	                      'terms'    => $get['country'],
-	                    ),
-	                    array(
-	                      'taxonomy' => 'article_cat',
-	                      'field'    => 'name',
-	                      'terms'    =>  $get['category'],
-	                    ),
-	                  ),
-	                   'posts_per_page' => '9', 'paged' => $paged
-	                );
+  }
 
-            }
-               
-
-
-         }
-
-
-        return $args;
-
+  return $args;
 }
 
 
 function post_acme_article($post){
-         
-    $set = $post['trigger_set_image']; 
+   
 
-  if($post['post_title']) {
+  //if($post['post_title']) {
 
-    if( empty($post['post_id'])) {
 
-    
-        $post = array(
-            'post_title' => wp_strip_all_tags( $post['post_title'] ),
-            'post_content' => $post['post_desc'],
-            'tax_input'      => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
-            'post_status' => 'publish',            // Choose: publish, preview, future, etc.
-            'post_type' => $post['custom_post_type'],
-            'post_author' => get_current_user_id() // Use a custom post type if you want to
-        );
+    $post_data = array(
+        'post_title'    => wp_strip_all_tags( $post['post_title'] ),
+        'post_content'  => $post['post_desc'],
+        'tax_input'     => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
+        'post_status'   => $post['save'] != '' ? 'draft' : 'publish', 
+        'post_type'     => $post['custom_post_type'],
+        'post_author'   => get_current_user_id() // Use a custom post type if you want to
+    );
 
       
-      $post_id =  wp_insert_post( $post );
+    $post_id =  wp_insert_post( $post_data );
 
-      add_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] );
-      add_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] );
-      add_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] );
-      add_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] );
-
-      add_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] );
-      add_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] );
-      add_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] );
-      add_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] );
-
-    } else {
-
-      
-       // Add the content of the form to $post as an array
-      $post = array(
-        'ID' => $post['post_id'],
-        'post_title' => wp_strip_all_tags( $post['post_title'] ),
-        'post_content' => $post['post_desc'],
-        'tax_input'      => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
-        'post_status' => 'publish',            // Choose: publish, preview, future, etc.
-        'post_type' => $post['custom_post_type'],
-        'post_author' => get_current_user_id() // Use a custom post type if you want to
-      );
-
-      $post_id =  wp_update_post( $post );
-
-
-      update_post_meta( $post_id, '_tab_1_text', $post['tab_1_text'] );
-      update_post_meta( $post_id, '_tab_3_desc', $post['tab_3_desc'] );
-      update_post_meta( $post_id, '_tab_3_url', $post['tab_3_url'] );
-      update_post_meta( $post_id, '_tab_4_link', $post['tab_4_link'] );
-
-      update_post_meta( $post_id, '_tab_5_twitter_url', $post['tab_5_twitter_url'] );
-      update_post_meta( $post_id, '_tab_6_youtube_url', $post['tab_6_youtube_url'] );
-      update_post_meta( $post_id, '_tab_7_heading', $post['tab_7_heading'] );
-      update_post_meta( $post_id, '_tab_7_tag_title', $post['tab_7_tag_title'] );
-
-    }
-
+   // add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
 
     if(!empty($_FILES['post_featured_img']['name'])){
 
@@ -229,20 +190,24 @@ function post_acme_article($post){
         $attach_id = media_handle_upload( $file, $post_id );            
         set_post_thumbnail( $post_id , $attach_id);
         update_post_meta($post_id,'_thumbnail_id',$attach_id);
-       
 
       }
 
+       $image_url = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
+       
+    } else {
+      
+       $image_url = '';
     }
 
-   $image_url = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
 
-   $result = array( 'status' => 'success', 'set_image' => $set, 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
+   $result = array( 'status' => 'success', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
+  // }
 
-  }  else {
+  // }  else {
 
-    $result = array( 'status' => 'error', 'set_image' => $set, 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Please fill-up the required fields.');
-  }
+  //   $result = array( 'status' => 'error', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Please fill-up the required fields.');
+  // }
     
 
   return $result; 
@@ -251,4 +216,83 @@ function post_acme_article($post){
 
 function unset_post() {
   unset($_POST);
+}
+
+
+function count_user_favorites($user_id) {
+
+     $fav_args = array(
+                  'post_type'       => 'acme_article', 
+                  'posts_per_page'  => -1, 
+                  'meta_query'        => array(
+                    'relation'  => 'AND',
+                      array(
+                          'key' => '_user_liked',
+                          'value' => $user_id,
+                          'compare' => '='
+                      )
+                  )
+                  );
+
+     return count(query_posts($fav_args));
+}
+
+function count_total_favorites($id) {
+global $wpdb;
+
+$fav = $wpdb->get_results(
+    "SELECT DISTINCT * 
+    FROM  $wpdb->postmeta
+    WHERE $wpdb->postmeta.post_id = '$id'
+    AND $wpdb->postmeta.meta_key ='_user_liked' ");
+
+     return count($fav);
+}
+
+
+function kura_twitter_count( $url ) {
+    /* build the pull URL */
+    $url = 'http://cdn.api.twitter.com/1/urls/count.json?url=' . urlencode( $url );
+  
+    /* get json */
+    $json = json_decode( file_get_contents( $url ), false );
+    if( isset( $json->count ) ) return (int) $json->count;
+  
+    return 0; // else zed
+}
+
+
+function kura_gplus_count( $url ) {
+    /* get source for custom +1 button */
+    $contents = file_get_contents( 'https://plusone.google.com/_/+1/fastbutton?url=' .  $url );
+ 
+    /* pull out count variable with regex */
+    preg_match( '/window\.__SSR = {c: ([\d]+)/', $contents, $matches );
+ 
+    /* if matched, return count, else zed */
+    if( isset( $matches[0] ) ) 
+        return (int) str_replace( 'window.__SSR = {c: ', '', $matches[0] );
+    return 0;
+}
+
+
+add_action('init', 'update_user_info');
+
+function update_user_info(){
+
+  if(isset($_POST['update_user_info'])) {
+
+
+    $userdata = array(
+            'ID'            => $_POST['user_id'],
+            'user_nicename' => $_POST['full_name'],
+            'display_name' => $_POST['full_name']
+        );
+
+       $result = wp_update_user( $userdata ); //update user info of the $userdata paramter
+
+       update_user_meta( $_POST['user_id'], 'description', $_POST['user_description'] ); //update user meta description
+        
+    }
+
 }

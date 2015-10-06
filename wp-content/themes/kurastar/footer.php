@@ -48,6 +48,41 @@
 	<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.flexslider.js"></script>
 	<script src="<?php echo get_template_directory_uri(); ?>/js/script.js"></script>
 	<?php wp_footer(); ?>
+
+	<script type="text/javascript">
+
+	  $(document).ready(function() {
+
+	    $(".form-send-like").submit(function(){
+	        console.log('test');
+	        $.ajax({
+	            type: "POST",
+	            dataType: "json",
+	            url: ajaxurl,
+	            data: $('.form-send-like').serializeArray(),
+	            success: function(response) {
+	                console.log(response);
+
+	                if(response.success){
+
+	                    $(".message").addClass('alert alert-success').html(response.msg);
+	                }else{
+	                    $(".message").addClass('alert alert-danger').html(response.msg);
+	                }
+	            },
+	            error: function(){
+
+	                 $(".message").addClass('alert alert-danger').html('Please try again.');
+	            }
+	        });
+
+	        return false;
+	    });
+
+
+	});
+
+	</script>
 	</body>
 	<!-- Mirrored from 10.20.150.92/template/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Apr 2015 04:22:38 GMT -->
 </html>

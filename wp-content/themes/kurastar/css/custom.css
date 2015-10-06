@@ -248,6 +248,16 @@ p {
 	overflow:hidden;
 	position:relative;
 }
+.subpage-banner {
+	max-height: 260px;
+}
+
+.subpage-banner .flexslider {
+	max-height: 260px;
+}
+.subpage-searchwrap {
+	top: 110% !important;
+}
 .slides {
 	overflow:hidden;
 	/*height:450px;*/
@@ -268,6 +278,28 @@ p {
   margin-top: -200px;
   z-index: 9999;
 }
+
+/*Articles*/
+
+.related-posts .post-detail-list > li {
+	float: left;
+	width: 33.33333%;
+}
+
+.related-posts{
+	background-color: #f0f0f0 !important;
+	box-shadow: none !important;
+}
+
+.article-detail-wrap .profile-thumb-wrap .curator, .article-detail-wrap .profile-thumb-wrap img {
+	top: -50px !important;
+}
+
+a.social-media.googleplus {
+	color: #dd4b39;
+	margin-left: 20px;
+}
+
 .searchwrap-inner {
 /*	top:-350px;
 	z-index:999;*/
@@ -715,7 +747,7 @@ p {
 }
 .post-list-thumb li {
 	float:left;
-	width:33.333%;
+	width:33%;
 }
 
 .post-list-thumb-wrap, .curator-detail-wrap {
@@ -751,7 +783,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .postimg {
 	width:100%;
-	height:150px;
+	height:300px;
 	background-size:cover !important;
 }
 .curator-list-thumb .postimg {
@@ -845,7 +877,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .smallpoints {
 	font-family:Tahoma, Arial;
-	font-size:11px;
+	font-size:15px;
 	color:#c5c5c5;
 }
 .smallpoints-left-views {
@@ -1498,10 +1530,16 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	line-height:16px;
 }
 .postimg2 {
-  	width: 329px;
+  	/*width: 329px;
   	height: 307px;
   	float: left;
-  	margin-right: 15px;
+  	margin-right: 15px;*/
+
+  	  width: 380px;
+	  height: 307px;
+	  float: left;
+	  margin-right: 15px;
+	  margin-left: -58px;
 }
 
 .article-detail-wrap .curator-info h4 {
@@ -1515,7 +1553,8 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
   	float: left;
   	border-top: 1px solid rgb(221, 221, 221);
   	padding-top: 15px;
-  	width: 422px;
+  	/*width: 422px;*/
+  	width: 100%;
 }
 .article-detail-page .article-detail-wrap .infobelow {
 	border-top: 0;
@@ -2259,3 +2298,46 @@ div#picture img {
     margin: 0;
     padding: 0;
 }
+ /*login and footer*/
+#post-602 {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#post-602 .form-control {
+	height: 48px;
+}
+#post-602 input.btn.btn-default {
+    height: 45px;
+}
+
+.group2:last-child {
+	float: left !important;
+}
+
+
+
+.post-list-thumb li.list-thumb {
+	width:33.333% !important;
+}
+
+.postimg3 {
+	height:150px !important;
+}
+
+
+/*LOGINBOX*/
+.registration-page.loginbox {
+	width: 30%;
+}
+
+.subpage-searchwrap .dropcountry, .subpage-searchwrap .dropcategory {
+	height: 105px;
+}
+.subpage-searchwrap .mCustomScrollbar {
+	height: 101px;
+}
+
+/*.contentbox .breadcrumbs span:last-child {
+	display: none;
+}*/

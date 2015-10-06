@@ -1,7 +1,9 @@
 <?php 
 /*Template Name: Create Article
 */
+acf_form_head(); 
 get_header(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <?php 
 	global $wp_query;
@@ -9,8 +11,51 @@ get_header(); ?>
 	if (!is_user_logged_in()):
 		wp_redirect( '/user-registration' ); exit();
 	endif;
+
 ?>
 
+<div class="mainbanner subpage-banner">
+	<div class="flexslider">
+		<ul class="slides">
+			<?php $row = 1; if(get_field('home_slider', 6)): ?>
+				 <?php while(has_sub_field('home_slider', 6)): ?>
+				 	<li><img src="<?php the_sub_field('slider_image', 6); ?>" /></li>
+				 <?php $row++; endwhile; ?>
+			<?php endif; ?>
+		</ul>
+	</div>
+	<div class="defaultWidth center searchwrap subpage-searchwrap">
+		<form method="get" action="<?php echo site_url() ?>/search-results/">
+			<div class="searchwrap-inner">
+				<div class="transwrap">
+					<input id="cty" type="text" name="country" value="select country" readonly />
+				</div>
+				<div class="transwrap">
+					<input id="cat" type="text" name="category" value="select category" readonly />
+				</div>
+				<input type="submit" class="search-btn" value="" name="post_type" />
+				
+				<?php 
+					/*
+					* Country Dropdown
+					* @hook: dropdown_country_func
+					*/
+				 ?>
+				 <?php echo do_shortcode( '[dropdown_country]' ) ?>
+
+
+				 <?php 
+					/*
+					* Category Dropdown
+					* @hook: dropdown_category_func
+					*/
+				 ?>
+				 <?php echo do_shortcode( '[dropdown_category]' ) ?>
+
+			</div>
+		</form>
+	</div>
+</div>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
 	<div class="contentbox">
 		
@@ -41,27 +86,37 @@ get_header(); ?>
     </div>
 </div>
 <div class="container">
+
 	<form data-toggle="validator" role="form" class="createform" id="acme-article-post-type" name="acme_article_post_type" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" enctype="multipart/form-data">
+
+
 		<div class="form-content">
-	    	<p class="text-center title">fill up  custom post below</p>
+	    	<p class="text-center title"><!-- fill up  custom post below --></p>
 	    	<div class="gap-30"></div>
 	    	<div class="col-md-4">
-	    		<p>image preview</p>
+	    		<!-- <p>image preview</p> -->
 	    		<div class="img-holder">
 	    		<?php if($result && $result['image_url'] != ''): ?>
-	  				<img src="<?php echo $result['image_url'] ?>" alt="">
+	  				<img id="article_featured_image_preview" src="<?php echo $result['image_url'] ?>" alt="">
 	  			<?php else: ?>
-	  				<img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
+	  				<img id="article_featured_image_preview" src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
 	  			<?php endif; ?>
 	  			</div>
 
 	    		<div class="fileUpload">
-				    <input type="file" class="upload" id="upload-image" name="post_featured_img"/>
+					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
+				    <!-- <input type="file" class="upload" id="upload-image" name="post_featured_img"/> -->
 				</div>
-				<p>or paste image link below</p>
-				<div class="fileUpload">
-				    <input type="text" class="link"/>
-				</div>
+				<?php //if( empty($_POST['image_action']) ): ?>
+
+				<!-- 	<div class="link_image">
+						<p>or paste image link below</p>
+						<div class="fileUpload">
+						    <input type="text" class="link" name="paste_featured_img" value="<?php //echo isset($_POST['paste_featured_img']) ? $_POST['paste_featured_img'] : ''  ?>"/>
+						</div>
+					</div> -->
+
+				<?php// endif; ?>
 	    	</div>
 	    	<div class="col-md-8">
 	    		<div class="form-grp">
@@ -144,158 +199,74 @@ get_header(); ?>
 					    </select>
 					</div>
 	    		</div>
-	    		<div class="form-grp">
-					<p>details <span>(required)</span></p>
-					<input type="text" name="post_title" required="required"  placeholder="Title">
-				</div>
+	    		<!-- <div class="form-grp">
+					<input type="text" name="post_title" id="post-title" placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
+				</div> -->
 				<div class="form-grp">
-					<p>limit to 150 characters only</p>
-					<textarea name="post_desc" class="text-height" placeholder="Description"></textarea>
+					<textarea name="post_desc" class="text-height" placeholder="Description"><?php echo isset($_POST['post_desc']) ? $_POST['post_desc'] : ''  ?></textarea>
 				</div>
 	    	</div>
     	
     		<?php wp_nonce_field( '_wp_custom_post','_wp_custom_post_nonce_field' ); ?>
+
 			<input type="hidden" name="custom_post_type" id="post-type" value="acme_article" />
 			<input type="hidden" name="action" value="save_custom_post" />
+			<input type="hidden" name="image_action" id="image-action" value=""/>
 			<input type="hidden" name="trigger_set_image" id="trigger-set-image"/>
-			<?php if($result): ?>
-  				<input type="hidden" name="featured_img" id="featured_image" value="<?php echo $result['set_image'] == '' ? '' : $result['featured_img']; ?>" />
-  			<?php else: ?>
-  				<input type="hidden" name="featured_img" id="featured_image" value=""/>
-  			<?php endif; ?>
 			
-		
-			<?php if($result): ?>
-  				<input type="hidden" name="post_id" value="<?php echo $result['set_image'] == '' ? '' : $result['post_id']; ?>" />
-  			<?php else: ?>
-  				<input type="hidden" name="post_id" value="" />
-  			<?php endif; ?>
-
-  			<!-- <a href="#" class="btn btn-default save pull-right">Publish</a> -->
-			<a href="#" class="btn btn-default save pull-right">Save</a>
+			<input type="submit" name="publish" value="Publish" class="btn btn-default pull-right">
+			<input type="submit" name="save" value="Save" class="btn btn-default pull-right">
 			
 	    </div>
-	    
-	    <div class="form-content">
-    	<p class="text-center title">or fill up reference post below</p>
-    	<div class="tab-form-panel">
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active">
-					<a href="#text" aria-controls="home" role="tab" data-toggle="tab">Text</a>
-				</li>
-				<li role="presentation">
-					<a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Picture</a>
-				</li>
-				<li role="presentation">
-					<a href="#reference" aria-controls="reference" role="tab" data-toggle="tab">Reference</a>
-				</li>
-				<li role="presentation">
-					<a href="#link" aria-controls="link" role="tab" data-toggle="tab">Link</a>
-				</li>
-				<li role="presentation">
-					<a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">Twitter</a>
-				</li>
-				<li role="presentation">
-					<a href="#youtube" aria-controls="youtube" role="tab" data-toggle="tab">Youtube</a>
-				</li>
-				<li role="presentation">
-					<a href="#h2-tag" aria-controls="h2-tag" role="tab" data-toggle="tab">H2 Tag</a>
-				</li>
-			</ul>
-
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="text">
-					<textarea name="tab_1_text" placeholder="Put your text here" class="form-control texts text-height"></textarea>
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="picture">
-					<?php if($result): ?>
-						<p><img src="<?php echo $result['image_url'] ?>"></p>
-					<?php else: ?>
-						<p><img src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt=""></p>
-					<?php endif; ?>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="reference">
-					<textarea name="tab_3_desc" class="form-control ref-desc text-height" name="ref-desc" placeholder="Add a description"></textarea>
-					<input name="tab_3_url" type="text" placeholder="Please put the URL of the reference" class="form-control ref-url">
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="link">
-					<div class="link-wrap">
-						<input name="tab_4_link" type="text" class="form-control ref-url" placeholder="URL of the Link">
-						<a href="#" class="btn btn-default tab_add">Add</a>
-						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="twitter">
-					<input type="text" name="tab_5_twitter_url" class="form-control ref-url" placeholder="Put the URL of a tweet here">
-					<a href="javascript:void(0)" class="search-twitter" onclick="addclass_modal('new-tweet', 0)" data-toggle="modal" data-target="#twitterSearch">
-						<span class="glyphicon glyphicon-search"></span>Search for tweets.
-					</a><br><br>
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="youtube">				
-					<div class="vid-url-container">
-						<input name="tab_6_youtube_url" type="text" class="ref-url form-control" placeholder="Video URL">
-						<a href="#" class="btn btn-default tab_add">Add</a>
-						<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="h2-tag">
-					<select class="form-control tag-heading ref-url" name="tab_7_heading">
-						<option value="normal">Normal Heading</option>
-						<option value="sub">Subheading</option>
-					</select>
-					<!-- <span class="tag-bullet" style="color: rgba(237, 113, 0, 1);">■</span> -->
-					<input name="tab_7_tag_title" type="text" class="form-control ref-url" placeholder="Tag Title">
-					<hr class="tag-hr" style="border-color: rgba(237, 113, 0, 1)">
-					<a href="#" class="btn btn-default tab_add">Add</a>
-					<a href="#" class="btn btn-default tab_cancel">Cancel</a>
-				</div>
-			</div>
-		</div>
-    </div>
 	</form>
 </div>
 
-
+<script type="text/javascript">
+$(document).ready(function(){
+	var maxField = 10; //Input fields increment limitation
+	var addButton = $('.add_button'); //Add button selector
+	var wrapper = $('.field_wrapper'); //Input field wrapper
+	var fieldHTML = '<div><input type="text" name="title[]" value=""/><input type="file" name="image[]" value=""/><input type="text" name="body[]" value=""/><input type="text" name="reference[]" value=""/><img src="remove-icon.png"/></a></div>'; //New input field html 
+	var x = 1; //Initial field counter is 1
+	$(addButton).click(function(){ //Once add button is clicked
+		if(x < maxField){ //Check maximum number of input fields
+			x++; //Increment field counter
+			$(wrapper).append(fieldHTML); // Add field html
+		}
+	});
+	$(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+		e.preventDefault();
+		$(this).parent('div').remove(); //Remove field html
+		x--; //Decrement field counter
+	});
+});
+</script>
 <?php
 get_footer();?>
 <script type="text/javascript">
 
-$('#upload-image').change(function(e) {
-  var files = e.target.files; 
+$('#upload-image').change(function() {
 
-  for (var i = 0, file; file = files[i]; i++) {
-    console.log(file);
-  }
+	getImageContent(this);
 
-  $('#trigger-set-image').val('1');
-  $('#acme-article-post-type').submit();
+	$('#trigger-set-image').val('1');
+	$('#image-action').val('upload_file');
+	//$('.link_image').remove();
 
 });
 
-$('.setImage').click(function() {
+// Changes
+function getImageContent(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
 
-  $('#trigger-set-image').val('1');
-  $('#acme-article-post-type').submit();
+		reader.onload = function (e) {
+		$('#article_featured_image_preview').attr('src', e.target.result);
+		}
 
-});
+		reader.readAsDataURL(input.files[0]);
+	}
+}
 
-$('.save').click(function() {
 
-  $('#trigger-set-image').val('');
-  $('#acme-article-post-type').submit();
-
-});
-
-$('.tab_add').click(function(){
-
-	$('#acme-article-post-type').submit();
-});
 </script>

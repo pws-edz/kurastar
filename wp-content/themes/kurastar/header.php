@@ -42,6 +42,11 @@
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/custom.css" />
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css" />
 
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
+/* ]]> */
+</script>
 <?php wp_head(); ?>
 </head>
 	<body>
@@ -53,6 +58,11 @@
 				<div class="logo">
 					<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="株式会社 デュナレイト" title="株式会社 デュナレイト" /></a>
 				</div>
+
+				<div class="searchform">
+					<?php get_search_form();?>
+				</div>
+
 				<div class="actions">
 					<?php if (!is_user_logged_in()): ?>
 
@@ -62,13 +72,13 @@
 						
 					<?php else: ?>
 						<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
-						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 						<?php  
-							$current_user = wp_get_current_user(); 
-							$curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
+							$current_user    = wp_get_current_user(); 
+							// $curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
+							$curator_profile = get_avatar( $current_user->ID );
 						?>
-						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>"><img src="<?php echo $curator_profile ?>" /><?php echo $current_user->user_login ?></a>
-
+						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>"><?php echo $curator_profile ?><?php echo $current_user->user_login ?></a>
+						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 					<?php endif; ?>
 
 				</div>

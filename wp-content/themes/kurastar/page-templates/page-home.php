@@ -49,6 +49,7 @@ get_header(); ?>
 		<div class="contentbox">
 			<h2 class="whatsnew">ー最新情報ー</h2>
 
+
 			<ul class="post-list-thumb">
 			<?php
 				 # get_wpposts();
@@ -66,8 +67,13 @@ get_header(); ?>
 
 					$authorID = get_the_author_meta($post->ID);
 					$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+					$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
+
+
                     ?>
-                    <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+                    <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
                       <div class="labels">
 
                       	<?php if($countries): ?>
@@ -86,27 +92,8 @@ get_header(); ?>
                       		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                       	<?php endif; ?>               
                       </div>
-                      <div class="desc">
-                        <h2><?php the_title(); ?></h2>
-                        <p><?php the_content(); ?></p>
-                      </div>
-                      <div class="infobelow">
-                        <i class="fa fa-heart"></i>
-                        <span class="smallpoints smallpoints-left">14,091 likes</span>
-                        <div class="profile-thumb-wrap">
-
-                      		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-              				<img src="<?php echo $curator_profile ?>">
-                            <div class="curator">
-                                <span>CURATORS</span><br>
-                                <h3><?php the_author() ?></h3>
-                            </div>
-                        </div>
-                      </div>
 	                </a>
 				</li>
-
 			
 			<?php endwhile ;   endif;  
 
@@ -121,7 +108,7 @@ get_header(); ?>
 			</ul>
 
 		</div>
-		<!---- start sidebar ---->
+		<!-- start sidebar -->
 
 		<div class="sidebox">
 			<div class="socketlabs">
@@ -150,7 +137,7 @@ get_header(); ?>
  				*/
  			 ?>
 			<?php echo do_shortcode( '[ranking_country]' ) ?>
-			?>
+			
 		</div>	
 	</div>
 <?php get_footer(); ?>

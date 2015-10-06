@@ -221,6 +221,9 @@ class MyShortcode {
 				<div class="droplistcategory">
 					<div>
 					<ul id="menu-category-menu" class="menu">
+						<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-all">
+							<a>all</a>
+						</li>
 						
 					<?php
 					$taxonomy = '';
@@ -350,8 +353,9 @@ class MyShortcode {
 
 	        }
 
-	        $first_name 	= array_get($post, 'first_name');
-			$last_name 		=  array_get($post, 'last_name');
+	  //       $first_name 	= array_get($post, 'first_name');
+			// $last_name 		=  array_get($post, 'last_name');
+			$full_name 		= array_get($post, 'full_name');
 			$email_address 	=  array_get($post, 'email_address');
 			$password 		=  array_get($post, 'password');
 			$password2 		=  array_get($post, 'password_confirm');
@@ -367,11 +371,11 @@ class MyShortcode {
 
 				<!-- new register-form-template -->
 				<div class="row">
-					<div class="form-grp form-placeholder-offset">
+				<!-- 	<div class="form-grp form-placeholder-offset">
 						<input type="text" name="first_name" class="form-control form-control-stroked" id="first_name" placeholder="First Name" value="<?php echo $first_name ?>" required>
-					</div>
+					</div> -->
 					<div class="form-grp form-placeholder-offset">
-						<input type="text" name="last_name" class="form-control form-control-stroked" id="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" required>
+						<input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $full_name ?>" required>
 					</div>
 				</div>
 				<div class="row">
@@ -401,20 +405,21 @@ class MyShortcode {
 
 		$flash_messages = new Flash_Message();
 
-		$first_name = array_get($post, 'first_name');
-		$last_name =  array_get($post, 'last_name');
+		// $first_name = array_get($post, 'first_name');
+		// $last_name =  array_get($post, 'last_name');
+		$full_name = array_get($post, 'full_name');
 		$email_address =  array_get($post, 'email_address');
 		$password =  array_get($post, 'password');
 		$password2 =  array_get($post, 'password_confirm');
 		$username = array_get($post, 'username');
 		
 
-		if ( trim($first_name) == '' ) {
-			$flash_messages->set(__('First Name is required.', 'wp'), 'error');
-		}
+		// if ( trim($first_name) == '' ) {
+		// 	$flash_messages->set(__('First Name is required.', 'wp'), 'error');
+		// }
 
-		if ( trim($last_name) == '' ) {
-			$flash_messages->set(__('Last Name is required.', 'wp'), 'error');
+		if ( trim($full_name) == '' ) {
+			$flash_messages->set(__('Full Name is required.', 'wp'), 'error');
 		}
 
 
@@ -444,9 +449,9 @@ class MyShortcode {
 	        'user_login' 	=> $username,
 	        'user_pass'  	=> $password2,
 	        'user_email' 	=> $email_address,
-	        'first_name' 	=> $first_name,
-	        'last_name'  	=> $last_name,
-	        'user_nicename' => $first_name.' '.$last_name
+	        'first_name' 	=> '',
+	        'last_name'  	=> '',
+	        'user_nicename' => $full_name//$first_name.' '.$last_name
 	    );
 
 	    $user_id = wp_insert_user( $userdata ) ;
@@ -459,6 +464,15 @@ class MyShortcode {
     	     wp_update_user( array ('ID' => $user_id, 'role' => 'subscriber' ) ) ;
 
 	    	$flash_messages->set(__('Successfully saved the information!', 'wp'), 'updated');
+
+			// $creds = array();
+			// $creds['user_login'] = $username;
+			// $creds['user_password'] = $password2;
+			// $creds['remember'] = false;
+
+			// $user = wp_signon( $creds, false );
+
+	    	wp_redirect(home_url().'/user-login/');
 
 	    	return true;
 
@@ -527,11 +541,11 @@ class MyShortcode {
 			<?php wp_nonce_field( 'wp-custom-login' ); ?>
 			<div class="form-group">
 				<label for="username"><?php _e('Username', 'wp') ?></label>
-				<input type="text" class="form-control" name="username" id="username" value="<?php echo $username ?>" required>
+				<input type="text" class="form-control" name="username" id="username" placeholder="username" value="<?php echo $username ?>" required>
 			</div>
 			<div class="form-group">
 				<label for="password"><?php _e('Password', 'wp') ?></label>
-				<input type="password" name="password" class="form-control" id="password" value="<?php echo $password ?>" required>
+				<input type="password" name="password" class="form-control" id="password" placeholder="password" value="<?php echo $password ?>" required>
 			</div>
 			<div class="checkbox">
 				<label>
@@ -569,7 +583,8 @@ class MyShortcode {
 
 		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
 			
-	        wp_redirect(site_url().'/curator-detail/?id='.$user->ID);
+	        #wp_redirect(site_url().'/curator-detail/?id='.$user->ID);
+	        wp_redirect(home_url());
 	     	die();
 		    #return false;
 	       

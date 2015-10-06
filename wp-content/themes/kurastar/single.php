@@ -8,7 +8,7 @@
  */
 
 get_header(); ?>
-<div class="mainbanner">
+<!-- <div class="mainbanner">
             <div class="flexslider">
               <ul class="slides">
                 <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image.jpg" /></li>
@@ -53,12 +53,12 @@ get_header(); ?>
               </div>
             </form>
             </div>
-</div>
-	<div id="primary" class="content-area container">
+</div> -->
+	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		<?php
 		// Start the loop.
-		while ( have_posts() ) : the_post();
+		while ( have_posts() ) : the_post(); 
 
 			/*
 			 * Include the post format-specific template for the content. If you want to
