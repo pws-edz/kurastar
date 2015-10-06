@@ -521,8 +521,6 @@ class MyShortcode {
 		$password =  array_get($post, 'password');
 		$remember_me =  array_get($post, 'remember_me');
 		$username = array_get($post, 'username');
-
-
 		?>
 		<form method="post">
 			<?php $flash_messages->flash_messages(); ?>

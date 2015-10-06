@@ -1742,7 +1742,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 
 .user-login {
-	width: 402px;
+	width: 402px; 
 }
 
 .user-login, .sns-login {
@@ -2250,4 +2250,12 @@ div#picture img {
 .registration-page .form-grp {
     margin-right: 20px;
     margin-left: 20px;
+}
+
+.form-results span.error {
+    border-bottom: 0;
+    color: #FD0000;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
 }
