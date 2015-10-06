@@ -2,7 +2,7 @@
 /*Template Name: Curator Page
 */
 get_header(); 
-  
+
  $user_id = $_GET['id'];
 
  if(!$user_id) {
@@ -27,7 +27,7 @@ $args = array(
     );
 
 $posts = get_posts($args);
-$curator_profile   = get_avatar( $current_user->ID );
+$curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
 ?>
   <div class="mainbanner subpage-banner">
@@ -80,20 +80,27 @@ $curator_profile   = get_avatar( $current_user->ID );
               bcn_display();
           }?>
       </div>
-
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
-        <?php echo $curator_profile ?>
+        
+        
+        <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
+            <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
+        <?php }else{ ?>
+            <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
+        <?php } ?>
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites</span>
+          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
+          </span>
         </div>
         <div class="curator-info">
 
-          <form method="POST" id="form-curator-info">
+          <form method="POST" id="form-curator-info" enctype="multipart/form-data">
             <div class="user_details">
               <span id="edit-form">
-                <h4> <?php echo $user->display_name ?> </h4>
+                <h4>
+                 <?php echo $user->display_name ?> </h4>
                 <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
               <?php if ( is_user_logged_in() ) : ?>
@@ -106,6 +113,7 @@ $curator_profile   = get_avatar( $current_user->ID );
             <div style="display:none;" class="userinfo_section">
               <div class="row">
                 <div class="form-grp form-placeholder-offset">
+                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
                 </div>
               </div>
@@ -472,7 +480,22 @@ $curator_profile   = get_avatar( $current_user->ID );
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
+      function readURL(input) {
 
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#blah').attr('src', e.target.result);
+              }
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+
+      $("#imgInp").change(function(){
+          readURL(this);
+      });
   
      $(document).on('click', ".edit", function(e) {
          e.preventDefault();
@@ -509,36 +532,6 @@ $(function(){
          $('.user_details').show();
 
      }
-
-
-    // $(document).on('click', "#edit", function(e) {
-    //   e.preventDefault();
-
-    //     $( "#edit-form" ).replaceWith( function() {
-    //         hfpur = "<h4> <input type='text' value='"+ $( "#edit-form > h4" ).text() + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;'/> </h4>";
-    //         p = "<p> <input type='text' value='" + $( "#edit-form > p" ).text()  + "' style='background: #FFF; border: solid 1px #e6e6e6; border-radius: 4px; width: 94.6%; padding: 6px 2%; color: #747474; font-size: 15px; line-height: 24px; height: 50px;' /> </p>";
-
-    //         return hfpur + p;
-    //     });
-    // });
-    // $(document).on('click', "#save", function(e) {
-    //   e.preventDefault();
-    //   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-    //   post_id = $(this).attr("data-post_id")
-    //   nonce = $(this).attr("data-nonce")
-
-    //   $.ajax({
-    //     url: ajaxurl,
-    //     data : {action: "my_ajax_callback_function", post_id : post_id, nonce: nonce},
-    //     success: function( data ) {
-    //       alert( data );
-    //     }
-    //   })
-
-    //   $( "input[type=text]" ).replaceWith( function() {
-    //       return $( this ).val();
-    //   });
-    // });
 
 });
 </script>
