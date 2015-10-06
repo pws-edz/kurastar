@@ -782,9 +782,11 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-bottom:15px;
 }
 .postimg {
-	width:100%;
-	height:300px;
-	background-size:cover !important;
+    width: 100%;
+    height: 200px;
+    background-size: cover!important;
+    background-position: center!important;
+    background-repeat: no-repeat!important;
 }
 .curator-list-thumb .postimg {
 	height: 115px;
