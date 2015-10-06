@@ -204,7 +204,6 @@ function post_acme_article($post){
        $image_url = '';
     }
 
-
    $result = array( 'status' => 'success', 'post_id' => $post_id, 'image_url' => $image_url, 'featured_img' => $image_url, 'msg' => 'Post Save.');
   // }
 
@@ -303,7 +302,7 @@ function update_user_info(){
             $profile_url = null;
         }
 
-        if(get_the_author_meta( 'profile_url', $_POST['user_id'] )){
+        if(get_the_author_meta( 'profile_url', $_POST['user_id'] ) != NULL){
           update_user_meta( $_POST['user_id'], 'profile_url', $profile_url ); 
         }else{
           add_user_meta( $_POST['user_id'], 'profile_url', $profile_url);

@@ -256,17 +256,17 @@ $('#upload-image').change(function() {
 });
 
 // Changes
-function getImageContent(input) {
-	if (input.files && input.files[0]) {
-		var reader = new FileReader();
+// function getImageContent(input) {
+// 	if (input.files && input.files[0]) {
+// 		var reader = new FileReader();
 
-		reader.onload = function (e) {
-		$('#article_featured_image_preview').attr('src', e.target.result);
-		}
+// 		reader.onload = function (e) {
+// 		$('#article_featured_image_preview').attr('src', e.target.result);
+// 		}
 
-		reader.readAsDataURL(input.files[0]);
-	}
-}
+// 		reader.readAsDataURL(input.files[0]);
+// 	}
+// }
 
 
 </script>

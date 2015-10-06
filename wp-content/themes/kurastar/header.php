@@ -76,8 +76,18 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 							$current_user    = wp_get_current_user(); 
 							// $curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
 							$curator_profile = get_avatar( $current_user->ID );
+						
 						?>
-						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>"><?php echo $curator_profile ?><?php echo $current_user->user_login ?></a>
+
+						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
+
+						<?php if(get_the_author_meta( 'profile_url', $current_user->ID )){ ?>
+						<img src="<?php echo get_the_author_meta( 'profile_url', $current_user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
+						<?php }else{ ?>
+						<img src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
+						<?php } ?>
+
+						<?php echo $current_user->user_login ?></a>
 						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 					<?php endif; ?>
 

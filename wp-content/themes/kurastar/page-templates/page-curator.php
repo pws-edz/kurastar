@@ -29,7 +29,9 @@ $args = array(
 $posts = get_posts($args);
 $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
+
 ?>
+
   <div class="mainbanner subpage-banner">
     <div class="flexslider">
       <ul class="slides">
@@ -113,7 +115,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <div style="display:none;" class="userinfo_section">
               <div class="row">
                 <div class="form-grp form-placeholder-offset">
-                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked">
+                  <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: none; ">
+                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
                 </div>
               </div>
@@ -480,6 +483,19 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
+
+
+
+      $(document).on('mouseenter', "#blah", function(e) {
+        $( "#image-button" ).show();
+      }).on('mouseleave', "#blah", function(e) {    
+        $('#image-button').fadeOut('slow');
+      });
+
+      $(document).on('click', "#image-button", function(e) {
+        $('#imgInp').trigger('click');
+      });
+
       function readURL(input) {
 
           if (input.files && input.files[0]) {
@@ -493,7 +509,8 @@ $(function(){
           }
       }
 
-      $("#imgInp").change(function(){
+      // $("#imgInp").change(function(){
+      $(document).on('change', "#imgInp", function(e) {
           readURL(this);
       });
   
