@@ -90,7 +90,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
         <div class="img-round">
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-           <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
+              <img id="blah" src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
           <?php }else{ ?>
               <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
           <?php } ?>
@@ -105,29 +105,19 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
             </span>
           </div>
-
-        
-        
         <div class="curator-info">
 
           <form method="POST" id="form-curator-info" enctype="multipart/form-data">
             <div class="user_details">
               <span id="edit-form">
-
-                <!-- HERE -->
-
                 <h4>
                  <?php echo $user->display_name ?> </h4>
                 <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
-
-              <!-- HERE -->
-              
               <?php if ( is_user_logged_in() ) : ?>
               <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
               <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
-   <!--       <span id="edit" class="catlabel"><b>Edit</b> </span>
-              <span id="save" class="catlabel"><b>Save</b> </span> -->
+              <!-- <span id="edit" class="catlabel"><b>Edit</b> </span> <span id="save" class="catlabel"><b>Save</b> </span> -->
               <?php endif; ?>
             </div>
             <div style="display:none;" class="userinfo_section">
@@ -500,14 +490,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 <script type="text/javascript">
 $(function(){
 
-
-
-      $(document).on('mouseenter', "#blah", function(e) {
-        $( "#image-button" ).show();
-      }).on('mouseleave', "#blah", function(e) {    
-        $('#image-button').hide();
-      });
-
       $(document).on('click', "#image-button", function(e) {
         $('#imgInp').trigger('click');
       });
@@ -535,6 +517,7 @@ $(function(){
 
          $('.user_details').hide();
          $('.userinfo_section').show();
+         $('#imgInp').show();
 
      });
 

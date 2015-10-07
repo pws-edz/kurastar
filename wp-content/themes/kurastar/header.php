@@ -84,7 +84,7 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 						<?php if(get_the_author_meta( 'profile_url', $current_user->ID )){ ?>
 						<img src="<?php echo get_the_author_meta( 'profile_url', $current_user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
 						<?php }else{ ?>
-						<img src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
+						<?php echo $curator_profile; ?>
 						<?php } ?>
 
 						<?php echo $current_user->user_login ?></a>
