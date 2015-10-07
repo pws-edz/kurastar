@@ -306,11 +306,11 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                     <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                   <?php endif; ?>               
                 </div>
-                <div class="desc">
+               <!--  <div class="desc">
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
+                </div> -->
+                <!-- <div class="infobelow">
                   <i class="fa fa-heart"></i>
                   <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
                   <div class="profile-thumb-wrap">
@@ -322,10 +322,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
                       </div>
-
-
                   </div>
-                </div>
+                </div> -->
               </a>
             </li>
               <?php
@@ -402,11 +400,11 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                     <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                   <?php endif; ?>               
                 </div>
-                <div class="desc">
+                <!-- <div class="desc">
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
+                </div> -->
+                <!-- <div class="infobelow">
                   <i class="fa fa-heart"></i>
                   <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
                   <div class="profile-thumb-wrap">
@@ -418,10 +416,9 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
                       </div>
-
-
                   </div>
-                </div>
+                </div> -->
+                
               </a>
             </li>
 
