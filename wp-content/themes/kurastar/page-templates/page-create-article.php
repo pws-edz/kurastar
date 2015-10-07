@@ -80,6 +80,18 @@ get_header(); ?>
 	    		  	<?php echo $result['msg']; ?>	
 	    		  </span>
     		    <?php endif; ?>
+
+    		    	<!-- HERE -->
+	    		<div class="result-post alert result-post post-success" role="alert">
+				  <span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
+				  Post Saved
+				</div>
+	    		<div class="result-post alert alert-danger result-post" role="alert">
+				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="false"></span>
+				  Please Fill in the required fields.
+				</div>
+
+				
     		</div>
     	</div>
 

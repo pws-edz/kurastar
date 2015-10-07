@@ -85,26 +85,38 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
         
-        
+
+        <!-- HERE -->
         <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-            <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php }else{ ?>
-            <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php } ?>
-        <div class="labels labels2">
-          <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
-          </span>
-        </div>
+           <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
+          <?php }else{ ?>
+              <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
+          <?php } ?>
+          <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: none; ">
+
+          <div class="labels labels2">
+            <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
+            <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
+            </span>
+          </div>
+
+        
+        
         <div class="curator-info">
 
           <form method="POST" id="form-curator-info" enctype="multipart/form-data">
             <div class="user_details">
               <span id="edit-form">
+
+                <!-- HERE -->
+
                 <h4>
                  <?php echo $user->display_name ?> </h4>
                 <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
+
+              <!-- HERE -->
+              
               <?php if ( is_user_logged_in() ) : ?>
               <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
               <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
@@ -115,7 +127,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <div style="display:none;" class="userinfo_section">
               <div class="row">
                 <div class="form-grp form-placeholder-offset">
-                  <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: none; ">
+                  
                   <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
                 </div>
@@ -486,7 +498,7 @@ $(function(){
       $(document).on('mouseenter', "#blah", function(e) {
         $( "#image-button" ).show();
       }).on('mouseleave', "#blah", function(e) {    
-        $('#image-button').fadeOut('slow');
+        $('#image-button').hide();
       });
 
       $(document).on('click', "#image-button", function(e) {

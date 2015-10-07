@@ -553,6 +553,7 @@ a.social-media.googleplus {
   color: #7f7f7f;
   padding-bottom: 12px;
 }
+
 .result-page .menu {
 	font-size: 14px;
     overflow: hidden;
@@ -2302,7 +2303,9 @@ div#picture img {
     font-size: 15px;
     margin: 0;
     padding: 0;
+
 }
+
  /*login and footer*/
 #post-602 {
     width: 50%;
@@ -2346,3 +2349,27 @@ div#picture img {
 /*.contentbox .breadcrumbs span:last-child {
 	display: none;
 }*/
+
+
+.result-post {
+	font-size: 22px;
+	font-family: 'HiraKakuPro-W3-AlphaNum';
+	padding: 20px;
+	display: block;
+}
+
+.info-success {
+	margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.post-success {
+	color: #5cb85c;
+    background-color: rgba(92, 184, 92, 0.16);
+    border-color: #5cb85c;
+}
+
+.post-error {
+
+}
