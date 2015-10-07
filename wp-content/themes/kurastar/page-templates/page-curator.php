@@ -75,7 +75,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
     </div>
   </div>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
-	<div class="contentbox">
+  <div class="contentbox">
       <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
           <?php if(function_exists('bcn_display'))
           {
@@ -87,13 +87,19 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
         
 
         <!-- HERE -->
-        <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
+
+        <div class="img-round">
+          <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
            <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
           <?php }else{ ?>
               <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
           <?php } ?>
-          <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: none; ">
 
+          <span class="icon-cam-holder">
+            <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
+          </span>
+
+        </div>
           <div class="labels labels2">
             <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
             <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
@@ -454,42 +460,43 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
       </div>
     </div>
 
-	</div>
+  </div>
 
 
-	<div class="sidebox">
-		<div class="socketlabs">
-			<a href="#">
-				<img src="<?php echo get_template_directory_uri(); ?>/images/socketlabs.jpg" alt="">
-			</a>
-		</div>
+  <div class="sidebox">
+    <div class="socketlabs">
+      <a href="#">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/socketlabs.jpg" alt="">
+      </a>
+    </div>
 
-		<a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
-		<?php echo do_shortcode( '[most_view]' ); ?> 
-		<div class="sideboxcontent ad300">
-			<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
-		</div>
-		
-			<?php 
-				/*
-				* Ranking article sidebar
-				*  @hook: ranking_article_func
-				*/
-			 ?>
-		<?php echo do_shortcode( '[ranking_article]' ) ?>
-		<?php 
-				/*
-				* Ranking country sidebar
-				*  @hook: ranking_country_func
-				*/
-			 ?>
-		<?php echo do_shortcode( '[ranking_country]' ) ?>
-		?>
-	</div>	
+    <a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
+    <?php echo do_shortcode( '[most_view]' ); ?> 
+    <div class="sideboxcontent ad300">
+      <img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
+    </div>
+    
+      <?php 
+        /*
+        * Ranking article sidebar
+        *  @hook: ranking_article_func
+        */
+       ?>
+    <?php echo do_shortcode( '[ranking_article]' ) ?>
+    <?php 
+        /*
+        * Ranking country sidebar
+        *  @hook: ranking_country_func
+        */
+       ?>
+    <?php echo do_shortcode( '[ranking_country]' ) ?>
+    ?>
+  </div>  
 
-	
+  
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(function(){
 
@@ -561,5 +568,6 @@ $(function(){
 
 });
 </script>
+
 <?php 
 get_footer();?>
