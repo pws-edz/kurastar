@@ -86,12 +86,12 @@ get_header(); ?>
 				  <span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
 				  Post Saved
 				</div>
-	    		<div class="result-post alert alert-danger result-post" role="alert">
+	    		<div class="result-post alert alert-danger" role="alert">
 				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="false"></span>
-				  Please Fill in the required fields.
+				  Please Fill in the Required Fields.
 				</div>
 
-				
+
     		</div>
     	</div>
 
