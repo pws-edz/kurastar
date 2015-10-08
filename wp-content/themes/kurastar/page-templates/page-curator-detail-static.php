@@ -34,8 +34,8 @@ get_header();
 			<div class="pointer2-curactor"></div>
 			<img src="http://kurastar.dev/wp-content/uploads/2015/09/profile1.jpg"/>
 			<div class="labels labels2">
-				<span class="countrylabel"><b>8</b>Articles</span>
-				<span class="catlabel"><b>3</b> Favorites</span>
+				<a href="#" class="countrylabel"><b>8</b>Articles</a>
+				<a href="#" class="catlabel"><b>3</b> Favorites</a>
 			</div>
 			<div class="curator-info info-custom">
 				<h4>Misaki Kimura</h4>
@@ -66,8 +66,8 @@ get_header();
 							<a href class="post-list-thumb-wrap">
 								<div class="postimg" style="background-image:url('http://kurastar.dev/wp-content/uploads/2015/07/img1.jpg');"></div>
 								<div class="labels">
-									<span class="countrylabel"><i class="fa fa-map-marker"></i> Philippines</span>
-									<span class="catlabel"><i class="fa fa-hotel"></i> Hotel</span>
+									<a href="#" class="countrylabel"><i class="fa fa-map-marker"></i> Philippines</a>
+									<a href="#" class="catlabel"><i class="fa fa-hotel"></i> Hotel</a>
 								</div>
 								<div class="desc">
 									<h2>Amora Hotel Jamison and Restaurant</h2>

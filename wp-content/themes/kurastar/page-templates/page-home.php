@@ -74,25 +74,25 @@ get_header(); ?>
 
                     ?>
                     <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
-                      <div class="labels">
+	                </a>
+	                <div class="labels">
 
                       	<?php if($countries): ?>
                       		<?php foreach($countries as $country): ?>
-                      			<span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                      			<a href="#" class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></a>
                       		<?php endforeach; ?>
                       	<?php else: ?>
-                      		<span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                      		<a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
                       	<?php endif; ?>
 
                       	<?php if($category): ?>
                       		<?php foreach($category as $cat): ?>
-                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+                      			<a href="#" class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </a>
                       		<?php endforeach; ?>
                       	<?php else: ?>
-                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                      		<a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
                       	<?php endif; ?>               
                       </div>
-	                </a>
 				</li>
 			
 			<?php endwhile ;   endif;  
