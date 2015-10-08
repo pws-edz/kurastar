@@ -68,18 +68,24 @@ get_header(); ?>
             </div>
 
 	    	<div class="form-results">
-		    	<?php $result =  ''; ?>	
-	    		<?php 
-	    		  if(!empty( $_POST['action'] )):
-	    			//this will save the data in the 'acme_article' custom post type.
-					$result =  post_acme_article($_POST);
-	    		  endif;
-	    		?>
-		  	    <?php if($result): ?>
-	    		  <span class="search-results <?php echo $result['status'] ?>">
-	    		  	<?php echo $result['msg']; ?>	
-	    		  </span>
-    		    <?php endif; ?>
+			<?php $result = false; ?>	
+			<?php if(!empty( $_POST['action'] )): $result = post_acme_article($_POST); endif; ?>
+			<?php if($result): ?>
+
+					<?php $image_url = wp_get_attachment_url( get_post_thumbnail_id($result['post_id']) ); ?>
+					<?php if($result['status'] == 'success'): ?>
+						<div class="result-post alert result-post post-success" role="alert">
+							<span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
+							<?php echo $result['msg'];  ?>	
+						</div>
+					<?php else: ?>
+						<div class="result-post alert alert-danger" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="false"></span>
+							<?php echo $result['msg'];  ?>	
+						</div>
+					<?php endif; ?>
+
+			<?php endif; ?>
     		</div>
     	</div>
 
@@ -96,8 +102,8 @@ get_header(); ?>
 	    	<div class="col-md-4">
 	    		<!-- <p>image preview</p> -->
 	    		<div class="img-holder">
-	    		<?php if($result && $result['image_url'] != ''): ?>
-	  				<img id="article_featured_image_preview" src="<?php echo $result['image_url'] ?>" alt="">
+	    		<?php if(isset($image_url)): ?>
+	  				<img id="article_featured_image_preview" src="<?php echo $image_url; ?>" alt="">
 	  			<?php else: ?>
 	  				<img id="article_featured_image_preview" src="<?php echo site_url() ?>/wp-content/themes/kurastar/images/blank-img.png" alt="">
 	  			<?php endif; ?>
@@ -202,6 +208,9 @@ get_header(); ?>
 	    		<!-- <div class="form-grp">
 					<input type="text" name="post_title" id="post-title" placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
 				</div> -->
+	    		<div class="form-grp" style="display:none;" >
+					<input type="text" name="post_id" id="post-id" placeholder="Post ID" value="<?php echo isset($result['post_id']) ? $result['post_id'] : ''  ?>">
+				</div>
 				<div class="form-grp">
 					<textarea name="post_desc" class="text-height" placeholder="Description"><?php echo isset($_POST['post_desc']) ? $_POST['post_desc'] : ''  ?></textarea>
 				</div>
@@ -256,17 +265,21 @@ $('#upload-image').change(function() {
 });
 
 // Changes
-// function getImageContent(input) {
-// 	if (input.files && input.files[0]) {
-// 		var reader = new FileReader();
+function readURL(input) {
 
-// 		reader.onload = function (e) {
-// 		$('#article_featured_image_preview').attr('src', e.target.result);
-// 		}
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
 
-// 		reader.readAsDataURL(input.files[0]);
-// 	}
-// }
+      reader.onload = function (e) {
+          $('#article_featured_image_preview').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+$(document).on('change', "#upload-image", function(e) {
+  readURL(this);
+});
 
 
 </script>

@@ -133,25 +133,30 @@ get_header(); ?>
 
                               ?>
                               <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
-                                <div class="labels">
-
-                                  <?php if($countries): ?>
-                                    <?php foreach($countries as $country): ?>
-                                      <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
-                                    <?php endforeach; ?>
-                                  <?php else: ?>
-                                    <span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
-                                  <?php endif; ?>
-
-                                  <?php if($category): ?>
-                                    <?php foreach($category as $cat): ?>
-                                      <span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
-                                    <?php endforeach; ?>
-                                  <?php else: ?>
-                                    <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
-                                  <?php endif; ?>               
-                                </div>
                               </a>
+                              <div class="labels">
+                                <?php if($countries): ?>
+                                  <?php foreach($countries as $country): ?>
+                                    <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
+                                      <i class="fa fa-map-marker"></i> 
+                                      <?php echo $country; ?>
+                                    </a>
+                                  <?php endforeach; ?>
+                                <?php else: ?>
+                                  <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
+                                <?php endif; ?>
+
+                                <?php if($category): ?>
+                                  <?php foreach($category as $cat): ?>
+                                    <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
+                                      <i class="fa fa-hotel"></i> 
+                                      <?php echo $cat; //観光 ?> 
+                                    </a>
+                                  <?php endforeach; ?>
+                                <?php else: ?>
+                                  <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+                                <?php endif; ?>               
+                              </div>
                 </li>
                  <?php  endwhile;?>
 
