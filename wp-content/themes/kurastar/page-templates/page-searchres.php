@@ -122,7 +122,10 @@ get_header(); ?>
                         
                       <?php if($countries): ?>
                         <?php foreach($countries as $country): ?>
-                          <a href="#" class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></a>
+                          <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
+                            <i class="fa fa-map-marker"></i> 
+                            <?php echo $country; //フィリピン ?>
+                          </a>
                         <?php endforeach; ?>
                       <?php else: ?>
                         <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
@@ -130,7 +133,10 @@ get_header(); ?>
 
                       <?php if($category): ?>
                         <?php foreach($category as $cat): ?>
-                          <a href="#" class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </a>
+                          <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
+                            <i class="fa fa-hotel"></i> 
+                            <?php echo $cat; //観光 ?>
+                          </a>
                         <?php endforeach; ?>
                       <?php else: ?>
                         <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
