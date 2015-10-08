@@ -85,12 +85,33 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
         
+          <?php  
+                $curator_profile = get_avatar( $user->ID );
+
+                $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
+                $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
         
-        <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-            <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php }else{ ?>
-            <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php } ?>
+
+               if($fb_user_access_token != '') {
+
+                $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+
+               } else {
+
+                if(get_the_author_meta( 'profile_url', $user->ID )) {
+
+                  $profile =  get_the_author_meta( 'profile_url', $user->ID );
+
+                } else {
+
+                  $profile = $curator_profile;
+                }
+                
+               }
+            
+            ?>
+
+         <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
@@ -284,6 +305,28 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $authorID          = get_the_author_meta($post->ID);
                 // $curator_profile   = get_cupp_meta($authorID, 'thumbnail');
                 $curator_profile   = get_avatar( $authorID );
+
+               //  $fb_user_access_token =  get_user_meta( $authorID, 'fb_user_access_token', true ); 
+               //  $fb_profile_picture =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+        
+
+               // if($fb_user_access_token != '') {
+
+               //  $profile =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+
+               // } else {
+
+               //    if( get_cupp_meta($authorID, 'thumbnail') ) {
+
+               //       $profile = get_cupp_meta($authorID, 'thumbnail');
+
+               //    } else {
+               //       $profile = $curator_profile;
+               //    }
+                 
+             
+               // }
+
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
@@ -306,7 +349,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                     <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                   <?php endif; ?>               
                 </div>
-                <div class="desc">
+              <!--   <div class="desc">
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
                 </div>
@@ -317,7 +360,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                      <?php echo $curator_profile ?>
+                      <?php echo $profile ?>
                       <div class="curator">
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
@@ -325,7 +368,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
 
                   </div>
-                </div>
+                </div> -->
               </a>
             </li>
               <?php
@@ -380,6 +423,28 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
+               //   $fb_user_access_token =  get_user_meta( $authorID, 'fb_user_access_token', true ); 
+               //  $fb_profile_picture =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+        
+
+               // if($fb_user_access_token != '') {
+
+               //  $profile =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+
+               // } else {
+
+               //    if( get_cupp_meta($authorID, 'thumbnail') ) {
+
+               //       $profile = get_cupp_meta($authorID, 'thumbnail');
+
+               //    } else {
+               //       $profile = $curator_profile;
+               //    }
+                 
+             
+               // }
+               
+
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
@@ -402,7 +467,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                     <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
                   <?php endif; ?>               
                 </div>
-                <div class="desc">
+<!--                 <div class="desc">
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
                 </div>
@@ -413,7 +478,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                      <img src="<?php echo $curator_profile ?>">
+                      <img src="<?php echo $profile ?>">
                       <div class="curator">
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
@@ -421,7 +486,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
 
                   </div>
-                </div>
+                </div> -->
               </a>
             </li>
 

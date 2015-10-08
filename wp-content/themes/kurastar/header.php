@@ -76,17 +76,32 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 							$current_user    = wp_get_current_user(); 
 							// $curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
 							$curator_profile = get_avatar( $current_user->ID );
+
+						      $fb_user_access_token =  get_user_meta( $current_user->ID, 'fb_user_access_token', true ); 
+						      $fb_profile_picture =  get_user_meta( $current_user->ID, 'fb_profile_picture', true ); 
+					
+
+							 if($fb_user_access_token != '') {
+
+							 	$profile =  get_user_meta( $current_user->ID, 'fb_profile_picture', true ); 
+
+							 } else {
+
+							 	if(get_the_author_meta( 'profile_url', $current_user->ID )) {
+
+						 			$profile =  get_the_author_meta( 'profile_url', $current_user->ID );
+
+							 	} else {
+
+							 		$profile = $curator_profile;
+							 	}
+							 	
+							 }
 						
 						?>
 
 						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
-
-						<?php if(get_the_author_meta( 'profile_url', $current_user->ID )){ ?>
-						<img src="<?php echo get_the_author_meta( 'profile_url', $current_user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
-						<?php }else{ ?>
-						<img src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-						<?php } ?>
-
+						<img src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
 						<?php echo $current_user->user_login ?></a>
 						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 					<?php endif; ?>

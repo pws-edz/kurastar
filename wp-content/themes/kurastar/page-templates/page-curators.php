@@ -66,7 +66,29 @@ get_header(); ?>
               $users = get_users( 'orderby=nicename&post_per_page=2' );   
            		// Start the Loop.
            		foreach($users as $user):
-           			$curator_profile = get_cupp_meta($user->ID, 'thumbnail');
+                
+                $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
+                $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+        
+
+               if($fb_user_access_token != '') {
+
+                $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+
+               } else {
+
+                if(get_cupp_meta($user->ID, 'thumbnail')) {
+
+                  $profile =  get_cupp_meta($user->ID, 'thumbnail');
+
+                } else {
+
+                  $profile = $curator_profile;
+                }
+                
+               }
+            
+           		//	$curator_profile = get_cupp_meta($user->ID, 'thumbnail');
            			$post_count = count_user_posts($user->ID, 'acme_article');
            		?>
                 <li>
@@ -75,7 +97,7 @@ get_header(); ?>
                     <?php
                       $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
                     ?>
-                    <div class="postimg user-<?php echo $user->ID ?>" style="background: url(<?php echo $curator_profile; ?> )"></div>
+                    <div class="postimg user-<?php echo $user->ID ?>" style="background: url(<?php echo $profile; ?> )"></div>
                       <div class="curator-info">
                         <h4><?php echo $user->display_name; ?></h4>
                         <p><?php echo get_user_meta($user->ID, 'description', true); ?></p>

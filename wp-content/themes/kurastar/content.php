@@ -73,7 +73,21 @@
                 $countries = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
                 $authorID        = get_the_author_meta($post->ID);
-                $curator_profile = get_cupp_meta($authorID, 'thumbnail');
+ 
+                $fb_user_access_token =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_user_access_token', true ); 
+                $fb_profile_picture =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+        
+
+               if($fb_user_access_token != '') {
+
+                $profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+
+               } else {
+
+                  $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
+             
+               }
+
 
                 //diplay reference post data
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
@@ -134,7 +148,7 @@
 					</span>
 
 					<div class="profile-thumb-wrap">
-						<img src="<?php echo $curator_profile ?>">
+						<img src="<?php echo $profile ?>">
 						<div class="curator">
 							<span>CURATOR</span><br>
 							<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
