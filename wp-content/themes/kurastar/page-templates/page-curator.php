@@ -84,13 +84,34 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
       </div>
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
+        <?php 
+
+            $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
+            $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+    
+
+
+           if($fb_user_access_token != '') {
+
+                $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+
+               } else {
+
+                if(get_the_author_meta( 'profile_url', $user->ID )) {
+
+                  $profile =  get_the_author_meta( 'profile_url', $user->ID );
+
+                } else {
+
+                  $profile = $curator_profile;
+                }
+                
+               }
+            
+
+         ?>
         
-        
-        <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-            <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php }else{ ?>
-            <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <?php } ?>
+         <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
