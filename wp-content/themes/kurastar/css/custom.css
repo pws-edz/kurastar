@@ -2422,3 +2422,14 @@ div#picture img {
 	opacity: 0.5;
 	filter: alpha(opacity=50);
 }
+
+.input-user {
+	margin-top: -35px;
+	margin-left: 25px;
+	margin-right: 5px;
+}
+
+.desc-user {
+	margin-left: 25px; 
+	margin-right: 5px;
+}

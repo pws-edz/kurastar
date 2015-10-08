@@ -122,14 +122,14 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             </div>
             <div style="display:none;" class="userinfo_section">
               <div class="row">
-                <div class="form-grp form-placeholder-offset">
+                <div class="form-grp form-placeholder-offset input-user">
                   
-                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
+                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility:hidden">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
                 </div>
               </div>
                <div class="row">
-                <div class="form-grp form-placeholder-offset">
+                <div class="form-grp form-placeholder-offset desc-user">
                   <textarea name="user_description" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
                 </div>
               </div>
