@@ -1525,9 +1525,6 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-left:0;
 	width:100px;
 }
-
-
-
 .points-detail {
 	background:#f4f4f4;
 	padding:4px 8px;
@@ -1548,16 +1545,11 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	line-height:16px;
 }
 .postimg2 {
-  	/*width: 329px;
-  	height: 307px;
-  	float: left;
-  	margin-right: 15px;*/
-
-  	  width: 380px;
-	  height: 307px;
-	  float: left;
-	  margin-right: 15px;
-	  margin-left: -58px;
+    max-width: 310px;
+    max-height: 310px;;
+    border-radius: 50%;
+    margin-right: 20px;
+    float: left; 
 }
 
 .article-detail-wrap .curator-info h4 {
@@ -1565,14 +1557,13 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .article-detail-wrap .curator-info {
 	width:55%;
-	margin-bottom:20px;
+	margin: 20px 0;
 }
 .article-detail-wrap .infobelow {
   	float: left;
   	border-top: 1px solid rgb(221, 221, 221);
   	padding-top: 15px;
-  	/*width: 422px;*/
-  	width: 100%;
+  	width: 430px;
 }
 .article-detail-page .article-detail-wrap .infobelow {
 	border-top: 0;
