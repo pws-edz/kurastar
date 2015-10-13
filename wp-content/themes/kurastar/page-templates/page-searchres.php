@@ -124,7 +124,7 @@ get_header(); ?>
                         <?php foreach($countries as $country): ?>
                           <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
                             <i class="fa fa-map-marker"></i> 
-                            <?php echo $country; //フィリピン ?>
+                            <?php echo $country; ?>
                           </a>
                         <?php endforeach; ?>
                       <?php else: ?>
@@ -134,12 +134,12 @@ get_header(); ?>
                       <?php if($category): ?>
                         <?php foreach($category as $cat): ?>
                           <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                            <i class="fa fa-hotel"></i> 
-                            <?php echo $cat; //観光 ?>
+                            <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
+                            <?php echo $cat; ?>
                           </a>
                         <?php endforeach; ?>
                       <?php else: ?>
-                        <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+                        <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
                       <?php endif; ?>               
                     </div>
               </li>

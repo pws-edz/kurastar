@@ -149,12 +149,12 @@ get_header(); ?>
                                 <?php if($category): ?>
                                   <?php foreach($category as $cat): ?>
                                     <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                                      <i class="fa fa-hotel"></i> 
+                                      <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
                                       <?php echo $cat; //観光 ?> 
                                     </a>
                                   <?php endforeach; ?>
                                 <?php else: ?>
-                                  <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+                                  <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
                                 <?php endif; ?>               
                               </div>
                 </li>

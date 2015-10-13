@@ -48,10 +48,10 @@
            ?>
            <?php echo do_shortcode( '[dropdown_category]' ) ?>
 
-        </div>
-      </form>
     </div>
-  </div>
+  </form>
+</div>
+</div>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="defaultWidth center clear-auto bodycontent">
@@ -108,17 +108,19 @@
 	                  <?php if($category): ?>
 	                    <?php foreach($category as $cat): ?>
 	                        <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-								<i class="fa fa-hotel"></i> 
+								<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
 								<?php echo $cat; ?> 
 		                    </a>
 	                    <?php endforeach; ?>
 	                  <?php else: ?>
-	                    <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+	                    <a href="#" class="catlabel"><i class="fa fa-question"></i> No Category</a>
 	                  <?php endif; ?>  
 				</div>
 				<div class="curator-info">
-					<h4><?php the_title(); ?></h4>
+					<div class="curator-info">
+					<!-- <h4><?php the_title(); ?></h4> --> 
 					<p><?php the_content();  ?></p>
+				</div>
 				</div>
 				<div class="infobelow">
 
@@ -244,12 +246,12 @@
                 	<?php if($category): ?>
                 		<?php foreach($category as $cat): ?>
                 			<a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                				<i class="fa fa-hotel"></i> 
+                				<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
                 				<?php echo $cat; ?> 
                 			</a>
                 		<?php endforeach; ?>
                 	<?php else: ?>
-                		<a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+                		<a href="#" class="catlabel"><i class="fa fa-question"></i> No Category</a>
                 	<?php endif; ?>               
                 </div>
 							</li>

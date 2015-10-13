@@ -85,10 +85,10 @@ get_header(); ?>
 
                       	<?php if($category): ?>
                       		<?php foreach($category as $cat): ?>
-                      			<span class="catlabel"><i class="fa fa-hotel"></i> <?php echo $cat; //観光 ?> </span>
+                      			<span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
                       		<?php endforeach; ?>
                       	<?php else: ?>
-                      		<span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                      		<!-- <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span> -->
                       	<?php endif; ?>               
                       </div>
                       <div class="desc">

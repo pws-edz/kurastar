@@ -27,7 +27,7 @@ $args = array(
     );
 
 $posts = get_posts($args);
-$curator_profile = get_avatar_url(get_avatar( $user->ID ));
+$curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
 
 ?>
@@ -84,77 +84,81 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
       </div>
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
-        <?php 
-
-          $fb_user_access_token = get_user_meta( $user->ID, 'fb_user_access_token', true ); 
-          $fb_profile_picture   = get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-
-          if($fb_user_access_token != '') {
-
-            $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-          }else{
-
-            if(get_the_author_meta( 'profile_url', $user->ID )) {
-              $profile =  get_the_author_meta( 'profile_url', $user->ID );
-            }else{
-              $profile = $curator_profile;
-            }
-
-          }
-
-
-         ?>
         
-        <!--  <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
+<!-- <<<<<<< HEAD -->
+          <?php  
+                $curator_profile = get_avatar( $user->ID );
+
+                $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
+                $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+        
+
+               if($fb_user_access_token != '') {
+
+                $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
+
+               } else {
+
+                if(get_the_author_meta( 'profile_url', $user->ID )) {
+
+                  $profile =  get_the_author_meta( 'profile_url', $user->ID );
+
+                } else {
+
+                  $profile = $curator_profile;
+                }
+                
+               }
+            
+            ?>
+
+         <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
         <div class="labels labels2">
           <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
           <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
-          </span>
-        </div> -->
+<!-- =======
+
+      
 
         <div class="img-round">
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-              <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
+              <img id="blah" src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
           <?php }else{ ?>
-              <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
+              <img id="blah"  src="<?php echo $curator_profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
           <?php } ?>
 
           <span class="icon-cam-holder">
             <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
+>>>>>>> 48e1372acb282cfae5f447d0c4826fbc6505f804 -->
           </span>
 
         </div>
           <div class="labels labels2">
             <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-            <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites </span>
+            <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
+            </span>
           </div>
-
         <div class="curator-info">
+
           <form method="POST" id="form-curator-info" enctype="multipart/form-data">
             <div class="user_details">
               <span id="edit-form">
                 <h4>
-                  <?php echo $user->display_name ?> 
-                </h4>
-                <p> <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
+                 <?php echo $user->display_name ?> </h4>
+                <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
-              <?php if(is_user_logged_in()) : ?>
-                <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
+              <?php if ( is_user_logged_in() ) : ?>
+              <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
+              <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
+              <!-- <span id="edit" class="catlabel"><b>Edit</b> </span> <span id="save" class="catlabel"><b>Save</b> </span> -->
               <?php endif; ?>
             </div>
-
-            
-
-
             <div style="display:none;" class="userinfo_section">
               <div class="row">
                 <div class="form-grp form-placeholder-offset input-user">
-                  <!-- <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: block; "> -->
-
-
-                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
+                  
+                  <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility:hidden">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
-
                 </div>
               </div>
                <div class="row">
@@ -190,9 +194,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           <a href="#3" aria-controls="3" role="tab" data-toggle="tab">Draft</a>
         </li>
       </ul>
-
-
-      <!-- ARTICLES -->
 
       <!-- Tab panes -->
       <div class="tab-content curator-tab-content curator-tab-content">
@@ -253,28 +254,22 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               </a>
               <div class="labels">
 
-                  <?php if($countries): ?>
-                    <?php foreach($countries as $country): ?>
-                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                        <i class="fa fa-map-marker"></i> 
-                        <?php echo $country; //フィリピン ?>
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <!-- <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a> -->
-                  <?php endif; ?>
+                <?php if($countries): ?>
+                  <?php foreach($countries as $country): ?>
+                    <a href="#" class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></a>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
+                <?php endif; ?>
 
-                  <?php if($category): ?>
-                    <?php foreach($category as $cat): ?>
-                      <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                        <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                        <?php echo $cat; //観光 ?> 
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
-                  <?php endif; ?>               
-                </div>
+                <?php if($category): ?>
+                  <?php foreach($category as $cat): ?>
+                    <a href="#" class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </a>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+                <?php endif; ?>               
+              </div>
             </li>
 
           
@@ -293,10 +288,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
            wp_reset_query();?>
           </ul>
-        </div>
-        
-        <!-- FAVORITES -->
-        <!--tab 1-->
+        </div><!--tab 1-->
         <div role="tabpanel" class="tab-pane" id="2">
            <?php 
 
@@ -334,57 +326,92 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $authorID          = get_the_author_meta($post->ID);
                 // $curator_profile   = get_cupp_meta($authorID, 'thumbnail');
                 $curator_profile   = get_avatar( $authorID );
+
+               //  $fb_user_access_token =  get_user_meta( $authorID, 'fb_user_access_token', true ); 
+               //  $fb_profile_picture =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+        
+
+               // if($fb_user_access_token != '') {
+
+               //  $profile =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+
+               // } else {
+
+               //    if( get_cupp_meta($authorID, 'thumbnail') ) {
+
+               //       $profile = get_cupp_meta($authorID, 'thumbnail');
+
+               //    } else {
+               //       $profile = $curator_profile;
+               //    }
+                 
+             
+               // }
+
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+<<<<<<< HEAD
+                <div class="labels">
+
+                  <?php if($countries): ?>
+                    <?php foreach($countries as $country): ?>
+                      <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                  <?php endif; ?>
+
+                  <?php if($category): ?>
+                    <?php foreach($category as $cat): ?>
+                      <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                  <?php endif; ?>               
+                </div>
+              <!--   <div class="desc">
+=======
                 
-                <!-- <div class="desc">
+               <!--  <div class="desc">
+>>>>>>> 48e1372acb282cfae5f447d0c4826fbc6505f804
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
+                </div> -->
+                <!-- <div class="infobelow">
                   <i class="fa fa-heart"></i>
                   <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
                   <div class="profile-thumb-wrap">
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                      <?php echo $curator_profile ?>
+                      <?php echo $profile ?>
                       <div class="curator">
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
                       </div>
-
-
                   </div>
                 </div> -->
               </a>
               <div class="labels">
 
-                  <?php if($countries): ?>
-                    <?php foreach($countries as $country): ?>
+              <?php if($countries): ?>
+                <?php foreach($countries as $country): ?>
+                  <a href="#" class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></a>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
+              <?php endif; ?>
 
-                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                        <i class="fa fa-map-marker"></i> 
-                        <?php echo $country; //フィリピン ?>
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
-                  <?php endif; ?>
-
-                  <?php if($category): ?>
-                    <?php foreach($category as $cat): ?>
-                      <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                        <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                        <?php echo $cat; //観光 ?> 
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
-                  <?php endif; ?>               
-                </div>
+              <?php if($category): ?>
+                <?php foreach($category as $cat): ?>
+                  <a href="#" class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </a>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
+              <?php endif; ?>               
+            </div>
             </li>
               <?php
  
@@ -407,10 +434,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                  ?>
              
             </ul>
-        </div>
-        
-        <!-- DRAFT -->
-        <!--tab 2-->
+        </div><!--tab 2-->
         <div role="tabpanel" class="tab-pane" id="3">
            <ul class="post-list-thumb">
           <?php
@@ -441,56 +465,99 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
+               //   $fb_user_access_token =  get_user_meta( $authorID, 'fb_user_access_token', true ); 
+               //  $fb_profile_picture =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+        
+
+               // if($fb_user_access_token != '') {
+
+               //  $profile =  get_user_meta( $authorID, 'fb_profile_picture', true ); 
+
+               // } else {
+
+               //    if( get_cupp_meta($authorID, 'thumbnail') ) {
+
+               //       $profile = get_cupp_meta($authorID, 'thumbnail');
+
+               //    } else {
+               //       $profile = $curator_profile;
+               //    }
+                 
+             
+               // }
+               
+
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+<<<<<<< HEAD
+                <div class="labels">
+
+                  <?php if($countries): ?>
+                    <?php foreach($countries as $country): ?>
+                      <span class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="countrylabel"><i class="fa fa-map-marker"> No Country</i></span>
+                  <?php endif; ?>
+
+                  <?php if($category): ?>
+                    <?php foreach($category as $cat): ?>
+                      <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span>
+                  <?php endif; ?>               
+                </div>
+<!--                 <div class="desc">
+=======
                 
                 <!-- <div class="desc">
+>>>>>>> 48e1372acb282cfae5f447d0c4826fbc6505f804
                   <h2><?php the_title(); ?></h2>
                   <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
+                </div> -->
+                <!-- <div class="infobelow">
                   <i class="fa fa-heart"></i>
                   <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
                   <div class="profile-thumb-wrap">
 
                       <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 
-                      <img src="<?php echo $curator_profile ?>">
+                      <img src="<?php echo $profile ?>">
                       <div class="curator">
                           <span>CURATORS</span><br>
                           <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
                       </div>
-
-
                   </div>
                 </div> -->
+                
               </a>
               <div class="labels">
 
                   <?php if($countries): ?>
                     <?php foreach($countries as $country): ?>
-                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                        <i class="fa fa-map-marker"></i> 
-                        <?php echo $country; //フィリピン ?>
-                      </a>
+                      <a href="#"class="countrylabel"><i class="fa fa-map-marker"></i> <?php echo $country; //フィリピン ?></a>
                     <?php endforeach; ?>
                   <?php else: ?>
                     <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
                   <?php endif; ?>
 
+<<<<<<< HEAD
+                  </div>
+                </div> -->
+              </a>
+=======
                   <?php if($category): ?>
                     <?php foreach($category as $cat): ?>
-                      <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                        <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                        <?php echo $cat; //観光 ?> 
-                      </a>
+                      <a href="#" class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </a>
                     <?php endforeach; ?>
                   <?php else: ?>
                     <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a>
                   <?php endif; ?>               
                 </div>
+>>>>>>> 48e1372acb282cfae5f447d0c4826fbc6505f804
             </li>
 
           
@@ -549,16 +616,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
   
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(function(){
-
-
-
-      // $(document).on('mouseenter', "#blah", function(e) {
-      //   $( "#image-button" ).show();
-      // }).on('mouseleave', "#blah", function(e) {    
-      //   $('#image-button').fadeOut('slow');
-      // });
 
       $(document).on('click', "#image-button", function(e) {
         $('#imgInp').trigger('click');
@@ -587,6 +647,7 @@ $(function(){
 
          $('.user_details').hide();
          $('.userinfo_section').show();
+         $('#imgInp').show();
 
      });
 
@@ -620,5 +681,6 @@ $(function(){
 
 });
 </script>
+
 <?php 
 get_footer();?>
