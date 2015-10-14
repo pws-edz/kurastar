@@ -83,8 +83,14 @@
 
                } else {
 
-                  $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
+                  // $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
              
+		            if(get_the_author_meta( 'profile_url', $user->ID )) {
+		              $profile =  get_the_author_meta( 'profile_url', $user->ID );
+		            }else{
+		              $profile = $curator_profile;
+		            }
+
                }
 
 
@@ -149,8 +155,14 @@
 
             <br><br>
 
-            <a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
-						<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
+            <a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter">
+           		<i class="fa fa-twitter"></i>  
+           		Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) 
+            </a>
+			<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" >
+				<i class="fa fa-google-plus"></i>  
+				Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)
+			</a>
 						
 					</span>
 
