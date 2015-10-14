@@ -2367,7 +2367,8 @@ div#picture img {
     display: none;
 }
 .icon-cam-holder img{
-	height: auto;
+	/*height: auto;*/
+	height: 100%;
 	width: 100%;
 	cursor: pointer;
 }
@@ -2386,6 +2387,9 @@ div#picture img {
     position: relative;
     background: #fff;
     margin-right: 20px;
+}
+.img-round img {
+	height: 100%;
 }
 .img-round:hover .icon-cam-holder{
 	display: block;
