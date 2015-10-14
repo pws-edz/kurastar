@@ -125,33 +125,41 @@
 				<div class="infobelow">
 
 					<span class="smallpoints smallpoints-left">
-						<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
+						
+						<ul class="socialmedia">
+							<li class="like-button">
+								<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
 
-							<form class="form-send-like" method="POST">
+								<form class="form-send-like" method="POST">
 								<p class="message"></p>
-	                            <div class="form-group">
-	                         	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-	                         	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-	                         	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-	                         	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-	                         	    <input type="hidden" name="action" value="send-like">
-	                         	    <i class="fa fa-heart"></i>
-	                                <button type="submit" class="smallpoints smallpoints-left">Likes(<?php echo count_total_favorites($post->ID) ?>)</button>
-	                            </div>
-	                        </form>
+                <div class="form-group">
+             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+             	    <input type="hidden" name="action" value="send-like">
+             	    <i class="fa fa-heart"></i>
+                    <!-- <button type="submit" class="smallpoints smallpoints-left">Likes(<?php echo count_total_favorites($post->ID) ?>)</button> -->
+                    <button type="submit" class="smallpoints ">Likes ( <?php echo count_total_favorites($post->ID) ?> )</button>
 
-                    	<?php else: ?>
+                    <?php else: ?>
 
 	                    	<i class="fa fa-heart"></i>
-	                    	<span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+	                    	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
 
                         <?php endif; ?>	
+		                </div>
+		            </form>
+							</li>
 
-            <br><br>
+							<li class="twit-button">
+								<a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
+							</li>
 
-            <a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
-						<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
-						
+							<li class="gplus-button">
+								<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
+							</li>
+						</ul>
 					</span>
 
 					<div class="profile-thumb-wrap">
@@ -161,6 +169,8 @@
 							<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
 						</div>
 					</div>
+
+
 				</div>
 				<div class="points-detail">
 					<?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
