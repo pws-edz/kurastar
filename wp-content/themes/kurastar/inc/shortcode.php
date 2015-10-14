@@ -581,7 +581,7 @@ class MyShortcode {
 		           $user_role = $role;
 		    }
 
-		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
+//		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
 			
 	        #wp_redirect(site_url().'/curator-detail/?id='.$user->ID);
 	        wp_redirect(home_url());

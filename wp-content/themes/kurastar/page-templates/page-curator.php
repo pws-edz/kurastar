@@ -138,7 +138,11 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 </h4>
                 <p> <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
-              <?php if(is_user_logged_in()) : ?>
+              <?php 
+
+                $current_user    = wp_get_current_user(); 
+              ?>
+              <?php if(is_user_logged_in() && $current_user->ID == $user->ID) : ?>
                 <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
               <?php endif; ?>
             </div>
