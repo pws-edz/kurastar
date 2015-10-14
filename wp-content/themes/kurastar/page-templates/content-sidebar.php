@@ -1,5 +1,5 @@
 <?php 
-/* Template Name: About Us */
+/* Template Name: Content with right sidebar */
 get_header(); ?>
 <div class="mainbanner subpage-banner">
 	<div class="flexslider">
