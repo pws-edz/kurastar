@@ -1,6 +1,7 @@
-<?php 
-/* Template Name: About Us */
-get_header(); ?>
+<?php  
+/* Template Name: Terms of Services*/
+
+get_header();?>
 <div class="mainbanner subpage-banner">
 	<div class="flexslider">
 		<ul class="slides">
@@ -43,7 +44,6 @@ get_header(); ?>
 		</form>
 	</div>
 </div>
-
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index">
 	<div class="contentbox">
 
@@ -89,4 +89,4 @@ get_header(); ?>
 			
 		</div>
 </div>
-<?php get_footer(); ?>
+<?php  get_footer(); ?>

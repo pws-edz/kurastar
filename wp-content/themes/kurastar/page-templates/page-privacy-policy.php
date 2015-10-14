@@ -1,5 +1,5 @@
-<?php 
-/* Template Name: About Us */
+<?php  
+/* Template Name: Privacy Policy */
 get_header(); ?>
 <div class="mainbanner subpage-banner">
 	<div class="flexslider">
@@ -44,20 +44,19 @@ get_header(); ?>
 	</div>
 </div>
 
-<div class="defaultWidth center clear-auto bodycontent bodycontent-index">
-	<div class="contentbox">
+<div class="defaultWidth center clear-auto">
+		<div class="contentbox">
+				<?php 
+					while (have_posts()) : the_post(); ?>
+						<h2 class="whatsnew"> <?php  the_title(); ?> </h2>
+				<?php
+					the_content();		
+					endwhile;
+				?>
 
+		</div>
 
-		<?php 
-			while (have_posts()) : the_post();?>
-					<h2 class="whatsnew"><?php  the_title(); ?></h2>
-			<?php
-			the_content();
-			endwhile;
-		?>
-		
-	</div>
-	<!-- start sidebar -->
+		<!-- start sidebar -->
 
 		<div class="sidebox">
 			<div class="socketlabs">
@@ -89,4 +88,5 @@ get_header(); ?>
 			
 		</div>
 </div>
-<?php get_footer(); ?>
+
+ <?php  get_footer(); ?>
