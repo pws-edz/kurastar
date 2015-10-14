@@ -320,7 +320,7 @@ a.social-media.googleplus {
 	border-radius:4px;
 	padding:6px;
 	text-align:center;
-	color:#ee7500;
+	color:#ee7500 !important;
 	font-size:17px;
 	font-weight:bold;
 	margin:4px;
@@ -787,7 +787,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .postimg {
     width: 100%;
-    height: 350px;
+    height: 250px;
     background-size: cover!important;
     background-position: center!important;
     background-repeat: no-repeat!important;
@@ -798,14 +798,6 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
     width: 30%;
     margin-right: 3%;
 }
-/*.labels {
-	overflow:auto;
-	border-bottom:solid 1px #e9e9e9;
-	padding-bottom:10px;
-	margin-bottom:10px;
-	margin-top:10px;
-}*/
-
 .labels {
 	background: #ffffff;
 	overflow:auto;
@@ -814,9 +806,6 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	padding: 10px;
 	margin: 0px 6px 0px 0;
 }
-
-
-
 .list-single .labels {
 	margin-top: 0;
 }
@@ -2333,18 +2322,12 @@ div#picture img {
 .group2:last-child {
 	float: left !important;
 }
-
-
-
 .post-list-thumb li.list-thumb {
 	width:33.333% !important;
 }
-
 .postimg3 {
 	height:150px !important;
 }
-
-
 /*LOGINBOX*/
 .registration-page.loginbox {
 	width: 30%;
@@ -2356,31 +2339,22 @@ div#picture img {
 .subpage-searchwrap .mCustomScrollbar {
 	height: 105px;
 }
-
-/*.contentbox .breadcrumbs span:last-child {
-	display: none;
-}*/
-
-
 .result-post {
 	font-size: 22px;
 	font-family: 'HiraKakuPro-W3-AlphaNum';
 	padding: 20px;
 	display: block;
 }
-
 .info-success {
 	margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
-
 .post-success {
 	color: #5cb85c;
     background-color: rgba(92, 184, 92, 0.16);
     border-color: #5cb85c;
 }
-
 .icon-cam-holder {
 	position: absolute;
     top: 50%;
@@ -2392,10 +2366,10 @@ div#picture img {
     -o-transform: translate(-50%,-50%);
     display: none;
 }
-
 .icon-cam-holder img{
 	height: auto;
 	width: 100%;
+	cursor: pointer;
 }
 
 .icon-cam img {
@@ -2413,11 +2387,9 @@ div#picture img {
     background: #fff;
     margin-right: 20px;
 }
-
 .img-round:hover .icon-cam-holder{
 	display: block;
 }
-
 .img-round:hover > img{
 	opacity: 0.5;
 	filter: alpha(opacity=50);
@@ -2428,7 +2400,6 @@ div#picture img {
 	margin-left: 25px;
 	margin-right: 5px;
 }
-
 .desc-user {
 	margin-left: 25px; 
 	margin-right: 5px;

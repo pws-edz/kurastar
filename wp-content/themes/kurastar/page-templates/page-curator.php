@@ -171,7 +171,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           </form>
         </div>
         <div class="points-detail">
-          <?php echo do_shortcode( '[post_view]' ); ?><span>points</span>
+          <?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
         </div>
         <div class="clear"></div>
       </div>

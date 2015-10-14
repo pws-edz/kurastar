@@ -163,7 +163,7 @@
 					</div>
 				</div>
 				<div class="points-detail">
-					<?php echo do_shortcode( '[post_view]' ); ?><span>points</span>
+					<?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
 				</div>
 				<div class="clear"></div>
 			</div>
