@@ -76,7 +76,7 @@ p {
 	border-top:solid 3px #ee7500;
 	background-color:#272727;
 }
-.headwrap { overflow:auto; }
+.headwrap { overflow:auto; position:relative;}
 .logo {
 	margin:10px 0;
 	float:left;
@@ -1534,8 +1534,8 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	line-height:16px;
 }
 .postimg2 {
-    max-width: 310px;
-    max-height: 310px;;
+    max-width: 250px;
+    max-height: 250px;;
     border-radius: 50%;
     margin-right: 20px;
     float: left; 
@@ -2403,4 +2403,13 @@ div#picture img {
 .desc-user {
 	margin-left: 25px; 
 	margin-right: 5px;
+}
+.searchform {
+	position: absolute;
+	margin-left: 260px;
+	margin-top: 28px;
+}
+input.search-field {
+	border-radius: 50px;
+	padding: 8px 23px;
 }
