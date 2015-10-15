@@ -73,18 +73,22 @@
                 $countries       = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
                 $authorID        = get_the_author_meta($post->ID);
  
-                $fb_user_access_token =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_user_access_token', true ); 
-                $fb_profile_picture =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+                $fb_user_access_token = get_user_meta( get_the_author_meta( 'ID' ), 'fb_user_access_token', true ); 
+                $fb_profile_picture   = get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
         
 
                if($fb_user_access_token != '') {
 
-                $profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+                	$profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
 
                } else {
 
-                  $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
-             
+		            if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
+		              $profile =  get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+		            }else{
+		              $profile = $curator_profile;
+		            }
+                  	// $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
                }
 
 
@@ -163,7 +167,7 @@
 					</span>
 
 					<div class="profile-thumb-wrap">
-						<img src="<?php echo $profile ?>">
+						<img src="<?php echo $profile; ?>">
 						<div class="curator">
 							<span>CURATOR</span><br>
 							<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
@@ -190,57 +194,38 @@
 						<ul class="post-detail-list">
 					    <?php
 			             # get_wpposts();					    
-			            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+				            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-			            $param = array( 
-			                    'post_type'       => 'acme_article', 
-			                    'posts_per_page'  => 6, 
-			                    'paged'           => $paged, 
-			                    'author'          => get_the_author_meta( 'ID' ), 
-			                    'post__not_in' => array($post->ID),
-			                    'orderby'         => 'post_date',
-			                    'order'           => 'DESC');
+				            $param = array( 
+				                    'post_type'       => 'acme_article', 
+				                    'posts_per_page'  => 6, 
+				                    'paged'           => $paged, 
+				                    'author'          => get_the_author_meta( 'ID' ), 
+				                    'post__not_in' => array($post->ID),
+				                    'orderby'         => 'post_date',
+				                    'order'           => 'DESC');
 
-			              query_posts( $param );
-			              if ( have_posts() ) : 
-			              	while ( have_posts() ) : the_post();
-			              ?>
+			                query_posts( $param );
+			                if ( have_posts() ) : 
+			              		while ( have_posts() ) : the_post();
+		              	?>
 			              	<li>
 							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
 		                    <?php
-		                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-			                  
-			                 	//Returns All Term Items for "my_taxonomy"
-												$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-												$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+			                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+				                  
+             					//Returns All Term Items for "my_taxonomy"
+								$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+								$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-												$authorID = get_the_author_meta($post->ID);
-												$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+								$authorID = get_the_author_meta($post->ID);
+								$curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-												$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
-
-					                ?>
+								$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+			                ?>
 
                   <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
                     
-                    <!-- <div class="desc">
-                      <h2><?php the_title(); ?></h2>
-                      <p><?php the_content(); ?></p>
-                    </div> -->
-                    <!-- <div class="infobelow">
-                      <i class="fa fa-heart"></i>
-                      <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                      <div class="profile-thumb-wrap">
-
-                    		<span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-            				<img src="<?php echo $curator_profile ?>">
-                          <div class="curator">
-                              <span>CURATORS</span><br>
-                              <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                          </div>
-                      </div>
-                    </div> -->
                 </a>
                 <div class="labels">
                 	<?php if($countries): ?>
