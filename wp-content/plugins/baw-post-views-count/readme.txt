@@ -1,14 +1,16 @@
-=== Post Views Count ===
+=== Post Views Count (Support caching plugins!)===
 Contributors: juliobox
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KJGT942XKWJ6W
 Tags: popular, views, view, count, widget, stats, popular post
-Requires at least: 3.0
-Tested up to: 4.0
+Requires at least: 3.1
+Tested up to: 4.4
 Stable tag: trunk
 
 This plugin counts views for post and pages, shortcodes [post_view] & [most_view] are available, also a widget "Most Viewed Posts" is.
 
 == Description ==
+
+IMPORTANT: 3.0 supports cahing plugins!
 
 When someone visits a post or page (not a search engine bot crawler), it adds 1 count views to its counter.
 
@@ -130,6 +132,26 @@ You can hack the post types displayed in widget, whatever the settings.
 1. Column in post list, each post type too
 
 == Changelog ==
+
+= 3.0.2 =
+* 08 oct 2015
+* Fix (bool) false/true in footer, my bad, too quick!
+
+= 3.0.1 =
+* 08 oct 2015
+* Fix bug double counter
+
+= 3.0 =
+* 07 oct 2015
+* This version supports now all caching plugins, including the premium WP Rocket.
+
+= 2.19.13 =
+* 11 sep 2015
+* Remove the "time between counts" options, it was a bad idea believe me. Nor logical and badly coded.
+
+= 2.19.12 =
+* 01 sep 2015
+* Widget was broken
 
 = 2.19.11 =
 * 04 nov 2012

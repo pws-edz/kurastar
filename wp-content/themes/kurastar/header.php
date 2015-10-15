@@ -10,10 +10,7 @@
  */
 ?>
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja"> <!--<![endif]-->
+<html class="no-js" lang="ja">
     
 <!-- Mirrored from 10.20.150.92/template/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Apr 2015 04:21:48 GMT -->
 <head>
@@ -74,7 +71,6 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 						<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
 						<?php  
 							$current_user    = wp_get_current_user(); 
-							// $curator_profile = get_cupp_meta($current_user->ID, 'thumbnail');
 							$curator_profile = get_avatar( $current_user->ID );
 
 						      $fb_user_access_token =  get_user_meta( $current_user->ID, 'fb_user_access_token', true ); 

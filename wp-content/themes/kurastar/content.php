@@ -88,7 +88,6 @@
 		            }else{
 		              $profile = $curator_profile;
 		            }
-                  	// $profile = get_cupp_meta(get_the_author_meta( 'ID' ), 'thumbnail');
                }
 
 
@@ -122,7 +121,6 @@
 				</div>
 				<div class="curator-info">
 					<div class="curator-info">
-					<!-- <h4><?php the_title(); ?></h4> --> 
 					<p><?php the_content();  ?></p>
 				</div>
 				</div>
@@ -143,7 +141,7 @@
              	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
              	    <input type="hidden" name="action" value="send-like">
              	    <i class="fa fa-heart"></i>
-                    <!-- <button type="submit" class="smallpoints smallpoints-left">Likes(<?php echo count_total_favorites($post->ID) ?>)</button> -->
+
                     <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
 
                     <?php else: ?>
@@ -188,14 +186,11 @@
 			<div class="curator-detail-wrap article-detail-wrap related-posts">
 
 				<div class="detail-title">
-						<!-- <h2 class="<?php  if (isset($heading))
-						echo $heading; ?>">Yet Another Related Posts</h2> -->
 						<h2 class="article-title">Yet Another Related Posts</h2>
 					</div>
 						<ul class="post-detail-list">
 					    <?php
 					    	 $p = get_query_var('page') ? get_query_var('page') : 1;
-
 				            $param = array( 
 				                    'post_type'       => 'acme_article', 
 				                    'posts_per_page'  => 6, 
@@ -204,9 +199,7 @@
 				                   'post__not_in' => array($post->ID),
 				                    'orderby'         => 'post_date',
 				                    'order'           => 'DESC');
-
 			                $query = new WP_Query( $param );
-
 			                if ( $query->have_posts() ) : 
 			              		while ( $query->have_posts() ) : $query->the_post();
 		              	?>
@@ -214,19 +207,14 @@
 							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
 			                    <?php
 				                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-					                  
 	             					//Returns All Term Items for "my_taxonomy"
 									$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
 									$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
-
 									$authorID = get_the_author_meta($post->ID);
 									$curator_profile = get_cupp_meta($authorID, 'thumbnail');
-
 									$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 				                ?>
-
 			                  		<div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
-			                    
 				                </a>
 				                <div class="labels">
 				                	<?php if($countries): ?>
@@ -254,53 +242,37 @@
 							</li>
 			              <?php 
 				          	endwhile;  
-
-
-
 				          else:?>
-				          
 				          	<li><p> No related posts yet.</p></li>
-				          
 				          <?php 
 				          endif;  
-
-							
 				        ?>
-					
 				</ul>
 					<?php
 							wp_reset_query(); 
 								
 
 							$total_page = ceil( $query->found_posts / 6 );
-
+							$current_link = get_permalink($post->ID);
 							echo "<div class='wp-pagenavi'>";
 							echo "<span class='pages'>Page ". $p ." of ". $total_page ."</span>";
-							echo '<a class="first" href="'. get_permalink($post->ID) .'">« First</a>';
-							echo '<a class="previouspostslink" href="'. get_permalink($post->ID) . ( $p > 1 ? $p - 1 : $p ) .'">«</a>';
+							echo '<a class="first" href="'. $current_link .'">« First</a>';
+							echo '<a class="previouspostslink" href="'. $current_link . ( $p > 1 ? $p - 1 : $p ) .'">«</a>';
 							for ($i = 1; $i <= $total_page; $i++) {
 
 								if ( $p == $i ) {
 									echo '<span class="current">'. $i .'</span>';
 								} else {
-									echo '<a href="'. get_permalink($post->ID) . $i. '">'. $i .'</a>';	
+									echo '<a href="'. $current_link. $i. '">'. $i .'</a>';	
 								}
-								
 							}
-
-							echo '<a class="nextpostslink" href="'. get_permalink($post->ID) . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
-							echo '<a class="last" href="'.get_permalink($post->ID) . $total_page .'/">Last »</a>';
+							echo '<a class="nextpostslink" href="'. $current_link . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
+							echo '<a class="last" href="'. $current_link . $total_page .'/">Last »</a>';
 							echo '</div>';
-
-								
-
-
 				           ?>
 
 				<div class="clear"></div>
 			</div>
-			
-
 		</div>
 
 		<div class="sidebox">
@@ -332,17 +304,6 @@
 		</div>
 	</div>
 
-	<?php
-		// Author bio.
-		// if ( is_single() && get_the_author_meta( 'description' ) ) :
-		// 	get_template_part( 'author-bio' );
-		// endif;
-	?>
 
-<!-- 	<footer class="entry-footer">
-		<?php twentyfifteen_entry_meta(); ?>
-		<?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<span class="edit-link">', '</span>' ); ?>
-	</footer>-->
-	<!-- .entry-footer --> 
 
 </article><!-- #post-## -->

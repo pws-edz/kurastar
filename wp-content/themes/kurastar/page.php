@@ -17,19 +17,9 @@ get_header(); ?>
 	<?php
 	// Start the loop.
 	while ( have_posts() ) : the_post();
-		the_title(); //echo $post->post_name;
+		the_title(); 
+		
 		// Include the page content template.
-
-		// if($post->post_name == 'user-login') {
-
-		// 	get_template_part( 'content', 'page' );
-
-		// } else {
-
-		// 	get_template_part( 'content', 'custom' );
-
-		// }
-
 		get_template_part( 'content', 'custom' );
 		
 	// End the loop.
