@@ -193,66 +193,69 @@
 					</div>
 						<ul class="post-detail-list">
 					    <?php
-			             # get_wpposts();					    
-				            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+					    	 $p = get_query_var('page') ? get_query_var('page') : 1;
 
 				            $param = array( 
 				                    'post_type'       => 'acme_article', 
 				                    'posts_per_page'  => 6, 
-				                    'paged'           => $paged, 
+				                    'paged'           => $p, 
 				                    'author'          => get_the_author_meta( 'ID' ), 
-				                    'post__not_in' => array($post->ID),
+				                   'post__not_in' => array($post->ID),
 				                    'orderby'         => 'post_date',
 				                    'order'           => 'DESC');
 
-			                query_posts( $param );
-			                if ( have_posts() ) : 
-			              		while ( have_posts() ) : the_post();
+			                $query = new WP_Query( $param );
+
+			                if ( $query->have_posts() ) : 
+			              		while ( $query->have_posts() ) : $query->the_post();
 		              	?>
 			              	<li>
 							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
-		                    <?php
-			                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-				                  
-             					//Returns All Term Items for "my_taxonomy"
-								$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-								$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+			                    <?php
+				                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+					                  
+	             					//Returns All Term Items for "my_taxonomy"
+									$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+									$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-								$authorID = get_the_author_meta($post->ID);
-								$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+									$authorID = get_the_author_meta($post->ID);
+									$curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-								$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
-			                ?>
+									$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+				                ?>
 
-                  <div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
-                    
-                </a>
-                <div class="labels">
-                	<?php if($countries): ?>
-                		<?php foreach($countries as $country): ?>
-                			<a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                				<i class="fa fa-map-marker"></i> 
-                				<?php echo $country; ?>
-                			</a>
-                		<?php endforeach; ?>
-                	<?php else: ?>
-                		<a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
-                	<?php endif; ?>
+			                  		<div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
+			                    
+				                </a>
+				                <div class="labels">
+				                	<?php if($countries): ?>
+				                		<?php foreach($countries as $country): ?>
+				                			<a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
+				                				<i class="fa fa-map-marker"></i> 
+				                				<?php echo $country; ?>
+				                			</a>
+				                		<?php endforeach; ?>
+				                	<?php else: ?>
+				                		<a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
+				                	<?php endif; ?>
 
-                	<?php if($category): ?>
-                		<?php foreach($category as $cat): ?>
-                			<a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                				<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                				<?php echo $cat; ?> 
-                			</a>
-                		<?php endforeach; ?>
-                	<?php else: ?>
-                		<a href="#" class="catlabel"><i class="fa fa-question"></i> No Category</a>
-                	<?php endif; ?>               
-                </div>
+				                	<?php if($category): ?>
+				                		<?php foreach($category as $cat): ?>
+				                			<a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
+				                				<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
+				                				<?php echo $cat; ?> 
+				                			</a>
+				                		<?php endforeach; ?>
+				                	<?php else: ?>
+				                		<a href="#" class="catlabel"><i class="fa fa-question"></i> No Category</a>
+				                	<?php endif; ?>               
+				                </div>
 							</li>
 			              <?php 
-				          	endwhile;   
+				          	endwhile;  
+
+
+
 				          else:?>
 				          
 				          	<li><p> No related posts yet.</p></li>
@@ -260,17 +263,38 @@
 				          <?php 
 				          endif;  
 
-							//wp pagenavi plugin for pagination   
-							if(function_exists("wp_pagenavi")):
-
-							wp_pagenavi(); 
-
-							endif;  
-
-				           wp_reset_query();
+							
 				        ?>
 					
 				</ul>
+					<?php
+							wp_reset_query(); 
+								
+
+							$total_page = ceil( $query->found_posts / 6 );
+
+							echo "<div class='wp-pagenavi'>";
+							echo "<span class='pages'>Page ". $p ." of ". $total_page ."</span>";
+							echo '<a class="first" href="'. get_permalink($post->ID) .'">« First</a>';
+							echo '<a class="previouspostslink" href="'. get_permalink($post->ID) . ( $p > 1 ? $p - 1 : $p ) .'">«</a>';
+							for ($i = 1; $i <= $total_page; $i++) {
+
+								if ( $p == $i ) {
+									echo '<span class="current">'. $i .'</span>';
+								} else {
+									echo '<a href="'. get_permalink($post->ID) . $i. '">'. $i .'</a>';	
+								}
+								
+							}
+
+							echo '<a class="nextpostslink" href="'. get_permalink($post->ID) . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
+							echo '<a class="last" href="'.get_permalink($post->ID) . $total_page .'/">Last »</a>';
+							echo '</div>';
+
+								
+
+
+				           ?>
 
 				<div class="clear"></div>
 			</div>

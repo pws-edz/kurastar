@@ -268,7 +268,7 @@ class PageNavi_Call {
 	}
 
 	function get_url( $page ) {
-		return ( 'multipart' == $this->type ) ? get_multipage_link( $page ) : get_pagenum_link( $page );
+		return ( 'multipart' == $this->type ) ? get_multipage_link( $page ) : get_pagenum_link( $page, true );
 	}
 }
 

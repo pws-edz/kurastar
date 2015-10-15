@@ -138,7 +138,7 @@ function create_post_type() {
       'public' => true,
 	  '_builtin' => false,
 	  'query_var' => true,
-	  'rewrite' => array('slug' => 'article', 'with_front' => false),
+	  'rewrite' => array('slug' => 'article', 'with_front' => true),
       'show_ui' => true,
       'supports' => array('title','editor','thumbnail', 'author' )
   ));
