@@ -77,7 +77,9 @@ class MyShortcode {
 					<a href="<?php echo get_permalink(); ?>">
 						<span class="rank rank1">1</span>
 						<?php
-	                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
+							global $wp_query;
+							$post = $wp_query->post;
+							$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 	                    ?>
 						<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
 						<h4 class="ranktitle"><?php the_title(); ?></h4>

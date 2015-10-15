@@ -184,7 +184,8 @@
 			<div class="curator-detail-wrap article-detail-wrap related-posts">
 
 				<div class="detail-title">
-						<h2 class="<?php echo $heading ?>">Yet Another Related Posts</h2>
+						<h2 class="<?php  if (isset($heading))
+						echo $heading; ?>">Yet Another Related Posts</h2>
 					</div>
 						<ul class="post-detail-list">
 					    <?php
