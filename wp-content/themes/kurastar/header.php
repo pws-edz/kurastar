@@ -66,9 +66,9 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 				<div class="actions">
 					<?php if (!is_user_logged_in()): ?>
 
-						<a href="/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
-						<a href="/user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup.png" />REGISTER</a>
-						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
+						<a href="<?php echo site_url() ?>/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
+						<a href="<?php echo site_url() ?>/user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup.png" />REGISTER</a>
+						<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 						
 					<?php else: ?>
 						<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
@@ -103,7 +103,7 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
 						<img src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
 						<?php echo $current_user->user_login ?></a>
-						<a href="/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
+						<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 					<?php endif; ?>
 
 				</div>
