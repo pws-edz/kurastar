@@ -60,9 +60,8 @@ get_header(); ?>
 
             <!-- Tab panes -->
             <ul class="post-list-thumb curator-list-thumb">
-              	<?php
+            	<?php
 
-				      #$users = get_users( 'orderby=nicename&role=subscriber&post_per_page=2' );
               $users = get_users( 'orderby=nicename&post_per_page=2' );   
            		// Start the Loop.
            		foreach($users as $user):
@@ -70,25 +69,16 @@ get_header(); ?>
                 $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
                 $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
         
-
-               if($fb_user_access_token != '') {
-
-                $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-
-               } else {
-
-                if(get_cupp_meta($user->ID, 'thumbnail')) {
-
-                  $profile =  get_cupp_meta($user->ID, 'thumbnail');
-
-                } else {
-
-                  $profile = $curator_profile;
+                if($fb_user_access_token != '') {
+                  $profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+                }else{
+                  if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
+                    $profile =  get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+                  }else{
+                    $profile = $curator_profile;
+                  }
                 }
-                
-               }
             
-           		//	$curator_profile = get_cupp_meta($user->ID, 'thumbnail');
            			$post_count = count_user_posts($user->ID, 'acme_article');
            		?>
                 <li>
