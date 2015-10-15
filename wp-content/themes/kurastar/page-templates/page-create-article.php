@@ -111,24 +111,12 @@ get_header(); ?>
 
 	    		<div class="fileUpload">
 					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
-				    <!-- <input type="file" class="upload" id="upload-image" name="post_featured_img"/> -->
 				</div>
-				<?php //if( empty($_POST['image_action']) ): ?>
-
-				<!-- 	<div class="link_image">
-						<p>or paste image link below</p>
-						<div class="fileUpload">
-						    <input type="text" class="link" name="paste_featured_img" value="<?php //echo isset($_POST['paste_featured_img']) ? $_POST['paste_featured_img'] : ''  ?>"/>
-						</div>
-					</div> -->
-
-				<?php// endif; ?>
 	    	</div>
 	    	<div class="col-md-8">
 	    		<div class="form-grp">
 	    			<div class="select-form">
 	    				<p>select country</p>
-						<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
 						<select id="cty" name="post_country">
 						<?php
 
