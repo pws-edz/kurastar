@@ -67,7 +67,7 @@
 	$dir = opendir($filePath);
 	while ($file = readdir($dir)) {
 	 
-	  if (eregi("\.css",$file)) { /* Look for files with .png extension */
+	  if (preg_match("\.css",$file)) { /* Look for files with .png extension */
 		$flie_name=explode('.',$file);
 		echo '<option value="'.$flie_name[0].'"'; ?>
 		<?php selected($flie_name[0], $options['template']); ?>>

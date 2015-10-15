@@ -113,7 +113,6 @@ get_header(); ?>
               query_posts( array( 
                 'post_type' => 'acme_article', 
                 '' => '', 
-                // 'meta_value' => $menu_slug,
               ));
               while ( $query->have_posts() ) : $query->the_post(); 
             ?>
@@ -153,7 +152,6 @@ get_header(); ?>
                                     </a>
                                   <?php endforeach; ?>
                                 <?php else: ?>
-                                  <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
                                 <?php endif; ?>               
                               </div>
                 </li>

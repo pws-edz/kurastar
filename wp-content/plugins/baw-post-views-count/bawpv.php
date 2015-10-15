@@ -1,97 +1,87 @@
 <?php
 /* Plugin Name: BAW Post Views Count
- * Plugin URI: http://www.boiteaweb.fr/pvc
+ * Plugin URI: http://www.boiteaweb.fr
  * Description: Count views for post and pages, shortcode [post_view] and [most_view] available, widget "Most Viewed Posts" available.
- * Version: 2.19.11
+ * Version: 3.0.2
  * Author: Juliobox
  * Author URI: http://www.boiteaweb.fr
  * License: GPLv2
 **/
 DEFINE( 'BAWPVC_FULLNAME', 'Post Views Count' );
-DEFINE( 'BAWPVC_VERSION', '2.19.10' );
+DEFINE( 'BAWPVC_VERSION', '3.0.2' );
 
-add_action( 'wp_head', 'baw_pvc_main' );
-function baw_pvc_main()
-{
-	global $post, $bawpvc_options;
+function bawpvc_main() {
+	global $post;
+	$bawpvc_options = bawpvc_get_options();
+	$timings = bawpcv_get_timings();
 	$bots = array( 	'wordpress', 'googlebot', 'google', 'msnbot', 'ia_archiver', 'lycos', 'jeeves', 'scooter', 'fast-webcrawler', 'slurp@inktomi', 'turnitinbot', 'technorati',
 					'yahoo', 'findexa', 'findlinks', 'gaisbo', 'zyborg', 'surveybot', 'bloglines', 'blogsearch', 'pubsub', 'syndic8', 'userland', 'gigabot', 'become.com' );
-	if( 	!( ( $bawpvc_options['no_members']=='on' && is_user_logged_in() ) || ( $bawpvc_options['no_admins']=='on' && current_user_can( 'administrator' ) ) ) && 
-			!empty( $_SERVER['HTTP_USER_AGENT'] ) &&
-			is_singular( $bawpvc_options['post_types'] ) && 
-			!preg_match( '/' . implode( '|', $bots ) . '/i', $_SERVER['HTTP_USER_AGENT'] )
+	if( 	! ( ( $bawpvc_options['no_members']=='on' && is_user_logged_in() ) || ( $bawpvc_options['no_admins']=='on' && current_user_can( 'administrator' ) ) ) && 
+			! empty( $_SERVER['HTTP_USER_AGENT'] ) &&
+			( defined( 'DOING_AJAX' ) || is_singular( $bawpvc_options['post_types'] ) ) && 
+			! preg_match( '/' . implode( '|', $bots ) . '/i', isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : BAWPVC_FULLNAME )
 		)
-	{
-		global $timings;
-		$IP = substr( md5( getenv( 'HTTP_X_FORWARDED_FOR' ) ? getenv( 'HTTP_X_FORWARDED_FOR' ) : getenv( 'REMOTE_ADDR' ) ), 0, 16 );
-		$time_to_go = $bawpvc_options['time']; // Default: no time between count 
-		if( (int)$time_to_go == 0 || !get_transient( 'baw_count_views-' . $IP . $post->ID ) ) {
-			foreach( $timings as $time=>$date )
-			{
-				if( $time != 'all' )
-					$date = '-' . date( $date );
-				// Filtered meta key name
-				$meta_key_filtered = apply_filters( 'baw_count_views_meta_key', '_count-views_' . $time . $date, $time, $date );
-				$count = (int)get_post_meta( $post->ID, $meta_key_filtered, true );
-				$count++;
-				update_post_meta( $post->ID, $meta_key_filtered, $count );
-				// Normal meta key name
-				$meta_key = '_count-views_' . $time . $date;
-				if( $meta_key_filtered != $meta_key ):
-					$count = (int)get_post_meta( $post->ID, $meta_key, true );
-					$count++;
-					update_post_meta( $post->ID, $meta_key, $count );
-				endif;
-				//// I update 2 times with 2 different meta names because i need to keep my own count too, in bonus of hacked/filtered count.
+	{	
+		foreach( $timings as $time=>$date ) {
+			if( $time != 'all' ) {
+				$date = '-' . date( $date );
 			}
-			if( (int)$time_to_go > 0 )
-				set_transient( 'baw_count_views-' . $IP . $post->ID, $IP, $time_to_go );
+			// Filtered meta key name
+			$meta_key_filtered = apply_filters( 'baw_count_views_meta_key', '_count-views_' . $time . $date, $time, $date );
+			$count = (int) get_post_meta( $post->ID, $meta_key_filtered, true );
+			++$count;
+			update_post_meta( $post->ID, $meta_key_filtered, $count );
+			// Normal meta key name
+			$meta_key = '_count-views_' . $time . $date;
+			if ( $meta_key_filtered != $meta_key ) {
+				$count = (int) get_post_meta( $post->ID, $meta_key, true );
+				++$count;
+				update_post_meta( $post->ID, $meta_key, $count );
+			}
 		}
+		return true;
+	} else {
+		return false;
 	}
 }
 
 add_shortcode( 'post_view', 'bawpvc_views_sc' );
 add_shortcode( 'post_views', 'bawpvc_views_sc' );
-function bawpvc_views_sc( $atts, $content = null )
-{
+function bawpvc_views_sc( $atts, $content = null ) {
 	global $post;
-	extract(shortcode_atts(array(
-		"id" => isset( $post->ID ) ? (int)$post->ID : 0,
+	$args = shortcode_atts(array(
+		"id" => isset( $post->ID ) ? (int) $post->ID : 0,
 		"time" => 'all',
 		"date" => '' //YYYYMMDD format
-	), $atts));
-	if( (int)$id > 0 ) {
-		global $timings, $time_shortcuts;
-		$date = $date != '' ? $date : date( $timings[$time] );
+	), $atts, 'bawpvc' );
+
+	$id = $args['id'];
+	if ( (int) $id > 0 ) {
+		$timings = bawpcv_get_timings();
+		$time = $args['time'];
+		$date = $args['date'] != '' ? $args['date'] : date( $timings[$time] );
 		$date = $time == 'all' ? '' : '-' . $date;
 		$meta_key = apply_filters( 'baw_count_views_meta_key', '_count-views_' . $time . $date, $time, $date );
-		$count = (int)get_post_meta( $id, $meta_key, true );
+		$count = (int) get_post_meta( $id, $meta_key, true );
 		do_action( 'baw_count_views_count_action', $count, $meta_key, $time, $date, $id );
 		$count = apply_filters( 'baw_count_views_count', $count, $meta_key, $time, $date, $id );
-		return $count;
+		return '<p class="bawpvc-ajax-counter" data-id="' . $id . '">' . $count . '</p>';
 	}
 	return '';
 }
 
 add_filter( 'baw_count_views_count', 'bawpvc_format', 1 );
-function bawpvc_format( $count )
-{
-	global $bawpvc_options;
+function bawpvc_format( $count ) {
+	$bawpvc_options = bawpvc_get_options();
 	return sprintf( str_replace( '%count%', '%d', $bawpvc_options['format'] ), $count );
 }
 
-function bawmrp_wp_dropdown_cats( $output )
-{
-	$output = str_replace( '<select ', '<select size="4" multiple ', $output );
-	$output = str_replace( '[exclude_cat]"', '[exclude_cat][]"', $output );
-	return $output;
-}
 
-class WP_Widget_Most_Viewed_Posts extends WP_Widget {
+class BAW_Widget_Most_Viewed_Posts extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array('classname' => 'widget_most_viewed_entries', 'description' => __( 'The most viewed posts on your site', 'bawpvc' ) );
-		parent::__construct('most-viewed-posts', __( 'Most Viewed Posts', 'bawpvc' ), $widget_ops);
+		$widget_ops = array( 'classname' => 'widget_most_viewed_entries', 'description' => __( 'The most viewed posts on your site', 'bawpvc' ) );
+		parent::__construct( 'widget_most_viewed_entries', __( 'Most Viewed Posts', 'bawpvc' ), $widget_ops );
 		$this->alt_option_name = 'widget_most_viewed_entries';
 
 		add_action( 'save_post', array(&$this, 'flush_widget_cache') );
@@ -118,7 +108,7 @@ class WP_Widget_Most_Viewed_Posts extends WP_Widget {
 		$title = apply_filters('widget_title', empty($instance['title']) ? __('Most Viewed Posts') : $instance['title'], $instance, $this->id_base);
 		if ( empty( $instance['number'] ) || ! $number = absint( $instance['number'] ) )
  			$number = 10;
-		global $timings;
+		$timings = bawpcv_get_timings();
 		$date = $instance['date'] != '' ? $instance['date'] : date( $timings[$instance['time']] );
 		$date = $instance['time'] == 'all' ? '' : '-' . $date;
 		$time = $instance['time'];
@@ -126,7 +116,7 @@ class WP_Widget_Most_Viewed_Posts extends WP_Widget {
 		$order = $instance['order'] == 'ASC' ? 'ASC' : 'DESC';
 		$author_id = $instance['author'];
 		$meta_key = apply_filters( 'baw_count_views_meta_key', '_count-views_' . $time . $date, $time, $date );
-		global $bawpvc_options;
+		$bawpvc_options = bawpvc_get_options();
 		$r = new WP_Query( array(	'posts_per_page' => $number, 
 									'no_found_rows' => true, 
 									'post_status' => 'publish', 
@@ -213,7 +203,8 @@ class WP_Widget_Most_Viewed_Posts extends WP_Widget {
 
 		<p><label for="<?php echo $this->get_field_id('time'); ?>"><?php _e( 'Which top do you want:', 'bawpvc' ); ?></label>
 		<select id="<?php echo $this->get_field_id('time'); ?>" name="<?php echo $this->get_field_name('time'); ?>">
-		<?php global $timings;
+		<?php 
+			$timings = bawpcv_get_timings();
 			foreach( $timings as $timing=>$dummy ) { ?>
 			<option value="<?php echo esc_attr( $timing ); ?>" <?php selected( $timing, $time ); ?>><?php echo ucwords( esc_html( $timing ) ); ?></option>
 			<?php } ?>
@@ -226,7 +217,7 @@ class WP_Widget_Most_Viewed_Posts extends WP_Widget {
 			<option value="<?php echo $u->ID; ?>" <?php selected( $author_id, $u->ID ); ?>><?php echo ucwords( esc_html( $u->display_name ) ); ?></option>
 			<?php } ?>
 		</select>
-		<?php /* /// soon
+		<?php /* // todo
 		<p><label for="<?php echo $this->get_field_id('author'); ?>"><?php _e( 'Exclude categories: (Multiple choise possible)', 'bawpvc' ); ?></label>
 		<?php add_filter( 'wp_dropdown_cats', 'bawmrp_wp_dropdown_cats' ); ?>
 		<?php wp_dropdown_categories( array( 'name'=>$this->get_field_name('exclude_cat').'[]' ) ); //// ?>
@@ -250,13 +241,20 @@ class WP_Widget_Most_Viewed_Posts extends WP_Widget {
 <?php
 	}
 }
+// todo2
+// function bawmrp_wp_dropdown_cats( $output )
+// {
+// 	$output = str_replace( '<select ', '<select size="4" multiple ', $output );
+// 	$output = str_replace( '[exclude_cat]"', '[exclude_cat][]"', $output );
+// 	return $output;
+// }
 
 add_shortcode( 'most_views', 'bawpvc_shortcode_top_most' );
 add_shortcode( 'most_view', 'bawpvc_shortcode_top_most' );
 add_shortcode( 'most_viewed', 'bawpvc_shortcode_top_most' );
-function bawpvc_shortcode_top_most( $atts, $content )
-{
-	global $timings, $time_shortcuts, $bawpvc_options;
+function bawpvc_shortcode_top_most( $atts, $content ) {
+	$timings = bawpcv_get_timings();
+	$bawpvc_options = bawpvc_get_options();
 	extract(shortcode_atts(array(
 		'number' => 10,
 		'show' => 1,
@@ -321,13 +319,17 @@ function bawpvc_shortcode_top_most( $atts, $content )
 	return $result;
 }
  
-add_action( 'init', 'bawpvc_widgets_init', 1 );
-function bawpvc_widgets_init()
-{
-	global $timings, $bawpvc_options;
+add_action( 'widgets_init', 'bawpvc_widgets_init' );
+function bawpvc_widgets_init() {
+	register_widget( 'BAW_Widget_Most_Viewed_Posts' );
+}
+
+add_action( 'init', 'bawpvc_init', 1 );
+function bawpvc_init() {
 	load_plugin_textdomain( 'bawpvc', '', dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-	register_widget( 'WP_Widget_Most_Viewed_Posts' );
-	$timings = apply_filters( 'baw_count_views_timings', array( 'all'=>'', 'day'=>'Ymd', 'week'=>'YW', 'month'=>'Ym', 'year'=>'Y' ) );
+}
+
+function bawpvc_get_options() {
 	$bawpvc_args = array( 'time' => 0,
 				'format' => ' (%count%)',
 				'in_content' => false,
@@ -335,24 +337,23 @@ function bawpvc_widgets_init()
 				'no_admins' => false,
 				'post_types' => array( 'post' )
 			);
-	$bawpvc_options = wp_parse_args( get_option( 'bawpvc_options' ), $bawpvc_args );
+	return wp_parse_args( get_option( 'bawpvc_options' ), $bawpvc_args );
 }
 
-function bawpvc_settings_page()
-{
+function bawpcv_get_timings() {
+	return apply_filters( 'baw_count_views_timings', array( 'all'=>'', 'day'=>'Ymd', 'week'=>'YW', 'month'=>'Ym', 'year'=>'Y' ) );
+}
+
+function bawpvc_settings_page() {
 	add_settings_section( 'bawpvc_settings_page', sprintf( __( 'General', 'bawpvc' ), BAWPVC_FULLNAME ), '__return_false', 'bawpvc_settings' );
-		add_settings_field( 'bawpvc_field_time_count', __( 'Time between counts', 'bawpvc' ), 'bawpvc_field_time_count', 'bawpvc_settings', 'bawpvc_settings_page' );
 		add_settings_field( 'bawpvc_field_format', __( 'Count format', 'bawpvc' ), 'bawpvc_field_format', 'bawpvc_settings', 'bawpvc_settings_page' );
 		add_settings_field( 'bawpvc_field_in_content', __( 'Display counter in post content', 'bawpvc' ), 'bawpvc_field_in_content', 'bawpvc_settings', 'bawpvc_settings_page' );
 		add_settings_field( 'bawpvc_field_no_members', __( 'Do not count views for logged members', 'bawpvc' ), 'bawpvc_field_no_members', 'bawpvc_settings', 'bawpvc_settings_page' );
 		add_settings_field( 'bawpvc_field_no_admins', __( 'Do not count views for admins', 'bawpvc' ), 'bawpvc_field_no_admins', 'bawpvc_settings', 'bawpvc_settings_page' );
 		add_settings_field( 'bawpvc_field_post_types', __( 'Select post types', 'bawpvc' ), 'bawpvc_field_post_types', 'bawpvc_settings', 'bawpvc_settings_page' );
-	add_settings_section( 'bawpvc_settings_page', sprintf( __( 'About', 'bawpvc' ), BAWPVC_FULLNAME ), '__return_false', 'bawpvc_settings2' );
-		add_settings_field( 'bawpvc_field_about', '', create_function( '', "include( dirname( __FILE__ ) . '/about.php' );" ), 'bawpvc_settings2', 'bawpvc_settings_page' );
 ?>
 	<div class="wrap">
-	<?php screen_icon( 'options-general' ); ?>
-	<h2><?php echo BAWPVC_FULLNAME; ?> v<?php echo BAWPVC_VERSION; ?></h2>
+	<h3><?php echo BAWPVC_FULLNAME; ?> v<?php echo BAWPVC_VERSION; ?></h3>
 
 	<form action="options.php" method="post">
 		<?php settings_fields( 'bawpvc_settings' ); ?>
@@ -363,16 +364,16 @@ function bawpvc_settings_page()
 <?php
 }
 
-function bawpvc_field_post_types()
-{
-	global $bawpvc_options;
-	foreach( get_post_types( array( ), 'objects' ) as $cpt ):
+function bawpvc_field_post_types() {
+	$bawpvc_options = bawpvc_get_options();
+	$cpts = get_post_types( array( ), 'objects' );
+	foreach ( $cpts as $cpt ) {
 		$checked = checked( in_array($cpt->name, $bawpvc_options['post_types']) ? 'on' : '', 'on', false );
 		$name = esc_attr( $cpt->name );
 		$label = esc_html( $cpt->label );
 		$public = $cpt->public ? __( 'Public', 'bawpvc' ) : __( 'Not public', 'bawpvc' );
 		printf( '<label><input type="checkbox" %s name="bawpvc_options[post_types][]" value="%s" /> %s <em>(%s)</em></label><br />', $checked, $name, $label, $public );
-	endforeach;
+	}
 	?>
 	<code>
 	<?php _e( 'Public: Whether a post type is intended to be used publicly either via the admin interface or by front-end users.<br />Not public: The opposite...', 'bawpvc' ); ?>
@@ -380,57 +381,50 @@ function bawpvc_field_post_types()
 	<?php
 }
 
-function bawpvc_field_no_members()
-{
-	global $bawpvc_options;
+function bawpvc_field_no_members() {
+	$bawpvc_options = bawpvc_get_options();
 ?>
 	<label><input type="checkbox" name="bawpvc_options[no_members]" <?php checked( $bawpvc_options['no_members'], 'on' ); ?> /> <em><?php _e( 'Check me to avoid counting views for logged members.', 'bawpvc' ); ?></em></label>
 <?php
 }
 
-function bawpvc_field_no_admins()
-{
-	global $bawpvc_options;
+function bawpvc_field_no_admins() {
+	$bawpvc_options = bawpvc_get_options();
 ?>
 	<label><input type="checkbox" name="bawpvc_options[no_admins]" <?php checked( $bawpvc_options['no_admins'], 'on' ); ?> /> <em><?php _e( 'Check me to avoid counting views for admins.', 'bawpvc' ); ?></em></label>
 <?php
 }
 
-function bawpvc_field_time_count()
-{
-	global $bawpvc_options;
+function bawpvc_field_time_count() {
+	$bawpvc_options = bawpvc_get_options();
 ?>
 	<input type="number" size="3" maxlength="3" name="bawpvc_options[time]" value="<?php echo absint( $bawpvc_options['time'] ); ?>" /> <em><?php _e( 'seconds', 'bawpvc' ); ?></em>
 <?php
 }
 
-function bawpvc_field_format()
-{
-	global $bawpvc_options;
+function bawpvc_field_format() {
+	$bawpvc_options = bawpvc_get_options();
 ?>
 	<input type="text" name="bawpvc_options[format]" size="40" value="<?php echo esc_attr( $bawpvc_options['format'] ); ?>" /> <em><?php _e( 'Use <code>%count%</code> to display the counter.', 'bawpvc' ); ?></em>
 <?php
 }
 
-function bawpvc_field_in_content()
-{
-	global $bawpvc_options;
+function bawpvc_field_in_content() {
+	$bawpvc_options = bawpvc_get_options();
 ?>
 	<label><input type="checkbox" name="bawpvc_options[in_content]" <?php checked( $bawpvc_options['in_content'], 'on' ); ?> /> <em><?php _e( 'Will be displayed in bottom of content.', 'bawpvc' ); ?></em></label>
 <?php
 }
 
 add_action( 'admin_menu', 'bawpvc_create_menu' );
-function bawpvc_create_menu()
-{
+function bawpvc_create_menu() {
 	add_options_page( BAWPVC_FULLNAME, BAWPVC_FULLNAME , 'manage_options', 'bawpvc_settings', 'bawpvc_settings_page' );
 	register_setting( 'bawpvc_settings', 'bawpvc_options' );
 }
 
 
 register_activation_hook( __FILE__, 'bawpvc_activation' );
-function bawpvc_activation()
-{
+function bawpvc_activation() {
 	add_option( 'bawpvc_options',array(	'time' => 0,
 										'format' => ' (%count%)',
 										'in_content' => false
@@ -438,27 +432,64 @@ function bawpvc_activation()
 }
 
 register_uninstall_hook( __FILE__, 'bawpvc_uninstaller' );
-function bawpvc_uninstaller()
-{
+function bawpvc_uninstaller() {
 	global $wpdb;
 	$wpdb->query( 'DELETE FROM ' . $wpdb->postmeta . ' WHERE meta_key LIKE "_count-views%"' );
 	delete_option( 'bawpvc_options' );
 }
 
 add_filter( 'the_content', 'bawpvc_in_content', 1 );
-function bawpvc_in_content( $content )
-{
-	global $bawpvc_options, $post;
-	if( $bawpvc_options['in_content']=='on' && in_array( $post->post_type, $bawpvc_options['post_types'] ) )
-		return $content . do_shortcode( '[post_views]' );
-	else
-		return $content;
+function bawpvc_in_content( $content ) {
+	global $post;
+	$bawpvc_options = bawpvc_get_options();
+	// if( is_home() || is_front_page() || bawpvc_main() ) {
+		wp_enqueue_script( 'jquery' );
+		add_action( 'wp_footer', 'bawpvc_ajax_script', PHP_INT_MAX );
+		$bawpvc_options = bawpvc_get_options();
+		if( 'on' == $bawpvc_options['in_content'] && in_array( $post->post_type, $bawpvc_options['post_types'] ) ) {
+			return $content . do_shortcode( '[post_views]' );
+		} else {
+			return $content;
+		}
+	// }
+}
+
+function bawpvc_ajax_script() {
+	$bawpvc_options = bawpvc_get_options();
+?>
+<script>
+jQuery( document ).ready( function($) {
+	$('.bawpvc-ajax-counter').each( function( i ) {
+		var $id = $(this).data('id');
+		var t = this;
+		var n = <?php echo (int) is_single(); ?>;
+		$.get('<?php echo admin_url( 'admin-ajax.php' ); ?>?action=bawpvc-ajax-counter&p='+$id+'&n='+n, function( html ) {
+			$(t).html( html );
+		})
+	});
+});
+</script>
+<?php
+}
+
+add_action( 'wp_ajax_bawpvc-ajax-counter', 'bawpvc_ajax_callback' );
+add_action( 'wp_ajax_nopriv_bawpvc-ajax-counter', 'bawpvc_ajax_callback' );
+function bawpvc_ajax_callback() {
+	if ( isset( $_GET['p'], $_GET['n'] ) ) {
+		global $post;
+		$post = get_post( $_GET['p'] );
+		$count = (int) get_post_meta( $post->ID, '_count-views_all', true );
+		if ( $_GET['n'] == 1 && bawpvc_main() ) {
+			++$count;
+		}
+		die( bawpvc_format( $count ) );
+	}
 }
 
 add_action( 'add_meta_boxes', 'bawpvc_add_meta_boxes' );
-function bawpvc_add_meta_boxes()
-{
-	foreach ( get_post_types( array(  ), 'names' ) as $cpt )
+function bawpvc_add_meta_boxes() {
+	$cpts = get_post_types( array(  ), 'names' );
+	foreach ( $cpts as $cpt )
 	add_meta_box(
 		'bawpvc_meta_box',
 		BAWPVC_FULLNAME,
@@ -468,15 +499,15 @@ function bawpvc_add_meta_boxes()
 	);
 }
 
-function bawpvc_add_metabox()
-{
+function bawpvc_add_metabox() {
 ?>
 	<div id="bawpvc_box">
 		<?php _e( '(Clic value to edit it)', 'bawpvc' ); ?>
 		<br />
 		<ul>
 			<?php
-			global $post, $timings;
+			global $post;
+			$timings = bawpcv_get_timings();
 			foreach( $timings as $time=>$date ):
 				if( $date != '' ) $date = '-' . date( $date );
 				$meta_key = apply_filters( 'baw_count_views_meta_key', '_count-views_' . $time . $date, $time, $date );
@@ -505,12 +536,12 @@ function bawpvc_add_metabox()
 }
 
 add_action( 'save_post', 'bawpvc_reset_from_meta_box' );
-function bawpvc_reset_from_meta_box()
-{
+function bawpvc_reset_from_meta_box() {
 	$capa = apply_filters( 'baw_count_views_capa_role', 'edit_posts' );
 	if( isset( $_POST['bawpvc_reset_nonce'], $_POST['post_ID'] ) && current_user_can( $capa, (int)$_POST['post_ID'] ) && (int)$_POST['post_ID']>0 ):
 		check_admin_referer( 'bawpvc-reset_' . $_POST['post_ID'], 'bawpvc_reset_nonce' );
-		global $wpdb, $timings;
+		global $wpdb;
+		$timings = bawpcv_get_timings();
 		if( isset( $_POST['bawpvc_reset'] ) && $_POST['bawpvc_reset']=='on' ):
 			$wpdb->query( 'DELETE FROM ' . $wpdb->postmeta . ' WHERE post_id = ' . (int)$_POST['post_ID'] . ' AND meta_key LIKE "_count-views%"' );
 			return;
@@ -526,42 +557,39 @@ function bawpvc_reset_from_meta_box()
 	endif;
 }
 
-function bawpvc_add_post_columns( $columns )
-{
+function bawpvc_add_post_columns( $columns ) {
 	$columns['bawpvc'] = BAWPVC_FULLNAME;
 	return $columns;
 }
 
 add_action( 'baw_count_views_render_post_columns', 'bawpv_render_post_columns_action' );
-function bawpv_render_post_columns_action( $post_id )
-{
-	echo (int)get_post_meta( $post_id, '_count-views_all', true );
+function bawpv_render_post_columns_action( $post_id ) {
+	echo (int) get_post_meta( $post_id, '_count-views_all', true );
 }
 
-function bawpvc_render_post_columns( $column_name, $post_id )
-{
+function bawpvc_render_post_columns( $column_name, $post_id ) {
 	$capa = apply_filters( 'baw_count_views_capa_role', 'edit_posts' );
-	if( $column_name == 'bawpvc' && current_user_can( $capa ) )
+	if( $column_name == 'bawpvc' && current_user_can( $capa ) ) {
 		do_action( 'baw_count_views_render_post_columns', $post_id );
+	}
 }
 
 add_action( 'load-edit.php', 'bawpvc_admin_init' );
-function bawpvc_admin_init()
-{
-	global $bawpvc_options;
+function bawpvc_admin_init() {
+	$bawpvc_options = bawpvc_get_options();
 	$capa = apply_filters( 'baw_count_views_capa_role', 'edit_posts' );
-	if( current_user_can( $capa ) )
-	foreach ( $bawpvc_options['post_types'] as $cpt ):
+	if ( current_user_can( $capa ) )
+	foreach ( $bawpvc_options['post_types'] as $cpt ) {
 		add_action( 'manage_' . $cpt . '_posts_columns', 'bawpvc_add_post_columns', 10, 2 );
 		add_action( 'manage_' . $cpt . '_posts_custom_column', 'bawpvc_render_post_columns', 10, 2 );
-	endforeach;
+	}
 }
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bawpvc_settings_action_links', 10, 2 );
-function bawpvc_settings_action_links( $links, $file )
-{
-	if( current_user_can( 'manage_options' ) )
+function bawpvc_settings_action_links( $links, $file ) {
+	if ( current_user_can( 'manage_options' ) ) {
 		array_unshift( $links, '<a href="' . admin_url( 'admin.php?page=bawpvc_settings' ) . '">' . __( 'Settings' ) . '</a>' );
+	}
 	return $links;
 }
 

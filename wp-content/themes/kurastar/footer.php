@@ -29,7 +29,6 @@
 			<h3 class="footlabel">Categories</h3>
 			<div>
 				<h4>Menu</h4>
-				<?php #wp_nav_menu( array('menu' => 'header-menu')); ?>
 				<?php echo do_shortcode( '[footer_category]' ) ?>
 				<!-- footer static -->
 			</div>

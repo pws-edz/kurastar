@@ -16,7 +16,7 @@ if(!function_exists('ns_wp_common_get_feeds'))
 	$rss_items = $rss->get_items(0, $maxitems); 
 	endif;
 	echo '<ol class="ns_wp_rss_list">';
-    if ($maxitems == 0) echo '<li>No items.</li>';
+    if (!$maxitems) echo '<li>No items.</li>';
     else
     // Loop through each feed item and display each item as a hyperlink.
     foreach ( $rss_items as $item ) : 
