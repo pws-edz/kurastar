@@ -107,8 +107,6 @@ class MyShortcode {
 			<div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
 				<div class="droplistcountry">
 					<div>
-
-						<?php //wp_nav_menu( array('menu' => 'country-menu')); ?>
 						<ul id="menu-country-menu" class="menu">
 							
 						<?php
@@ -348,15 +346,11 @@ class MyShortcode {
 	            $post = $_POST;				
 
 	            if ( self::submit_registration_form($post) ) {
-	         #   	$this->unset_post();
 	            	$post = array();
-	            	#wp_redirect('/user-registration');
 	            }
 
 	        }
 
-	  //       $first_name 	= array_get($post, 'first_name');
-			// $last_name 		=  array_get($post, 'last_name');
 			$full_name 		= array_get($post, 'full_name');
 			$email_address 	=  array_get($post, 'email_address');
 			$password 		=  array_get($post, 'password');
@@ -373,9 +367,6 @@ class MyShortcode {
 
 				<!-- new register-form-template -->
 				<div class="row">
-				<!-- 	<div class="form-grp form-placeholder-offset">
-						<input type="text" name="first_name" class="form-control form-control-stroked" id="first_name" placeholder="First Name" value="<?php echo $first_name ?>" required>
-					</div> -->
 					<div class="form-grp form-placeholder-offset">
 						<input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $full_name ?>" required>
 					</div>
@@ -407,18 +398,12 @@ class MyShortcode {
 
 		$flash_messages = new Flash_Message();
 
-		// $first_name = array_get($post, 'first_name');
-		// $last_name =  array_get($post, 'last_name');
 		$full_name = array_get($post, 'full_name');
 		$email_address =  array_get($post, 'email_address');
 		$password =  array_get($post, 'password');
 		$password2 =  array_get($post, 'password_confirm');
 		$username = array_get($post, 'username');
-		
 
-		// if ( trim($first_name) == '' ) {
-		// 	$flash_messages->set(__('First Name is required.', 'wp'), 'error');
-		// }
 
 		if ( trim($full_name) == '' ) {
 			$flash_messages->set(__('Full Name is required.', 'wp'), 'error');
@@ -466,13 +451,6 @@ class MyShortcode {
     	     wp_update_user( array ('ID' => $user_id, 'role' => 'subscriber' ) ) ;
 
 	    	$flash_messages->set(__('Successfully saved the information!', 'wp'), 'updated');
-
-			// $creds = array();
-			// $creds['user_login'] = $username;
-			// $creds['user_password'] = $password2;
-			// $creds['remember'] = false;
-
-			// $user = wp_signon( $creds, false );
 
 	    	wp_redirect(home_url().'/user-login/');
 
@@ -529,7 +507,6 @@ class MyShortcode {
 
             	unset_post();
             	$post = array();
-            	#wp_redirect('/user-registration');
             }
 
         }
@@ -583,12 +560,8 @@ class MyShortcode {
 		           $user_role = $role;
 		    }
 
-//		    $flash_messages->set(__('Login successful, redirecting...', 'wp'), 'updated');
-			
-	        #wp_redirect(site_url().'/curator-detail/?id='.$user->ID);
 	        wp_redirect(home_url());
 	     	die();
-		    #return false;
 	       
 	    } else {
 	    	$flash_messages->set(__('Wrong username or password.', 'wp'), 'error');

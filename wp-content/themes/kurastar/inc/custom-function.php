@@ -5,7 +5,6 @@ if ( ! function_exists( 'wp_handle_upload' ) ) {
 }
 
 function getFacebookDetails($source_url){
-  #  $source_url = 'https://www.facebook.com/stepblogging';
     $rest_url = "http://api.facebook.com/restserver.php?format=json&method=links.getStats&urls=".urlencode($source_url);
     $json = json_decode(file_get_contents($rest_url),true);
 return $json;
@@ -296,7 +295,7 @@ function update_user_info(){
         $movefile         = wp_handle_upload( $uploadedfile, $upload_overrides );
 
         if($movefile && !isset($movefile['error'])){
-            // echo "File is valid, and was successfully uploaded.\n";
+
             $profile_url = $movefile['url'];
 
              $check = get_the_author_meta( 'profile_url', $user_id );
@@ -320,9 +319,6 @@ function update_user_info(){
             $profile_url = null;
         }
 
-        // 'file' => string '/opt/lampp/htdocs/kurastar/wp-content/uploads/2015/10/nova.jpg' (length=62)
-        // 'url'  => string 'http://kurastar.local/wp-content/uploads/2015/10/nova.jpg' (length=57)
-        // 'type' => string 'image/jpeg' (length=10)
 
     }
 
