@@ -2443,4 +2443,8 @@ ul.socialmedia li {
 .socialmedia .fa, .socialmedia a, a.social-media.googleplus, .socialmedia .smallpoints {
 	color: #fff;
 }
-
+.article-title {
+	font-size: 24px;
+	font-weight: normal;
+	color: #f08100;
+}

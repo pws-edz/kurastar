@@ -144,7 +144,7 @@
              	    <input type="hidden" name="action" value="send-like">
              	    <i class="fa fa-heart"></i>
                     <!-- <button type="submit" class="smallpoints smallpoints-left">Likes(<?php echo count_total_favorites($post->ID) ?>)</button> -->
-                    <button type="submit" class="smallpoints ">Likes ( <?php echo count_total_favorites($post->ID) ?> )</button>
+                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
 
                     <?php else: ?>
 
@@ -188,8 +188,9 @@
 			<div class="curator-detail-wrap article-detail-wrap related-posts">
 
 				<div class="detail-title">
-						<h2 class="<?php  if (isset($heading))
-						echo $heading; ?>">Yet Another Related Posts</h2>
+						<!-- <h2 class="<?php  if (isset($heading))
+						echo $heading; ?>">Yet Another Related Posts</h2> -->
+						<h2 class="article-title">Yet Another Related Posts</h2>
 					</div>
 						<ul class="post-detail-list">
 					    <?php
