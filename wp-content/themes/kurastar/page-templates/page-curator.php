@@ -97,7 +97,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             if(get_the_author_meta( 'profile_url', $user->ID )) {
               $profile =  get_the_author_meta( 'profile_url', $user->ID );
             }else{
-              $profile = $curator_profile;
+              $profile = get_template_directory_uri()."/images/default-image.jpg";
             }
 
           }

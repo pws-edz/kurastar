@@ -390,7 +390,7 @@ function getCurrentProfile($params)
     if(get_the_author_meta( 'profile_url', $user_id )) {
       $profile =  get_the_author_meta( 'profile_url', $user_id );
     }else{
-      $profile = $curator_profile;
+      $profile = get_template_directory_uri()."/images/default-image.jpg";
     }
   }
   return $profile;

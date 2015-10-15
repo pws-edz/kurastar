@@ -89,7 +89,7 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 
 							 	} else {
 
-							 		$profile = $curator_profile;
+                   				    $profile = get_template_directory_uri()."/images/default-image.jpg";
 							 	}
 							 	
 							 }

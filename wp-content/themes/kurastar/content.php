@@ -84,9 +84,9 @@
                } else {
 
 		            if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
-		              $profile =  get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+		              $profile = get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
 		            }else{
-		              $profile = $curator_profile;
+                    	$profile = get_template_directory_uri()."/images/default-image.jpg";
 		            }
                }
 

@@ -122,7 +122,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
 
                 } else {
 
-                  $profile = $curator_profile;
+                  $profile = get_template_directory_uri()."/images/default-image.jpg";
                 }
                 
                }

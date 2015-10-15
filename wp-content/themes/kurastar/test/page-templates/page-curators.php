@@ -83,7 +83,7 @@ get_header(); ?>
 
                 } else {
 
-                  $profile = $curator_profile;
+                  $profile = get_template_directory_uri()."/images/default-image.jpg";
                 }
                 
                }

@@ -62,7 +62,7 @@ get_header(); ?>
             <ul class="post-list-thumb curator-list-thumb">
             	<?php
 
-              $users = get_users( 'orderby=nicename&post_per_page=2' );   
+              $users = get_users('orderby=nicename&post_per_page=2');   
            		// Start the Loop.
            		foreach($users as $user):
                 
@@ -70,12 +70,12 @@ get_header(); ?>
                 $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
         
                 if($fb_user_access_token != '') {
-                  $profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+                  $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
                 }else{
-                  if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
-                    $profile =  get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+                  if(get_the_author_meta( 'profile_url', $user->ID )) {
+                    $profile =  get_the_author_meta( 'profile_url', $user->ID );
                   }else{
-                    $profile = $curator_profile;
+                    $profile = get_template_directory_uri()."/images/default-image.jpg";
                   }
                 }
             
