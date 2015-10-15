@@ -106,10 +106,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
               <?php if ( is_user_logged_in() ) : ?>
-              <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
               <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
-   <!--       <span id="edit" class="catlabel"><b>Edit</b> </span>
-              <span id="save" class="catlabel"><b>Save</b> </span> -->
               <?php endif; ?>
             </div>
             <div style="display:none;" class="userinfo_section">
@@ -204,29 +201,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                       <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <!-- <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span> -->
                   <?php endif; ?>               
                 </div>
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                 <p><?php the_content(); ?></p>
-                </div> -->
-                <!-- <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <img src="<?php echo $curator_profile ?>">
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-
-
-                  </div>
-                </div> -->
               </a>
             </li>
 
@@ -303,27 +279,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                       <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <!-- <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span> -->
                   <?php endif; ?>               
                 </div>
-               <!--  <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                  <p><?php the_content(); ?></p>
-                </div> -->
-                <!-- <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <?php echo $curator_profile ?>
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-                  </div>
-                </div> -->
               </a>
             </li>
               <?php
@@ -397,28 +354,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                       <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <!-- <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span> -->
                   <?php endif; ?>               
                 </div>
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                  <p><?php the_content(); ?></p>
-                </div> -->
-                <!-- <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <img src="<?php echo $curator_profile ?>">
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-                  </div>
-                </div> -->
-                
               </a>
             </li>
 

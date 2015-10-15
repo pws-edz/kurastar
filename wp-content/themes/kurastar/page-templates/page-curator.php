@@ -105,23 +105,18 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
          ?>
         
-        <!--  <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <div class="labels labels2">
-          <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
-          </span>
-        </div> -->
-
         <div class="img-round">
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
               <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
+
+              
+              <span class="icon-cam-holder">
+                <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
+              </span>
+
           <?php }else{ ?>
               <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " height="96" width="96">
           <?php } ?>
-
-          <span class="icon-cam-holder">
-            <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
-          </span>
 
         </div>
           <div class="labels labels2">
@@ -234,26 +229,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                 <p><?php the_content(); ?></p>
-                </div> -->
-                <!-- <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <img src="<?php echo $curator_profile ?>">
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-
-
-                  </div>
-                </div> -->
               </a>
               <div class="labels">
 
@@ -343,26 +318,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                  <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <?php echo $curator_profile ?>
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-
-
-                  </div>
-                </div> -->
               </a>
               <div class="labels">
 
@@ -450,26 +405,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               ?>
               <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
                 
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                  <p><?php the_content(); ?></p>
-                </div>
-                <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <img src="<?php echo $curator_profile ?>">
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-
-
-                  </div>
-                </div> -->
               </a>
               <div class="labels">
 
@@ -555,14 +490,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-
-
-
-      // $(document).on('mouseenter', "#blah", function(e) {
-      //   $( "#image-button" ).show();
-      // }).on('mouseleave', "#blah", function(e) {    
-      //   $('#image-button').fadeOut('slow');
-      // });
 
       $(document).on('click', "#image-button", function(e) {
         $('#imgInp').trigger('click');
