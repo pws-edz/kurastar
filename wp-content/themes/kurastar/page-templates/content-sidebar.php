@@ -50,9 +50,8 @@ get_header(); ?>
 
 		<?php 
 			while (have_posts()) : the_post();?>
-					<h2 class="whatsnew"><?php  the_title(); ?></h2>
+					<h2 class="whatsnew"><?php  the_content(); ?></h2>
 			<?php
-			the_content();
 			endwhile;
 		?>
 		
@@ -66,7 +65,7 @@ get_header(); ?>
 				</a>
 			</div>
 
-			<a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
+			<a href="<?php echo bloginfo() ?>/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
 			<?php echo do_shortcode( '[most_view]' ); ?> 
 			<div class="sideboxcontent ad300">
 				<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
