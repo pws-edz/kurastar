@@ -153,9 +153,9 @@ function post_acme_article($post){
     if(!$post['post_id']){
       $post_data = array(
           'post_title'    => wp_strip_all_tags( $post['post_title'] ),
-          'post_content'  => $post['post_desc'],
+          'post_content'  => $post['post_title'],
           'tax_input'     => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
-          'post_status'   => $post['Save'] != '' ? 'draft' : 'publish', 
+          'post_status'   => isset($post['Save']) ? 'draft' : 'publish', 
           'post_type'     => $post['custom_post_type'],
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
       );
@@ -168,7 +168,9 @@ function post_acme_article($post){
       $message = 'Post Updated.';
     }
 
-    add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
+    if(isset($post['paste_featured_img'])){
+      add_post_meta( $post_id, '_custom_image_link', $post['paste_featured_img'], true );
+    }
 
     if(!empty($_FILES['post_featured_img']['name'])){
       $uploaddir = wp_upload_dir();

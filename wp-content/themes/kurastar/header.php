@@ -56,9 +56,9 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 					<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="株式会社 デュナレイト" title="株式会社 デュナレイト" /></a>
 				</div>
 
-				<div class="searchform">
+				<!-- <div class="searchform">
 					<?php get_search_form();?>
-				</div>
+				</div> -->
 
 				<div class="actions">
 					<?php if (!is_user_logged_in()): ?>
