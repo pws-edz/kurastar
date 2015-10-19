@@ -246,7 +246,7 @@
 					<?php
 							wp_reset_query(); 
 
-							$total_page = ceil( $query->found_posts / 6 );
+							$total_page = ceil( $query->found_posts / 6);
 							$current_link = get_permalink($post->ID);
 							echo "<div class='wp-pagenavi'>";
 							echo "<span class='pages'>Page ". $p ." of ". $total_page ."</span>";
@@ -260,8 +260,14 @@
 									echo '<a href="'. $current_link. $i. '">'. $i .'</a>';	
 								}
 							}
-							echo '<a class="nextpostslink" href="'. $current_link . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
-							echo '<a class="last" href="'. $current_link . $total_page .'/">Last »</a>';
+							
+
+							if( $p != $total_page ) { //added to hide the last and next arrow when the page is already last.
+
+								echo '<a class="nextpostslink" href="'. $current_link . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
+								echo '<a class="last" href="'. $current_link . $total_page .'/">Last »</a>';
+							}
+							
 							echo '</div>';
 		            ?>
 
