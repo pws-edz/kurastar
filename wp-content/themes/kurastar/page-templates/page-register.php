@@ -59,7 +59,6 @@ get_header(); ?>
 		  		<p class="reg-copy">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 				</p>
-			  <?php// echo do_shortcode('[contact-form-7 id="10" title="User Registration"]'); ?>
 			  <?php echo do_shortcode('[do_registration]'); ?>
 
 
@@ -68,12 +67,11 @@ get_header(); ?>
 		  <div class="col-md-6 form-right">
 		  	<div class="user-login">
 		  		<h2>Login:</h2>
-			 	<?php //echo do_shortcode('[contact-form-7 id="16" title="Log in"]'); ?>
 			 	<?php echo do_shortcode( '[do_login]') ?>
 			</div>
 			<?php if ( !is_user_logged_in() ) { ?>
 			<div class="sns-login sns-desktop">
-				<div><?php //echo do_shortcode('[wordpress_social_login]'); ?></div>
+				<div></div>
 				<h2>SNS Login:</h2>
 				<ul class="list-inline">
 					<?php $row = 1; if(get_field('sns_log_in_list')): ?>
@@ -94,8 +92,6 @@ get_header(); ?>
 				<ul class="list-inline">
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-					<!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-					<li><a href="#"><i class="fa fa-yahoo"></i></a></li> -->
 				</ul>
 			</div>
 			<?php } ?>

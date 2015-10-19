@@ -104,21 +104,23 @@ get_header(); ?>
             <span class="search-results">
               
               <?php   
-                $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-                $url = trim($url, '/');
-                $search = explode('/', $url);
-                echo end($search);
+                echo 'Country: ';
+                echo getSearchKeyword();
               ?> 
               <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
             </span>
 
             <!-- Tab panes -->
             <ul class="post-list-thumb">
-              <?php
-            // Start the Loop.
-               query_posts( array( 'post_type' => 'acme_article', '' => '', 
-              'meta_value' => $menu_slug,) );
-              while ( $query->have_posts() ) : $query->the_post(); 
+            <?php
+              // Start the Loop.
+              query_posts( array( 
+                'post_type' => 'acme_article', 
+                '' => '', 
+                // 'meta_value' => $menu_slug
+              ));
+
+              while( $query->have_posts() ) : $query->the_post(); 
             ?>
 
                 <li>

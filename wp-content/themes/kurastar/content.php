@@ -68,7 +68,7 @@
 				<?php
                  $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 
-                 //Returns All Term Items for "my_taxonomy"
+                //Returns All Term Items for "my_taxonomy"
                 $category        = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries       = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
                 $authorID        = get_the_author_meta($post->ID);
@@ -84,7 +84,7 @@
                } else {
 
 		            if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
-		              $profile = get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+		              	$profile = get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
 		            }else{
                     	$profile = get_template_directory_uri()."/images/default-image.jpg";
 		            }
@@ -121,7 +121,7 @@
 				</div>
 				<div class="curator-info">
 					<div class="curator-info">
-					<p><?php the_content();  ?></p>
+					<p><?php the_title();  ?></p>
 				</div>
 				</div>
 				<div class="infobelow">
@@ -131,27 +131,22 @@
 						<ul class="socialmedia">
 							<li class="like-button">
 								<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
-
 								<form class="form-send-like" method="POST">
 								<p class="message"></p>
-                <div class="form-group">
-             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-             	    <input type="hidden" name="action" value="send-like">
-             	    <i class="fa fa-heart"></i>
-
-                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
-
-                    <?php else: ?>
-
-	                    	<i class="fa fa-heart"></i>
-	                    	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-
-                        <?php endif; ?>	
-		                </div>
-		            </form>
+					                <div class="form-group">
+					             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+					             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+					             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+					             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+					             	    <input type="hidden" name="action" value="send-like">
+					             	    <i class="fa fa-heart"></i>
+					                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
+					                </div>
+					            </form>
+			                    <?php else: ?>
+			                    	<i class="fa fa-heart"></i>
+			                    	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+		                        <?php endif; ?>	
 							</li>
 
 							<li class="twit-button">
@@ -190,13 +185,13 @@
 					</div>
 						<ul class="post-detail-list">
 					    <?php
-					    	 $p = get_query_var('page') ? get_query_var('page') : 1;
+					    	$p = get_query_var('page') ? get_query_var('page') : 1;
 				            $param = array( 
 				                    'post_type'       => 'acme_article', 
 				                    'posts_per_page'  => 6, 
 				                    'paged'           => $p, 
 				                    'author'          => get_the_author_meta( 'ID' ), 
-				                   'post__not_in' => array($post->ID),
+				                    'post__not_in'    => array($post->ID),
 				                    'orderby'         => 'post_date',
 				                    'order'           => 'DESC');
 			                $query = new WP_Query( $param );
@@ -250,7 +245,6 @@
 				</ul>
 					<?php
 							wp_reset_query(); 
-								
 
 							$total_page = ceil( $query->found_posts / 6 );
 							$current_link = get_permalink($post->ID);
@@ -269,7 +263,7 @@
 							echo '<a class="nextpostslink" href="'. $current_link . ( $page < $total_page ? $p + 1 : $p ) .'">»</a>';
 							echo '<a class="last" href="'. $current_link . $total_page .'/">Last »</a>';
 							echo '</div>';
-				           ?>
+		            ?>
 
 				<div class="clear"></div>
 			</div>

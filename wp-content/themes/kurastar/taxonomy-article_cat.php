@@ -102,7 +102,10 @@ get_header(); ?>
                 }?>
             </div>
             <span class="search-results">
-              <?php echo getSearchKeyword(); ?>
+              <?php 
+                echo 'Category: ';
+                echo getSearchKeyword(); 
+              ?>
               <?php echo $query->post_count > 1 ? 'results' : 'result'?> (<?php echo $startpost.'-'.$endpost.' of '.$query->found_posts ?> <?php echo $query->post_count > 1 ? 'items' : 'item' ?>):
             </span>
 
@@ -112,7 +115,7 @@ get_header(); ?>
             // Start the Loop.
               query_posts( array( 
                 'post_type' => 'acme_article', 
-                '' => '', 
+                '' => '',
               ));
               while ( $query->have_posts() ) : $query->the_post(); 
             ?>

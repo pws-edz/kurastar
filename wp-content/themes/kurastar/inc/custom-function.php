@@ -374,7 +374,7 @@ function categoryLogo($params)
 
 function getSearchKeyword()
 {
-  $search = trim($_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], '/');              
+  $search = trim($_SERVER["HTTP_HOST"] . $_SERVER["REDIRECT_URL"], '/');              
   $search = explode('/', $search);
   return ucwords(end($search));
 }
