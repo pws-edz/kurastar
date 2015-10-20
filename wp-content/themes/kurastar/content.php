@@ -65,10 +65,9 @@
 
 			<div class="curator-detail-wrap article-detail-wrap">
 
-
-
-				<!-- EDIT HERE -->
-				<div class="pointer2"></div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4">
+						<div class="pointer2"></div>
 				<?php
                  $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 
@@ -100,9 +99,9 @@
        
                ?>
 				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>);"></div>
-
-				
-				<div class="article-det-wrapper">
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-8">
+						<div class="article-det-wrapper">
 					<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
@@ -182,8 +181,8 @@
 				<div class="clear"></div>
 
 				</div>
-
-				
+					</div>
+				</div>
 			</div>
 
 

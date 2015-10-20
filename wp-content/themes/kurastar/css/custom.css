@@ -767,7 +767,7 @@ p {
 	padding: 20px;
 }
 .post-list-thumb-wrap {
-	overflow:auto;
+	overflow:hidden;
 }
 a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	color:#353535;
@@ -783,11 +783,12 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-bottom:15px;
 }
 .postimg {
-    width: 100%;
+    width: 250px;
     height: 250px;
     background-size: cover!important;
     background-position: center!important;
     background-repeat: no-repeat!important;
+    margin: auto;
 }
 .curator-list-thumb .postimg {
 	height: 115px;
@@ -1526,7 +1527,8 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	font-size:22px;
 	position:absolute;
 	right:7px;
-	top:7px;
+	/*top:7px;*/
+	top: -15px;
 	color:#898989;
 	text-align:center;
 	line-height:26px;
