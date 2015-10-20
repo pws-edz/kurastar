@@ -146,7 +146,6 @@ function args_func($get, $paged) {
 
 
 function post_acme_article($post){
-   
 
   if($post){
 

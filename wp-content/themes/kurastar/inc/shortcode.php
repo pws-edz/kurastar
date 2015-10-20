@@ -82,7 +82,7 @@ class MyShortcode {
 							$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 	                    ?>
 						<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
-						<h4 class="ranktitle"><?php the_title(); ?></h4>
+						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
 						<span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 					</a>
 				</li>
@@ -409,18 +409,23 @@ class MyShortcode {
 			$flash_messages->set(__('Full Name is required.', 'wp'), 'error');
 		}
 
-
 		if ( trim($email_address) == '' ) {
 			$flash_messages->set(__('Email-address is required.', 'wp'), 'error');
 		} elseif ( ! filter_var($email_address, FILTER_VALIDATE_EMAIL) ) {
 			$flash_messages->set(__('Email-address invalid format.', 'wp'), 'error');
 		}
 
+		if(!preg_match('/^[a-zA-Z0-9]{4,16}$/', $username))
+	    {
+           $flash_messages->set(__('Username must be 4-16 characters and contain letters and numbers only.', 'wp'), 'error');
+	    }
+
 		if ( trim($password) == '' ) {
 			$flash_messages->set(__('Password is required.', 'wp'), 'error');
-		} elseif (strlen($password) < 5) {
-			$flash_messages->set(__('Password min of 5 characters.', 'wp'), 'error');
-		}
+		} elseif(!preg_match('/^[a-zA-Z0-9]{4,16}$/', $password))
+	    {
+           $flash_messages->set(__('Password must be 4-16 characters and contain letters and numbers only.', 'wp'), 'error');
+	    }
 
 		if ( trim($password2) == '' ) {
 			$flash_messages->set(__('Confirm Password is required.', 'wp'), 'error');

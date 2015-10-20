@@ -160,7 +160,7 @@ class bcn_breadcrumb
 	 */
 	public function title_trim($max_length)
 	{
-		_deprecated_function(__FUNCTION__, '5.2.0');
+		//_deprecated_function(__FUNCTION__, '5.2.0');
 		//To preserve HTML entities, must decode before splitting
 		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
 		$title_length = mb_strlen($this->title);

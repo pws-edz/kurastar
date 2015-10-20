@@ -45,9 +45,6 @@ get_header(); ?>
 		</div>
 	</div>
 	<div class="defaultWidth center clear-auto bodycontent registration-page">
-		<div class="alert alert-warning">
-	    <strong>You entered invalid Username and Password. Please try again.</strong>
-	  </div>
 	<div class="contentbox nosidebar">
 		<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
         <?php if(function_exists('bcn_display'))

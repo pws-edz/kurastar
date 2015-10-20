@@ -71,7 +71,7 @@ if ( ! class_exists('Flash_Message') ) {
 
 					$msg_text = $this->recursive_arr($message, $msg_text);
 
-					$message_text .= '<div class="flash-message '.$type.'"><p>'.$msg_text.'</p></div>';
+					$message_text .= '<div class="alert alert-warning '.$type.'"><strong>'.$msg_text.'</strong></div>';
 				}
 
 

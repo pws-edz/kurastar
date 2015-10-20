@@ -200,7 +200,7 @@ get_header(); ?>
 					<input type="text" name="post_id" id="post-id" placeholder="Post ID" value="<?php echo isset($result['post_id']) ? $result['post_id'] : ''  ?>">
 				</div>
 				<div class="form-grp">
-					<textarea name="post_title" class="text-height" placeholder="Description"><?php echo isset($_POST['post_desc']) ? $_POST['post_desc'] : ''  ?></textarea>
+					<textarea name="post_title" class="text-height" placeholder="Description"><?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?></textarea>
 				</div>
 	    	</div>
     	
