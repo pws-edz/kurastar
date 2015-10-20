@@ -2444,19 +2444,6 @@ ul.socialmedia li {
 	font-weight: normal;
 	color: #f08100;
 }
-.flash-message .error {
-	background-color: red;
-	text-align: center;
-	margin: 15px 30px;
-	padding-top: 10px;
-}
-.flash-message .error p {
-	text-transform: uppercase;
-	color: white;
-}
-.flash-message .error p {
-	padding-bottom: 10px;
-}
 .alert-warning {
 	font-size: 15px;
 }
