@@ -569,7 +569,7 @@ class MyShortcode {
 	     	die();
 	       
 	    } else {
-	    	$flash_messages->set(__('Wrong username or password.', 'wp'), 'error');
+	    	$flash_messages->set(__('You entered invalid Username and Password. Please try again.', 'wp'), 'error');
 	    	return false;
 	    
 	    	

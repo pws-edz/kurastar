@@ -44,9 +44,6 @@ get_header(); ?>
 	</div>
 </div>
 <div class="defaultWidth center clear-auto bodycontent registration-page loginbox">
-	  <div class="alert alert-warning">
-	    <strong>You entered invalid Username and Password. Please try again.</strong>
-	  </div>
 	<div class="contentbox nosidebar">
 
 		<?php echo do_shortcode( '[do_login]') ?>
