@@ -783,12 +783,13 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-bottom:15px;
 }
 .postimg {
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 230px;
     background-size: cover!important;
     background-position: center!important;
     background-repeat: no-repeat!important;
     margin: auto;
+    margin-top: 2px;
 }
 .curator-list-thumb .postimg {
 	height: 115px;

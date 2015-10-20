@@ -64,7 +64,10 @@
             </div>
 
 			<div class="curator-detail-wrap article-detail-wrap">
-				<div class="pointer2"></div>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4">
+						<div class="pointer2"></div>
 				<?php
                 //Returns All Term Items for "my_taxonomy"
                 $category        = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
@@ -92,7 +95,10 @@
        
                ?>
 				<div class="postimg postimg2" style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
-				<div class="labels">
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-8">
+						<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
 	                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
@@ -169,6 +175,14 @@
 					<?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
 				</div>
 				<div class="clear"></div>
+					</div>
+				</div>
+				
+
+				
+
+
+				
 			</div>
 
 
