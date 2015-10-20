@@ -1392,16 +1392,28 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	width:30%;
 	margin-right:3%;
 }
-.curator-list .curator-info {
+.curator-list .curator-info .article{
 	width: auto;
 	border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
-
+}
+.curator-list .curator-info {
+	width: 67%;
+	border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
 }
 .curator-info {
 	height:auto;
 	margin-bottom:8px;
-  	width: auto;
+	/*width: 62%;*/
+	width: auto;
+  	float: left;
+}
+.article-det .curator-info {
+	height:auto;
+	margin-bottom:8px;
+  width: auto !important;
+  float: none !important;
 }
 .curator-info h4 {
 	font-size:19px;

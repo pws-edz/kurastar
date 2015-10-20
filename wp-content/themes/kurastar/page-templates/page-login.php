@@ -45,7 +45,7 @@ get_header(); ?>
 </div>
 <div class="defaultWidth center clear-auto bodycontent registration-page loginbox">
 	  <div class="alert alert-warning">
-	    <strong>You entered wrong Username and Password. Please try again.</strong>
+	    <strong>You entered invalid Username and Password. Please try again.</strong>
 	  </div>
 	<div class="contentbox nosidebar">
 

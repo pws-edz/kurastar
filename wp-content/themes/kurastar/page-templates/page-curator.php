@@ -168,9 +168,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <div class="clear"></div>
           </form>
         </div>
-        <div class="points-detail">
+       <!--  <div class="points-detail">
           <?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
-        </div>
+        </div> -->
         <div class="clear"></div>
       </div>
               
@@ -185,7 +185,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           <a href="#2" aria-controls="2" role="tab" data-toggle="tab">Favorites</a>
         </li>
         <li role="presentation" class="curator-tab-list">
-          <a href="#3" aria-controls="3" role="tab" data-toggle="tab">Draft</a>
+          <a href="#3" aria-controls="3" role="tab" data-toggle="tab">Drafts</a>
         </li>
       </ul>
 

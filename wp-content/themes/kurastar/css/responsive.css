@@ -115,9 +115,12 @@
   .sns-login {
   	margin-left: 0;
   }
-  .related-posts .post-detail-list > li {
+  .related-posts .post-detail-list > li{
 		width: 100%;
 	}
+	.post-list-thumb li.list-thumb {
+		width: 100% !important;
+	} 
 }
 
 @media only screen and (min-width: 300px) and (max-width: 991px) {
@@ -355,6 +358,9 @@
 	}
 	.related-posts .post-detail-list > li {
 		width: 100%;
+	}
+	.post-list-thumb li.list-thumb {
+		width: 100% !important;
 	}
 	.form-left, .form-right {
 		width: 100%;

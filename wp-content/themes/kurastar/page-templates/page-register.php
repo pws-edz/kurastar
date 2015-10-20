@@ -45,24 +45,27 @@ get_header(); ?>
 		</div>
 	</div>
 	<div class="defaultWidth center clear-auto bodycontent registration-page">
+		<div class="alert alert-warning">
+	    <strong>You entered invalid Username and Password. Please try again.</strong>
+	  </div>
 	<div class="contentbox nosidebar">
 		<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-                <?php if(function_exists('bcn_display'))
-                {
-                    bcn_display();
-                }?>
-        </div>
+        <?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
+    </div>
 	  <div class="row">
 		  <div class="col-md-6 form-left">
 		  	<h2>User registration:</h2>
 		  	<div class="user-register">
-		  		<p class="reg-copy">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</p>
-			  <?php echo do_shortcode('[do_registration]'); ?>
+			  	<p class="reg-copy">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+				  <?php echo do_shortcode('[do_registration]'); ?>
 
 
-			</div>
+				</div>
 		  </div>
 		  <div class="col-md-6 form-right">
 		  	<div class="user-login">
