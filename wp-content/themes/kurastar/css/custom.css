@@ -1401,8 +1401,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .curator-info {
 	height:auto;
 	margin-bottom:8px;
-	width: 62%;
-  	float: left;
+  	width: auto;
 }
 .curator-info h4 {
 	font-size:19px;
@@ -1413,8 +1412,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .curator-info p {
 	line-height:20px;
-	float:left;
-	padding-right: 32px;
+	width: auto;
 }
 .curator-list-thumb .curator-info p {
 	padding-right: 19px;
@@ -1540,11 +1538,11 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	line-height:26px;
 }
 .article-detail-wrap .curator-info {
-	width:55%;
+	width: auto;
 	margin: 20px 0;
 }
 .article-detail-wrap .infobelow {
-  	float: left;
+  	float: right;
   	border-top: 1px solid rgb(221, 221, 221);
   	padding-top: 15px;
   	width: 490px;
