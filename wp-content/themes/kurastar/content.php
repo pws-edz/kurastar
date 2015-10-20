@@ -64,13 +64,8 @@
             </div>
 
 			<div class="curator-detail-wrap article-detail-wrap">
-
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-4">
-						<div class="pointer2"></div>
+				<div class="pointer2"></div>
 				<?php
-                 $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-
                 //Returns All Term Items for "my_taxonomy"
                 $category        = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries       = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -93,16 +88,11 @@
 		            }
                }
 
-
                 //diplay reference post data
-                $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
        
                ?>
-				<div class="postimg postimg2" style="background-image:url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>);"></div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-8">
-						<div class="article-det-wrapper">
-					<div class="labels">
+				<div class="postimg postimg2" style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
+				<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
 	                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
@@ -125,64 +115,60 @@
 	                    <a href="#" class="catlabel"><i class="fa fa-question"></i> No Category</a>
 	                  <?php endif; ?>  
 				</div>
-				
-				<div class="article-det">
+				<div class="curator-info">
 					<div class="curator-info">
-						<p><?php the_title();  ?></p>
-					</div>
-					<div class="infobelow">
-						<span class="smallpoints smallpoints-left">
-							
-							<ul class="socialmedia">
-								<li class="like-button">
-									<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
-									<form class="form-send-like" method="POST">
-										<p class="message"></p>
-		                <div class="form-group">
-		             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-		             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-		             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-		             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-		             	    <input type="hidden" name="action" value="send-like">
-		             	    <i class="fa fa-heart"></i>
-		                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
-		                </div>
-						      </form>
-	                <?php else: ?>
-	                	<i class="fa fa-heart"></i>
-	                	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-	                  <?php endif; ?>	
-								</li>
+					<p><?php the_title(); ?> </p>
+				</div>
+				</div>
+				<div class="infobelow">
 
-								<li class="twit-button">
-									<a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
-								</li>
+					<span class="smallpoints smallpoints-left">
+						
+						<ul class="socialmedia">
+							<li class="like-button">
+								<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
+								<form class="form-send-like" method="POST">
+								<p class="message"></p>
+					                <div class="form-group">
+					             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+					             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+					             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+					             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+					             	    <input type="hidden" name="action" value="send-like">
+					             	    <i class="fa fa-heart"></i>
+					                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
+					                </div>
+					            </form>
+			                    <?php else: ?>
+			                    	<i class="fa fa-heart"></i>
+			                    	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+		                        <?php endif; ?>	
+							</li>
 
-								<li class="gplus-button">
-									<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
-								</li>
-							</ul>
-						</span>
+							<li class="twit-button">
+								<a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
+							</li>
 
-						<div class="profile-thumb-wrap">
-							<img src="<?php echo $profile; ?>">
-							<div class="curator">
-								<span>CURATOR</span><br>
-								<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-							</div>
+							<li class="gplus-button">
+								<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
+							</li>
+						</ul>
+					</span>
+
+					<div class="profile-thumb-wrap">
+						<img src="<?php echo $profile; ?>">
+						<div class="curator">
+							<span>CURATOR</span><br>
+							<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
 						</div>
-
 					</div>
+
 
 				</div>
 				<div class="points-detail">
 					<?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
 				</div>
 				<div class="clear"></div>
-
-				</div>
-					</div>
-				</div>
 			</div>
 
 
@@ -211,15 +197,15 @@
 			              	<li>
 							  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
 			                    <?php
-				                  	$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 	             					//Returns All Term Items for "my_taxonomy"
 									$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
 									$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 									$authorID = get_the_author_meta($post->ID);
 									$curator_profile = get_cupp_meta($authorID, 'thumbnail');
 									$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
 				                ?>
-			                  		<div class="postimg" style="background: url(<?php echo ($custom_image_link != '') ? $custom_image_link : $src[0] ;  ?>)"></div>
+			                  		<div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
 				                </a>
 				                <div class="labels">
 				                	<?php if($countries): ?>

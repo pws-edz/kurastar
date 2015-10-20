@@ -396,3 +396,16 @@ function getCurrentProfile($params)
   }
   return $profile;
 }
+
+function getArticleImage($post_id)
+{
+  $custom_image_link = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), array( 5600,1000 ), false, '' );
+  $custom_image_link = $custom_image_link[0];
+
+  if(strlen($custom_image_link) > 1 ){
+    $src = $custom_image_link;
+  }else{
+    $src = get_template_directory_uri().'/images/blank-img.png';
+  }
+  return $src;
+}
