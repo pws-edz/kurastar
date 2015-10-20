@@ -16,7 +16,7 @@
 	.result-page .pagination a { margin-left: 0; }
 	.country-name-categories > li > a { padding: 22px 48px; }
 	.article-detail-page .sidebox { margin-top: 16.9%; }
-	.article-detail-wrap .curator-info { width: 45%; }
+	.article-detail-wrap .curator-info { width: auto; }
 	.article-detail-wrap .infobelow {width: auto;  }
 	.article-curator .curator-detail-wrap > img { width: 45%; }
 	.article-curator .curator-info { width: 52%; }
@@ -34,7 +34,7 @@
 	#menu-header-menu li:nth-child(1) > a:before { font-size: 15px; }
 	.transwrap input { width:295px; }
 	.post-list-thumb li { width:50%; }
-	.postimg2 { width: 100%; margin-bottom: 5px; }
+	.postimg2 { max-width: 200px; max-height: 200px; margin-top: 50px; margin-bottom: 5px; }
 	.article-detail-wrap .curator-info { width: 100%; }
 	.curator-info p { padding-right: 0; }
 	.article-detail-wrap .infobelow { width: 100%; }
@@ -115,6 +115,9 @@
   .sns-login {
   	margin-left: 0;
   }
+  .related-posts .post-detail-list > li {
+		width: 100%;
+	}
 }
 
 @media only screen and (min-width: 300px) and (max-width: 991px) {
@@ -298,20 +301,20 @@
 	.siderankimage {
 	  width: 18%;
 	  }
-	/*.curator-list-thumb img	  { width:60px; }*/
 	.curator-info h4 {
 	  font-size: 17px;
 	  line-height: 19px;
 	  }
 	  .curator-detail-wrap {
-  padding: 16px;
-  }
+	  padding: 16px;
+	  }
   	.list-single .postimg  { width: 100%; margin-bottom: 5px; }
   	.list-single .infobelow { width: 100%; }
 	.curator-list-thumb img { width:25%;  margin-right: 4%; }
 	.curator-list .curator-info { width:70%; float:left; }
 	.curator-info p { width:100%; padding-right: 0; }
-	.postimg2 { height:200px; margin-bottom: 5px; width: 100%; }
+	.postimg2 { max-width: 200px; max-height: 200px; margin-top: 50px; margin-bottom: 5px; }
+
 	.points-detail {
 		font-size:18px;
 		font-weight:600;
@@ -349,6 +352,9 @@
 	}
 	.related {
 		margin-top: 10px;
+	}
+	.related-posts .post-detail-list > li {
+		width: 100%;
 	}
 	.form-left, .form-right {
 		width: 100%;
@@ -527,8 +533,9 @@
 		  margin-right: 0;
 		  height: 200px;
 	  }
-	.article-detail-wrap .curator-info { width: 75%; margin-left: 5px; }
+	.article-detail-wrap .curator-info { width: auto; margin-left: 5px; }
 	.profile-thumb-wrap { margin-top:15px; }
+	.smallpoints {font-size: 14px;}
 	.smallpoints img { width:100%; }
 	.footermenu a { font-size:13px; }
 

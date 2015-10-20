@@ -1393,7 +1393,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-right:3%;
 }
 .curator-list .curator-info {
-	width: 67%;
+	width: auto;
 	border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 
@@ -2411,9 +2411,6 @@ input.search-field {
 	border-radius: 50px;
 	padding: 8px 23px;
 }
-/*.smallpoints-left {
-	float:left;
-}*/
 ul.socialmedia {
 	display: table;
 	margin: auto;
