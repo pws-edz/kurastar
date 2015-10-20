@@ -118,6 +118,9 @@ get_header(); ?>
 	    			<div class="select-form">
 	    				<p>select country</p>
 						<select id="cty" name="post_country">
+							<?php if(isset($result['country_id'])) : ?>
+								<option value="<?php echo $result['country_id']; ?>"><?php echo $result['country_name']; ?></option>
+							<?php endif;  ?>
 						<?php
 
 						$taxonomy = array( 
@@ -151,7 +154,7 @@ get_header(); ?>
 					        foreach($subcategories as $sub):
 					        ?>
 					          
-				        	<option value="<?php echo $sub->term_id ?>"><?php echo $sub->name ?></option>
+				        	<option value="<?php echo $sub->term_id.'@'.$sub->name ?>"><?php echo $sub->name ?></option>
 					        <?php
 					        endforeach;
 
@@ -163,6 +166,10 @@ get_header(); ?>
 					<div class="select-form">
 						<p>select category</p>
 						<select id="cat" name="post_category">
+							<?php if(isset($result['category_id'])) : ?>
+								<option value="<?php echo $result['category_id']; ?>"><?php echo $result['category_name']; ?></option>
+							<?php endif;  ?>
+
 							<?php
 							$taxonomy = '';
 							$args = '';
@@ -186,7 +193,7 @@ get_header(); ?>
 
 							foreach ($categories as $key => $category):
 							?>
-								<option value="<?php echo $category->term_id?>"><?php echo $category->name ?></option>
+								<option value="<?php echo $category->term_id.'@'.$category->name; ?>"><?php echo $category->name ?></option>
 							<?php 		
 							endforeach;
 							?>

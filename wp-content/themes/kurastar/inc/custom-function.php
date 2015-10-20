@@ -148,12 +148,20 @@ function args_func($get, $paged) {
 function post_acme_article($post){
 
   if($post){
+    $post_country      = explode('@', $post['post_country']);
+    $post_country_id   = $post_country[0];
+    $post_country_name = $post_country[1];
+
+    $post_category      = explode('@', $post['post_category']);
+    $post_category_id   = $post_category[0];
+    $post_category_name = $post_category[1];
+
 
     if(!$post['post_id']){
       $post_data = array(
           'post_title'    => wp_strip_all_tags( $post['post_title'] ),
           'post_content'  => $post['post_title'],
-          'tax_input'     => array( 'article_country_cat' => $post['post_country'], 'article_cat' => $post['post_category']),
+          'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
           'post_status'   => isset($post['Save']) ? 'draft' : 'publish', 
           'post_type'     => $post['custom_post_type'],
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
@@ -163,6 +171,17 @@ function post_acme_article($post){
       $post_id =  wp_insert_post( $post_data );
       $message = 'Post Saved.';
     }else{
+      $post_data = array(
+          'ID'            => $post['post_id'],
+          'post_title'    => wp_strip_all_tags( $post['post_title'] ),
+          'post_content'  => $post['post_title'],
+          'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
+          'post_status'   => isset($post['Save']) ? 'draft' : 'publish', 
+          'post_type'     => $post['custom_post_type'],
+          'post_author'   => get_current_user_id() // Use a custom post type if you want to
+      );
+      $post_id =  wp_update_post( $post_data );
+
       $post_id = $post['post_id'];
       $message = 'Post Updated.';
     }
@@ -212,11 +231,15 @@ function post_acme_article($post){
   }
     
   return array( 
-    'status'       => $status, 
-    'post_id'      => $post_id, 
-    'image_url'    => $image_url, 
-    'featured_img' => $image_url, 
-    'msg'          => $message
+    'status'        => $status, 
+    'post_id'       => $post_id, 
+    'image_url'     => $image_url, 
+    'featured_img'  => $image_url, 
+    'msg'           => $message, 
+    'country_id'    => $post_country_id, 
+    'country_name'  => $post_country_name, 
+    'category_id'   => $post_category_id, 
+    'category_name' => $post_category_name
   ); 
 
 }
