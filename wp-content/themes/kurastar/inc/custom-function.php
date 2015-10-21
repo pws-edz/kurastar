@@ -156,34 +156,37 @@ function post_acme_article($post){
     $post_category_id   = $post_category[0];
     $post_category_name = $post_category[1];
 
+    $post_status = (isset($post['Save'])) ? 'draft' : 'publish';
+
+
 
     if(!$post['post_id']){
       $post_data = array(
           'post_title'    => wp_strip_all_tags( $post['post_title'] ),
           'post_content'  => $post['post_title'],
           'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
-          'post_status'   => isset($post['Save']) ? 'draft' : 'publish', 
+          'post_status'   => $post_status, 
           'post_type'     => $post['custom_post_type'],
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
       );
 
         
       $post_id =  wp_insert_post( $post_data );
-      $message = 'Post Saved.';
+      $message = 'Post '.$post_status.'.';
     }else{
       $post_data = array(
           'ID'            => $post['post_id'],
           'post_title'    => wp_strip_all_tags( $post['post_title'] ),
           'post_content'  => $post['post_title'],
           'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
-          'post_status'   => isset($post['Save']) ? 'draft' : 'publish', 
+          'post_status'   => $post_status, 
           'post_type'     => $post['custom_post_type'],
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
       );
       $post_id =  wp_update_post( $post_data );
 
       $post_id = $post['post_id'];
-      $message = 'Post Updated.';
+      $message = 'Post '.$post_status.' updated.';
     }
 
     if(isset($post['paste_featured_img'])){
@@ -406,29 +409,41 @@ function getSearchKeyword()
 function getCurrentProfile($params)
 {
   $user_id              = $params['user_id'];
-  $fb_user_access_token = $params['fb_user_access_token'];
+  $fb_profile_picture   = get_user_meta( $user_id, 'fb_profile_picture', true ); 
+  $fb_user_access_token = get_user_meta( $user_id, 'fb_user_access_token', true ); 
 
-  if($fb_user_access_token != '') {
+  if($fb_user_access_token != ''){
     $profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
   }else{
     if(get_the_author_meta( 'profile_url', $user_id )) {
-      $profile =  get_the_author_meta( 'profile_url', $user_id );
+      $profile = get_the_author_meta( 'profile_url', $user_id );
     }else{
       $profile = get_template_directory_uri()."/images/default-image.jpg";
     }
   }
-  return $profile;
+
+  $url = @getimagesize($profile);
+  if(!$url){
+    $src = get_template_directory_uri()."/images/default-image.jpg";
+  }else{
+    $src = $profile;
+  }
+
+  return $src;
 }
 
 function getArticleImage($post_id)
 {
   $custom_image_link = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), array( 5600,1000 ), false, '' );
   $custom_image_link = $custom_image_link[0];
-
-  if(strlen($custom_image_link) > 1 ){
-    $src = $custom_image_link;
-  }else{
+  
+  // Check for not found images
+  $url = @getimagesize($custom_image_link);
+  if(!$url){
     $src = get_template_directory_uri().'/images/blank-img.png';
+  }else{
+    $src = $custom_image_link;
   }
+
   return $src;
 }

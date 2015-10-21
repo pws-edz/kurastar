@@ -84,30 +84,11 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
       </div>
       <div class="curator-detail-wrap">
         <div class="pointer2"></div>
-        <?php 
-
-          $fb_user_access_token = get_user_meta( $user->ID, 'fb_user_access_token', true ); 
-          $fb_profile_picture   = get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-
-          if($fb_user_access_token != '') {
-
-            $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-          }else{
-
-            if(get_the_author_meta( 'profile_url', $user->ID )) {
-              $profile =  get_the_author_meta( 'profile_url', $user->ID );
-            }else{
-              $profile = get_template_directory_uri()."/images/default-image.jpg";
-            }
-
-          }
-
-
-         ?>
+        <?php $profile = getCurrentProfile(array( 'user_id' => $user->ID )); ?>
         
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
             <div class="img-round">
-                  <img id="blah"  src="<?php echo get_the_author_meta( 'profile_url', $user->ID ); ?>" class="avatar avatar-96 photo " >
+                  <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " >
                   <span class="icon-cam-holder">
                     <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
                   </span>

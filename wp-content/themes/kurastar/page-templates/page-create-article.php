@@ -119,7 +119,7 @@ get_header(); ?>
 	    				<p>select country</p>
 						<select id="cty" name="post_country">
 							<?php if(isset($result['country_id'])) : ?>
-								<option value="<?php echo $result['country_id']; ?>"><?php echo $result['country_name']; ?></option>
+								<option value="<?php echo $result['country_id'].'@'.$result['country_name']; ?>"><?php echo $result['country_name']; ?></option>
 							<?php endif;  ?>
 						<?php
 
@@ -167,7 +167,7 @@ get_header(); ?>
 						<p>select category</p>
 						<select id="cat" name="post_category">
 							<?php if(isset($result['category_id'])) : ?>
-								<option value="<?php echo $result['category_id']; ?>"><?php echo $result['category_name']; ?></option>
+								<option value="<?php echo $result['category_id'].'@'.$result['category_name']; ?>"><?php echo $result['category_name']; ?></option>
 							<?php endif;  ?>
 
 							<?php

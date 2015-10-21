@@ -70,30 +70,8 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 					<?php else: ?>
 						<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
 						<?php  
-							$current_user    = wp_get_current_user(); 
-							$curator_profile = get_avatar( $current_user->ID );
-
-						      $fb_user_access_token =  get_user_meta( $current_user->ID, 'fb_user_access_token', true ); 
-						      $fb_profile_picture =  get_user_meta( $current_user->ID, 'fb_profile_picture', true ); 
-					
-
-							 if($fb_user_access_token != '') {
-
-							 	$profile =  get_user_meta( $current_user->ID, 'fb_profile_picture', true ); 
-
-							 } else {
-
-							 	if(get_the_author_meta( 'profile_url', $current_user->ID )) {
-
-						 			$profile =  get_the_author_meta( 'profile_url', $current_user->ID );
-
-							 	} else {
-
-                   				    $profile = get_template_directory_uri()."/images/default-image.jpg";
-							 	}
-							 	
-							 }
-						
+							$current_user = wp_get_current_user(); 
+							$profile = getCurrentProfile(array( 'user_id' => $current_user->ID )); 
 						?>
 
 						<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
