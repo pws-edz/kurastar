@@ -123,8 +123,6 @@ get_header(); ?>
                 <li>
                   <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
                               <?php
-                                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                                
                                 //Returns All Term Items for "my_taxonomy"
                                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -133,7 +131,7 @@ get_header(); ?>
                                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
                               ?>
-                              <div class="postimg" style="background: url(<?php echo $src[0]; ?> )"></div>
+                              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                               </a>
                               <div class="labels">
                                 <?php if($countries): ?>

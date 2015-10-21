@@ -79,9 +79,8 @@ class MyShortcode {
 						<?php
 							global $wp_query;
 							$post = $wp_query->post;
-							$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 	                    ?>
-						<div class="siderankimage"style="background-image:url(<?php echo $src[0]; ?>);"></div>
+						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
 						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
 						<span class="smallpoints smallpoints-right"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
 					</a>
