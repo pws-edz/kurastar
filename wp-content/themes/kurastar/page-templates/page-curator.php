@@ -90,7 +90,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
         <?php $profile = getCurrentProfile(array( 'user_id' => $user->ID )); ?>
         
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
-            <div class="img-round">
+            <div class="img-round cur-pic">
                   <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " >
                   <span class="icon-cam-holder">
                     <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">

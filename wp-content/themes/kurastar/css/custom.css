@@ -2402,14 +2402,13 @@ div#picture img {
 	height: 100%;
 	width: 100%;
 }
-.img-round:hover .icon-cam-holder{
+.cur-pic:hover .icon-cam-holder {
 	display: block;
 }
-.img-round:hover > img{
+.cur-pic:hover > img{
 	opacity: 0.5;
 	filter: alpha(opacity=50);
 }
-
 .input-user {
 	margin-top: -35px;
 	margin-left: 25px;
