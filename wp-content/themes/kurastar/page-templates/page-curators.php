@@ -66,27 +66,12 @@ get_header(); ?>
            		// Start the Loop.
            		foreach($users as $user):
                 
-                $fb_user_access_token =  get_user_meta( $user->ID, 'fb_user_access_token', true ); 
-                $fb_profile_picture =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-        
-                if($fb_user_access_token != '') {
-                  $profile =  get_user_meta( $user->ID, 'fb_profile_picture', true ); 
-                }else{
-                  if(get_the_author_meta( 'profile_url', $user->ID )) {
-                    $profile =  get_the_author_meta( 'profile_url', $user->ID );
-                  }else{
-                    $profile = get_template_directory_uri()."/images/default-image.jpg";
-                  }
-                }
-            
+                $profile = getCurrentProfile(array('user_id' => $user->ID));
            			$post_count = count_user_posts($user->ID, 'acme_article');
            		?>
                 <li>
                   <a href="<?php echo site_url(); ?>/curator-detail/?id=<?php echo $user->ID ?>" class="post-list-thumb-wrap curator-list">
                   <div class="infobelow">
-                    <?php
-                      $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                    ?>
                     <div class="postimg user-<?php echo $user->ID ?>" style="background: url(<?php echo $profile; ?> )"></div>
                       <div class="curator-info">
                         <h4><?php echo $user->display_name; ?></h4>
