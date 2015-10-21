@@ -160,7 +160,7 @@ function post_acme_article($post){
 
 
 
-    if(!$post['post_id']){
+        if(!$post['post_id']){
       $post_data = array(
           'post_title'    => wp_strip_all_tags( $post['post_title'] ),
           'post_content'  => $post['post_title'],
@@ -171,8 +171,8 @@ function post_acme_article($post){
       );
 
       if(isset($post['save'])){
-       $post_status  = 'draft';
-       $message = 'Post saved as draft.';
+         $post_status  = 'draft';
+         $message = 'Post saved to drafts.';
 
       }else{
           $post_status  = 'publish';
@@ -180,7 +180,7 @@ function post_acme_article($post){
       }
         
       $post_id =  wp_insert_post( $post_data );
-      $message = 'Post '.$post_status.'.';
+      // $message = 'Post '.$post_status.'.';
     }else{
       $post_data = array(
           'ID'            => $post['post_id'],
@@ -203,7 +203,7 @@ function post_acme_article($post){
       }
 
       $post_id = $post['post_id'];
-      $message = 'Post '.$post_status.' updated.';
+      // $message = 'Post '.$post_status.' updated.';
     }
 
     if(isset($post['paste_featured_img'])){

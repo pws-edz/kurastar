@@ -111,11 +111,6 @@ get_header(); ?>
 
 	    		<div class="fileUpload">
 					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
-					<?php 
-						echo "<pre>";
-						print_r($result);
-						echo "</pre>";
-					 ?>
 				</div>
 	    	</div>
 	    	<div class="col-md-8">
