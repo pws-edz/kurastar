@@ -179,7 +179,15 @@
 
 				</div>
 				<div class="points-detail">
-					<?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
+				<?php
+					if ( do_shortcode( '[post_view]' ) > 1 ) {
+					 	# code...
+						echo do_shortcode( '[post_view]' ).'<span>Views</span>';
+					 } else
+					 {
+					 	echo do_shortcode( '[post_view]' ).'<span>View</span>';
+					 }
+				 ?>
 				</div>
 				<div class="clear"></div>
 					</div>
