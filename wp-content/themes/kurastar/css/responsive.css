@@ -40,7 +40,7 @@
 		margin-top: 270px;
 		margin-left: -133px;
 	}
-	.postimg2 {
+	.postimg2{
 		margin-left: 85%;
 	}
 }
@@ -142,9 +142,9 @@
 	.post-list-thumb li.list-thumb {
 		width: 100% !important;
 	} 
-	/*.postimg2 {
-		max-width: 100%;
-	}*/
+	.user-login .btn {
+		float: left;
+	}
 }
 
 @media only screen and (min-width: 300px) and (max-width: 991px) {
@@ -179,6 +179,9 @@
 	}
 	form.user-login .checkbox {
 		margin-left: 0
+	}
+	.img-round {
+		margin-left: 26%;
 	}
 }
 @media only screen and (min-width: 300px) and (max-width: 767px) {
@@ -408,6 +411,9 @@
 	.user-login .form-control {
 		width: 71%;
 	}
+	.user-login .btn {
+		float: left;
+	}
 	form.user-login .btn {
 		margin-right: 29px;
 	}
@@ -422,6 +428,9 @@
 	}
 	.sns-mobile {
 		display: block;
+	}
+	.user-login {
+		margin-top: 20px;
 	}
 }
 @media only screen and (max-width: 767px) {
@@ -592,6 +601,9 @@
 	}
 	.smallpoints {
 		font-size: 11px;
+	}
+	.img-round {
+		margin-left: 24%;
 	}
 }
 

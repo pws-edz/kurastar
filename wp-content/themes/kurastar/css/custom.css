@@ -1735,7 +1735,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .reportpost:hover  { text-decoration:underline; }
 .article-curator .curator-info { margin-bottom:0; }
 
-.btn  { background:#919191; width:100px; text-align:center; color:#FFF; font-size:14px; border-radius:3px; margin:20px 4px; cursor:pointer; }
+.btn  { background:#919191; text-align:center; color:#FFF; font-size:14px; border-radius:3px; margin:20px 4px; cursor:pointer; }
 
 .registration-page {
 	overflow: hidden;
@@ -1777,6 +1777,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
     left: 73.5%;
     font-family: 'Proxima Nova';
     margin: 0;
+    padding: 10px 30px;
 }
 .user-login .btn {
 	font-family: 'Proxima Nova';
@@ -1800,6 +1801,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .user-login .btn {
 	float: right;
+	padding: 10px 30px;
 }
 .user-login .wpcf7-checkbox {
 	margin-left: 122px;

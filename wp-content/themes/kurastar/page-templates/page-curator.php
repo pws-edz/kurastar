@@ -83,7 +83,10 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           }?>
       </div>
       <div class="curator-detail-wrap">
-        <div class="pointer2"></div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="pointer2"></div>
         <?php $profile = getCurrentProfile(array( 'user_id' => $user->ID )); ?>
         
           <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
@@ -98,8 +101,10 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " height="96" width="96" >
             </div>
           <?php } ?>
-
-          <div class="labels labels2">
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-8">
+            
+            <div class="labels labels2">
             <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
             <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites </span>
           </div>
@@ -147,6 +152,11 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           </form>
         </div>
         <div class="clear"></div>
+          </div>
+        </div>
+        
+
+          
       </div>
               
 
