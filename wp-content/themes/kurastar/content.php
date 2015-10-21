@@ -142,12 +142,19 @@
 					             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
 					             	    <input type="hidden" name="action" value="send-like">
 					             	    <i class="fa fa-heart"></i>
-					                    <button type="submit" class="smallpoints ">Likes (<?php echo count_total_favorites($post->ID) ?>)</button>
+					                    <button type="submit" class="smallpoints ">Like (<?php echo count_total_favorites($post->ID) ?>)</button>
 					                </div>
 					            </form>
 			                    <?php else: ?>
 			                    	<i class="fa fa-heart"></i>
-			                    	<span class="smallpoints smallpoints-left likes-font"><?php echo count_total_favorites($post->ID) ?>  likes</span>
+			                    	<span class="smallpoints smallpoints-left likes-font">
+			                    	<?php 
+			                    		if ( count_total_favorites($post->ID) > 1 ) {
+			                    			echo 'Likes ('.count_total_favorites($post->ID).')';
+			                    		}else
+			                    			echo 'Like ('.count_total_favorites($post->ID).')';
+			                    	?>
+			                    	</span>
 		                        <?php endif; ?>	
 							</li>
 

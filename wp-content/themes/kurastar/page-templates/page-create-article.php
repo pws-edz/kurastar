@@ -111,6 +111,11 @@ get_header(); ?>
 
 	    		<div class="fileUpload">
 					<input type="file" class="upload" id="upload-image" name="post_featured_img"/>
+					<?php 
+						echo "<pre>";
+						print_r($result);
+						echo "</pre>";
+					 ?>
 				</div>
 	    	</div>
 	    	<div class="col-md-8">
@@ -200,9 +205,6 @@ get_header(); ?>
 					    </select>
 					</div>
 	    		</div>
-	    		<!-- <div class="form-grp">
-					<input type="text" name="post_title" id="post-title" placeholder="Title" value="<?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?>">
-				</div> -->
 	    		<div class="form-grp" style="display:none;" >
 					<input type="text" name="post_id" id="post-id" placeholder="Post ID" value="<?php echo isset($result['post_id']) ? $result['post_id'] : ''  ?>">
 				</div>

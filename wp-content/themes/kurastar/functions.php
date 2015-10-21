@@ -557,13 +557,13 @@ function send_like_request(){
 
   if($meta_id) {
     $success = true;
-    $msg = '<span class="success"> Successfully like this article. </span>';
+    //$msg = '';
   } else {
      $success = false;
-     $msg = '<span class="error"> Unable to like this article. Please try again later.</span>';
+     //$msg = '';
   }
     
-  echo json_encode(array('success'=>$success, 'msg'=>$msg, 'post' => $_POST, 'meta_id' => $meta_id ));
+  echo json_encode(array('success'=>$success, 'post' => $_POST, 'meta_id' => $meta_id ));
 
   die();
 

@@ -64,9 +64,9 @@
 
 	                if(response.success){
 
-	                    $(".message").addClass('alert alert-success').html(response.msg);
+	                    location.reload();
 	                }else{
-	                    $(".message").addClass('alert alert-danger').html(response.msg);
+	                	$(".message").addClass('alert alert-danger').html('you already liked this article');
 	                }
 	            },
 	            error: function(){

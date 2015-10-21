@@ -156,7 +156,7 @@ function post_acme_article($post){
     $post_category_id   = $post_category[0];
     $post_category_name = $post_category[1];
 
-    $post_status = (isset($post['Save'])) ? 'draft' : 'publish';
+    $post_status = (isset($post['save'])) ? 'draft' : 'publish';
 
 
 
