@@ -83,12 +83,13 @@ class MyShortcode {
 						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
 						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
 						<span class="smallpoints smallpoints-right"><?php
-																		if ( do_shortcode( '[post_view]' ) > 1 ) {
+																		$view = do_shortcode( '[post_view]' );
+																		if ( $view == 1 ) {
 																		 	# code...
-																			echo do_shortcode( '[post_view]' ).'views';
+																			echo $view.'<span>View</span>';
 																		 } else
 																		 {
-																		 	echo do_shortcode( '[post_view]' ).'views';
+																		 	echo $view.'<span>Views</span>';
 																		 }
 																	 ?></span>
 					</a>

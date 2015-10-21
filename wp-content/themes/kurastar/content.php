@@ -180,12 +180,13 @@
 				</div>
 				<div class="points-detail">
 				<?php
-					if ( do_shortcode( '[post_view]' ) > 1 ) {
+					$view = do_shortcode( '[post_view]' );
+					if ( $view == 1 ) {
 					 	# code...
-						echo do_shortcode( '[post_view]' ).'<span>Views</span>';
+						echo $view.'<span>View</span>';
 					 } else
 					 {
-					 	echo do_shortcode( '[post_view]' ).'<span>View</span>';
+					 	echo $view.'<span>Views</span>';
 					 }
 				 ?>
 				</div>
