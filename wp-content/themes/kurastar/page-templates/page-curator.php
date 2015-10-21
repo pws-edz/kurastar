@@ -128,9 +128,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <div style="display:none;" class="userinfo_section">
               <div class="row">
                 <div class="form-grp form-placeholder-offset input-user">
-                  <!-- <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo" style="height:10; width:10; display: block; "> -->
-
-
                   <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
                   <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
 
@@ -149,9 +146,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <div class="clear"></div>
           </form>
         </div>
-       <!--  <div class="points-detail">
-          <?php echo do_shortcode( '[post_view]' ); ?><span>Views</span>
-        </div> -->
         <div class="clear"></div>
       </div>
               
@@ -195,8 +189,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <li class="list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -207,7 +199,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 
               </a>
               <div class="labels">
@@ -272,21 +264,16 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                       )
                   )
               );
-
-
              ?>
             <ul class="post-list-thumb">
              
                 <?php 
-
                  query_posts( $fav_args );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
               ?>  
               <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -296,14 +283,12 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 
               </a>
               <div class="labels">
-
                   <?php if($countries): ?>
                     <?php foreach($countries as $country): ?>
-
                       <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
                         <i class="fa fa-map-marker"></i> 
                         <?php echo $country; //フィリピン ?>
@@ -312,7 +297,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                   <?php else: ?>
                     <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
                   <?php endif; ?>
-
                   <?php if($category): ?>
                     <?php foreach($category as $cat): ?>
                       <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
@@ -326,8 +310,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 </div>
             </li>
               <?php
- 
-                
               endwhile;
                else:?>
               <li><p> No available articles.</p></li>
@@ -371,8 +353,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -383,7 +363,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 
               </a>
               <div class="labels">

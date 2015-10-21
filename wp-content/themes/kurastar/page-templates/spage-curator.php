@@ -173,19 +173,15 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <li class="list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
-
                 $authorID = get_the_author_meta($post->ID);
                 $curator_profile = get_cupp_meta($authorID, 'thumbnail');
-
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
@@ -252,8 +248,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
               <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -263,7 +257,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
@@ -326,9 +320,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
-                //Returns All Term Items for "my_taxonomy"
+               //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
@@ -338,7 +330,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>

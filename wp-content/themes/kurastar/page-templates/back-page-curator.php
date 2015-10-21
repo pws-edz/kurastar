@@ -129,12 +129,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             
 
          ?>
-        
-<!--    <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-        <div class="labels labels2">
-          <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-          <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites
-          </span>
         </div>   -->
         <div class="curator-info">
 
@@ -146,10 +140,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 <p > <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
               </span>
               <?php if ( is_user_logged_in() ) : ?>
-              <!-- <span class="catlabel"> <a href="<?php echo get_edit_user_link( $current_user->ID ); ?>"><b>Edit</b> </a></span> -->
               <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
-   <!--       <span id="edit" class="catlabel"><b>Edit</b> </span>
-              <span id="save" class="catlabel"><b>Save</b> </span> -->
               <?php endif; ?>
             </div>
             <div style="display:none;" class="userinfo_section">
@@ -216,8 +207,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <li class="list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -228,7 +217,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
@@ -244,29 +233,8 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                       <span class="catlabel"><i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> <?php echo $cat; //観光 ?> </span>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <!-- <span class="catlabel"><i class="fa fa-hotel"></i> No Category</span> -->
                   <?php endif; ?>               
                 </div>
-                <!-- <div class="desc">
-                  <h2><?php the_title(); ?></h2>
-                 <p><?php the_content(); ?></p>
-                </div> -->
-                <!-- <div class="infobelow">
-                  <i class="fa fa-heart"></i>
-                  <span class="smallpoints smallpoints-left"><?php echo count_total_favorites($post->ID) ?>  likes</span>
-                  <div class="profile-thumb-wrap">
-
-                      <span class="smallpoints smallpoints-left"><?php echo do_shortcode( '[post_view]' ); ?> views</span>
-
-                      <img src="<?php echo $curator_profile ?>">
-                      <div class="curator">
-                          <span>CURATORS</span><br>
-                          <a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo get_the_author_meta( 'ID' ) ?>"><h3><?php the_author() ?></h3></a>
-                      </div>
-
-
-                  </div>
-                </div> -->
               </a>
             </li>
 
@@ -316,8 +284,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
               <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -327,7 +293,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
@@ -411,8 +377,6 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
             <li>
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
-                $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
-                
                 //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
@@ -423,7 +387,7 @@ $curator_profile = get_avatar_url(get_avatar( $current_user->ID ));
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
               ?>
-              <div class="postimg" style="background: url(<?php echo $custom_image_link != '' ? $custom_image_link : $src[0]; ?> )"></div>
+              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 <div class="labels">
 
                   <?php if($countries): ?>
