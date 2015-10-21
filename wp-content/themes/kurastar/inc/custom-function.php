@@ -170,6 +170,14 @@ function post_acme_article($post){
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
       );
 
+      if(isset($post['save'])){
+       $post_status  = 'draft';
+       $message = 'Post saved as draft.';
+
+      }else{
+          $post_status  = 'publish';
+          $message = 'Post published.';
+      }
         
       $post_id =  wp_insert_post( $post_data );
       $message = 'Post '.$post_status.'.';
@@ -184,6 +192,15 @@ function post_acme_article($post){
           'post_author'   => get_current_user_id() // Use a custom post type if you want to
       );
       $post_id =  wp_update_post( $post_data );
+
+      if(isset($post['save'])){
+       $post_status  = 'draft';
+       $message = 'Post updated as draft.';
+
+      }else{
+          $post_status  = 'publish';
+          $message = 'Post draft has been published.';
+      }
 
       $post_id = $post['post_id'];
       $message = 'Post '.$post_status.' updated.';
