@@ -90,7 +90,8 @@ get_header(); ?>
                     <div class="postimg user-<?php echo $user->ID ?>" style="background: url(<?php echo $profile; ?> )"></div>
                       <div class="curator-info">
                         <h4><?php echo $user->display_name; ?></h4>
-                        <p><?php echo get_user_meta($user->ID, 'description', true); ?></p>
+                        <p><?php $description = get_user_meta($user->ID, 'description', true); 
+                           if (strlen($description) > 80) {echo mb_strimwidth($description, 0, 65). '...'; } else {echo $description;}?></p>
                         <div class="clear"></div>
                       </div>
                     <span class="article-views smallpoints-right"><?php echo $post_count ?> <?php echo $post_count > 1 ? 'articles' : 'article'; ?></span>
@@ -110,7 +111,7 @@ get_header(); ?>
 			</a>
 		</div>
 
-		<a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
+		<a href="<?php echo site_url() ?>/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
 		<?php echo do_shortcode( '[most_view]' ); ?> 
 		<div class="sideboxcontent ad300">
 			<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
