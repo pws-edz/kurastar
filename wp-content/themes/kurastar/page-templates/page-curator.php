@@ -89,7 +89,10 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             <div class="pointer2"></div>
         <?php $profile = getCurrentProfile(array( 'user_id' => $user->ID )); ?>
         
-          <?php if(get_the_author_meta( 'profile_url', $user->ID )){ ?>
+          <?php 
+            $current_user_id = get_current_user_id();
+            if($current_user_id == $user->ID){ 
+          ?>
             <div class="img-round cur-pic">
                   <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " >
                   <span class="icon-cam-holder">
@@ -140,7 +143,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               </div>
                <div class="row">
                 <div class="form-grp form-placeholder-offset desc-user">
-                  <textarea name="user_description" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
+                  <textarea name="user_description" placeholder="Information" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
                 </div>
               </div>
                <input type="hidden" name="update_user_info" value="_update_user_info">
