@@ -98,7 +98,8 @@
 
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-8">
-						<div class="labels">
+						<div class="article-content">
+							<div class="labels">
 					<?php if($countries): ?>
 	                    <?php foreach($countries as $country): ?>
 	                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
@@ -134,38 +135,41 @@
 							<li class="like-button">
 								<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
 								<form class="form-send-like" method="POST">
-								<p class="message"></p>
-					                <div class="form-group">
-					             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-					             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-					             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-					             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-					             	    <input type="hidden" name="action" value="send-like">
-					             	    <i class="fa fa-heart"></i>
-					                    <button type="submit" class="smallpoints ">Like (<?php echo count_total_favorites($post->ID) ?>)</button>
-					                </div>
-					            </form>
-			                    <?php else: ?>
-			                    	<i class="fa fa-heart"></i>
-			                    	<span class="smallpoints smallpoints-left likes-font">
-			                    	<?php 
-			                    		if ( count_total_favorites($post->ID) > 1 ) {
-			                    			echo 'Likes ('.count_total_favorites($post->ID).')';
-			                    		}else
-			                    			echo 'Like ('.count_total_favorites($post->ID).')';
-			                    	?>
-			                    	</span>
-		                        <?php endif; ?>	
+									<p class="message"></p>
+		                <div class="form-group">
+		             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+		             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+		             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+		             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+		             	    <input type="hidden" name="action" value="send-like">
+		             	    <i class="fa fa-heart"></i>
+		                    <button type="submit" class="smallpoints "><span class="label-sm">Thank You</span> (<?php echo count_total_favorites($post->ID) ?>)</button>
+		                </div>
+		            </form>
+                <?php else: ?>
+                	<i class="fa fa-heart"></i>
+                	<span class="smallpoints smallpoints-left likes-font">
+                	<?php 
+                			echo 'Thank You ('.count_total_favorites($post->ID).')';
+                	?>
+                	Thank You
+                	</span>
+
+                  <?php endif; ?>	
+							</li>
+							<li class="fb-button">
+								<a class = "social-media" href="#" onclick="" class="twitter"><i class="fa fa-thumbs-o-up"></i> <span class="label-sm"> Facebook </span><span class="share-count">(<?php echo kura_twitter_count(get_permalink( $post->ID )) ?>)</span></a>
 							</li>
 
 							<li class="twit-button">
-								<a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i>  Twitter (<span class="share-count"><?php echo kura_twitter_count(get_permalink( $post->ID )) ?></span>) </a>
+								<a class = "social-media" href="https://twitter.com/home?status=<?php echo the_title() ?>+<?php echo get_permalink( $post->ID ); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="twitter"><i class="fa fa-twitter"></i> <span class="label-sm">Twitter </span><span class="share-count">(<?php echo kura_twitter_count(get_permalink( $post->ID )) ?>)</span></a>
 							</li>
 
 							<li class="gplus-button">
-								<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  Google+ (<span class="share-count"><?php echo kura_gplus_count(get_permalink( $post->ID )) ?></span>)</a>
+								<a class = "social-media googleplus" href="https://plus.google.com/share?url=<?php the_permalink($post->ID); ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="google-plus" ><i class="fa fa-google-plus"></i>  <span class="label-sm">Google+ </span><span class="share-count">(<?php echo kura_gplus_count(get_permalink( $post->ID )) ?>)</span></a>
 							</li>
 						</ul>
+
 					</span>
 
 					<div class="profile-thumb-wrap">
@@ -193,13 +197,8 @@
 				<div class="clear"></div>
 					</div>
 				</div>
-				
-
-				
-
-
-				
 			</div>
+		</div>
 
 
 			<!-- RELATED POSTS -->
