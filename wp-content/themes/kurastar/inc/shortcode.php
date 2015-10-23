@@ -56,7 +56,7 @@ class MyShortcode {
 		<div class="sideboxcontent rankwrap">
 
 			<h3 class="sidetitle">Ranking Article</h3>
-			<ul class="rankarticle">
+			<ul class="rankarticle list-articles">
 
 				<?php
 					 $args = array(
@@ -83,18 +83,15 @@ class MyShortcode {
 	                    ?>
 						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
 						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
-						<span class="smallpoints smallpoints-right"><?php
-																		$view = do_shortcode( '[most_view]' );
-																		var_dump($view);
-																		if ( $view == 1 ) {
-																		 	# code...
-																			echo $view.'<span>View</span>';
-																		 } else
-																		 {
-																		 	echo $view.'<span>Views</span>';
-																		 }
-																	 ?></span>
-					</a>
+						<span class="smallpoints smallpoints-right">
+							<?php
+								$view = do_shortcode( '[post_view]' );
+								if ( $view == 1 ) {
+									echo $view.'<span> view</span>';
+								 } else {
+								 	echo $view.'<span> views</span>';
+								 }
+							 ?></span>
 				</li>
 			<?php endwhile; endif; wp_reset_query(); ?>	
 			</ul>

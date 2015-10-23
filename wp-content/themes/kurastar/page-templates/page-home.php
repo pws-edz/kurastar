@@ -66,8 +66,6 @@ get_header(); ?>
 					$curator_profile   = get_cupp_meta($authorID, 'thumbnail');
 					$custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
-
-
                     ?>
                     <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
 	                </a>
