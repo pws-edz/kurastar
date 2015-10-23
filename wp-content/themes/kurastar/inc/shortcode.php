@@ -79,7 +79,7 @@ class MyShortcode {
 						<?php
 							global $wp_query;
 							$post = $wp_query->post;
-							var_dump($post);
+							//var_dump($post);
 	                    ?>
 						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
 						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
