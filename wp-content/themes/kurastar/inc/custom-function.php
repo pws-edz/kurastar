@@ -157,7 +157,7 @@ function post_acme_article($post){
     $post_category_name = $post_category[1];
 
     $post_status = (isset($post['save'])) ? 'draft' : 'publish';
-
+    $post_author = get_current_user_id();
 
 
         if(!$post['post_id']){
@@ -167,7 +167,7 @@ function post_acme_article($post){
           'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
           'post_status'   => $post_status, 
           'post_type'     => $post['custom_post_type'],
-          'post_author'   => get_current_user_id() // Use a custom post type if you want to
+          'post_author'   => $post_author // Use a custom post type if you want to
       );
 
       if(isset($post['save'])){
@@ -189,7 +189,7 @@ function post_acme_article($post){
           'tax_input'     => array( 'article_country_cat' => $post_country_id, 'article_cat' => $post_category_id),
           'post_status'   => $post_status, 
           'post_type'     => $post['custom_post_type'],
-          'post_author'   => get_current_user_id() // Use a custom post type if you want to
+          'post_author'   => $post_author // Use a custom post type if you want to
       );
       $post_id =  wp_update_post( $post_data );
 
@@ -249,19 +249,9 @@ function post_acme_article($post){
     $status  = 'error';
     $message = 'Please fill-up the required fields.';
   }
-    
-  return array( 
-    'status'        => $status, 
-    'post_id'       => $post_id, 
-    'image_url'     => $image_url, 
-    'featured_img'  => $image_url, 
-    'msg'           => $message, 
-    'country_id'    => $post_country_id, 
-    'country_name'  => $post_country_name, 
-    'category_id'   => $post_category_id, 
-    'category_name' => $post_category_name
-  ); 
-
+  
+  echo '<script type="text/javascript">alert("article '.$post_status.'");</script>';
+  wp_redirect(site_url().'/curator-detail/?id='.$post_author.'&status='.$post_status);
 }
 
 function unset_post() {

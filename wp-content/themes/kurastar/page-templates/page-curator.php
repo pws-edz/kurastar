@@ -165,18 +165,18 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
           
       </div>
-              
+        
 
     <div class="tab-form-panel">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs curator-tabs" role="tablist">
-        <li role="presentation" class="active curator-tab-list">
+        <li role="presentation" class="<?php if(isset($_GET['status'])) { if ($_GET['status']== 'published') {echo 'active';}else{ echo ''; } } else { echo 'active'; } ?> curator-tab-list">
           <a href="#1" aria-controls="1" role="tab" data-toggle="tab">Articles</a>
         </li>
         <li role="presentation" class="curator-tab-list">
           <a href="#2" aria-controls="2" role="tab" data-toggle="tab">Favorites</a>
         </li>
-        <li role="presentation" class="curator-tab-list">
+        <li role="presentation" class="<?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; }else{ echo ''; } } else { echo ''; } ?> curator-tab-list">
           <a href="#3" aria-controls="3" role="tab" data-toggle="tab">Drafts</a>
         </li>
       </ul>
@@ -186,7 +186,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
       <!-- Tab panes -->
       <div class="tab-content curator-tab-content curator-tab-content">
-        <div role="tabpanel" class="tab-pane active" id="1">
+        <div role="tabpanel" class="tab-pane <?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; } else { echo ''; } } else { echo 'active'; } ?>" id="1">
           <ul class="post-list-thumb">
           <?php
              # get_wpposts();
@@ -349,7 +349,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
         
         <!-- DRAFT -->
         <!--tab 2-->
-        <div role="tabpanel" class="tab-pane" id="3">
+        <div role="tabpanel" class="tab-pane <?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; } else { echo ''; } } else { echo ''; } ?> " id="3">
            <ul class="post-list-thumb">
           <?php
              # get_wpposts();

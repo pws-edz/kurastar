@@ -184,14 +184,14 @@
 				</div>
 				<div class="points-detail">
 				<?php
-					$view = do_shortcode( '[post_view]' );
-					if ( $view == 1 ) {
-					 	# code...
-						echo $view.'<span>View</span>';
-					 } else
-					 {
-					 	echo $view.'<span>Views</span>';
-					 }
+					// $view = do_shortcode( '[post_view]' );
+					// if ( $view == 1 ) {
+					//  	# code...
+					// 	echo $view.'<span>View</span>';
+					//  } else
+					//  {
+					//  	echo $view.'<span>Views</span>';
+					//  }
 				 ?>
 				</div>
 				<div class="clear"></div>
