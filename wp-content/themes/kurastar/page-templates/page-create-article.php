@@ -215,7 +215,7 @@ get_header(); ?>
 			<input type="hidden" name="trigger_set_image" id="trigger-set-image"/>
 			
 			<input type="submit" name="publish" value="Publish" class="btn btn-default pull-right">
-			<input type="submit" name="save" value="Save" class="btn btn-default pull-right">
+			<input type="submit" name="save" value="Save to Drafts" class="btn btn-default pull-right">
 			
 	    </div>
 	</form>

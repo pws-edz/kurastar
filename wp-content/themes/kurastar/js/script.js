@@ -121,3 +121,136 @@ $('#myTabs a').click(function (e) {
   e.preventDefault();
   $(this).tab('show');
 });
+
+
+/*Single Article Page & Curator Detail Page*/
+$(document).on('click', ".edit-custom-form", function(e) {
+	e.preventDefault();
+
+	$('.display_details').hide();
+	$('.display_section').show();
+
+});
+
+$(document).on('click', ".update_process", function() {
+
+	if (confirm("Are you sure you want to save the chages?") == true) {
+
+		$('#edit-custom-form').submit();
+
+	} else {
+
+		cancellation();
+
+	}
+
+});
+
+$(document).on('click', ".cancel_process", function(e) {
+	e.preventDefault();
+
+	cancellation();
+});
+
+
+function cancellation() {
+
+	$('.userinfo_section').hide();
+	$('.user_details').show();
+
+	$('.display_details').show();
+	$('.display_section').hide();
+
+}
+
+
+$(document).on('click', "#change-image", function(e) {
+	$('#post_image').trigger('click');
+});
+
+
+$(document).on('click',"#change-image-2", function(e) {
+	$('#post_image').trigger('click');
+});
+
+function readURL(input) {
+
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('#uploaded_image').attr('src', e.target.result);
+          
+          if (document.getElementById('change-image-2') != 0) {
+          	document.getElementById("change-image-2").style.backgroundImage = "url('" + e.target.result + "')";
+      	  }
+
+      }
+
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(document).on('change', "#post_image", function(e) {
+  readURL(this);
+});
+
+/*Curator Detail Page*/
+
+// $(document).on('click', "#image-button", function(e) {
+// 	$('#imgInp').trigger('click');
+// });
+
+// function readURL(input) {
+
+//   if (input.files && input.files[0]) {
+//       var reader = new FileReader();
+
+//       reader.onload = function (e) {
+//           $('#blah').attr('src', e.target.result);
+//       }
+
+//       reader.readAsDataURL(input.files[0]);
+//   }
+// }
+
+// // $("#imgInp").change(function(){
+// $(document).on('change', "#imgInp", function(e) {
+//   readURL(this);
+// });
+
+// $(document).on('click', ".edit", function(e) {
+//  e.preventDefault();
+
+//  $('.user_details').hide();
+//  $('.userinfo_section').show();
+
+// });
+
+// $(document).on('click', ".update_user_info", function() {
+
+// if (confirm("Are you sure you want to save the chages?") == true) {
+
+//   $('#form-curator-info').submit();
+
+// } else {
+
+//   cancellation();
+    
+// }
+
+// });
+
+// $(document).on('click', ".cancel_user_info", function(e) {
+//  e.preventDefault();
+
+//  cancellation();
+// });
+
+
+// function cancellation() {
+
+//  $('.userinfo_section').hide();
+//  $('.user_details').show();
+
+// }

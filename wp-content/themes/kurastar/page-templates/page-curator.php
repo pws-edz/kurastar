@@ -76,12 +76,11 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
   </div>
 <div class="defaultWidth center clear-auto bodycontent bodycontent-index ">
   <div class="contentbox">
+
       <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-          <?php if(function_exists('bcn_display'))
-          {
-              bcn_display();
-          }?>
-      </div>
+          <?php echo function_exists('custom_breadcrumb') ? custom_breadcrumb() : ''; ?>
+     </div><!-- .breadcrumb -->';
+
       <div class="curator-detail-wrap">
 
         <div class="row">
@@ -94,14 +93,14 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             if($current_user_id == $user->ID){ 
           ?>
             <div class="img-round cur-pic">
-                  <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " >
+                  <img id="uploaded_image"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " >
                   <span class="icon-cam-holder">
-                    <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="image-button" class="avatar avatar-96 photo">
+                    <img src="<?php echo get_template_directory_uri().'/images/icons/camera.png'; ?>" id="change-image" class="avatar avatar-96 photo">
                   </span>
             </div>
           <?php }else{ ?>
             <div class="img-round">
-                <img id="blah"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " height="96" width="96" >
+                <img id="uploaded_image"  src="<?php echo $profile; ?>" class="avatar avatar-96 photo " height="96" width="96" >
             </div>
           <?php } ?>
           </div>
@@ -114,8 +113,8 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
             </div>
 
             <div class="curator-info">
-              <form method="POST" id="form-curator-info" enctype="multipart/form-data">
-                <div class="user_details">
+              <form method="POST" id="edit-custom-form" enctype="multipart/form-data">
+                <div class="display_details">
                   <span id="edit-form">
                     <h4>
                         <?php echo $user->display_name ?> 
@@ -127,17 +126,17 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                     $current_user    = wp_get_current_user(); 
                   ?>
                   <?php if(is_user_logged_in() && $current_user->ID == $user->ID) : ?>
-                    <span class="catlabel"><a href="#" class="edit">Edit</a> </span>
+                    <span class="catlabel"><a href="#" class="edit-custom-form">Edit</a> </span>
                   <?php endif; ?>
                 </div>
 
                 
 
 
-                <div style="display:none;" class="userinfo_section">
+                <div style="display:none;" class="display_section">
                   <div class="row">
                     <div class="form-grp form-placeholder-offset input-user">
-                      <input type="file" name="profile" id="imgInp" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
+                      <input type="file" name="profile" id="post_image" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
                       <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
 
                     </div>
@@ -149,8 +148,8 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                   </div>
                    <input type="hidden" name="update_user_info" value="_update_user_info">
                    <input type="hidden" name="user_id" value="<?php echo $user->ID ?>">
-                   <a href="#" class="btn catlabel update_user_info"><?php _e('Save', 'wp') ?></a>
-                   <a href="#" class="btn catlabel cancel_user_info"><?php _e('Cancel', 'wp') ?></a>
+                   <a href="#" class="btn catlabel update_process"><?php _e('Save', 'wp') ?></a>
+                   <a href="#" class="btn catlabel cancel_process"><?php _e('Cancel', 'wp') ?></a>
                 </div>
                 <div class="clear"></div>
               </form>
@@ -170,13 +169,13 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
     <div class="tab-form-panel">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs curator-tabs" role="tablist">
-        <li role="presentation" class="<?php if(isset($_GET['status'])) { if ($_GET['status']== 'published') {echo 'active';}else{ echo ''; } } else { echo 'active'; } ?> curator-tab-list">
+        <li role="presentation" class="<?php echo $_GET['status'] == 'publish' ? 'active' : $_GET['status'] == '' ? 'active' : ''; ?> curator-tab-list">
           <a href="#1" aria-controls="1" role="tab" data-toggle="tab">Articles</a>
         </li>
         <li role="presentation" class="curator-tab-list">
           <a href="#2" aria-controls="2" role="tab" data-toggle="tab">Favorites</a>
         </li>
-        <li role="presentation" class="<?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; }else{ echo ''; } } else { echo ''; } ?> curator-tab-list">
+        <li role="presentation" class="<?php echo $_GET['status'] == 'draft' ? 'active' : ''; ?> curator-tab-list">
           <a href="#3" aria-controls="3" role="tab" data-toggle="tab">Drafts</a>
         </li>
       </ul>
@@ -186,15 +185,17 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
       <!-- Tab panes -->
       <div class="tab-content curator-tab-content curator-tab-content">
-        <div role="tabpanel" class="tab-pane <?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; } else { echo ''; } } else { echo 'active'; } ?>" id="1">
-          <ul class="post-list-thumb">
+        <div role="tabpanel" class="tab-pane <?php echo $_GET['status'] == 'publish' ? 'active' : $_GET['status'] == '' ? 'active' : ''; ?>" id="1">
+          <ul class="post-list-thumb post-publish">
           <?php
              # get_wpposts();
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
+
             $param = array( 
                     'post_type'       => 'acme_article', 
-                    'posts_per_page'  => 6, 
+                    'posts_per_page'  => 2, 
+                    'post_status'     => 'publish', 
                     'paged'           => $paged, 
                     'author'          => $user->ID, 
                     'orderby'         => 'post_date',
@@ -203,7 +204,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               query_posts( $param );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
           ?>
-            <li class="list-thumb">
+            <li id="post-publish-<?php echo the_ID() ?>" class="post-publish-<?php echo the_ID() ?> post-publish-list list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
                 //Returns All Term Items for "my_taxonomy"
@@ -253,11 +254,14 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           <?php endif;  
 
           //wp pagenavi plugin for pagination   
-            if(function_exists("wp_pagenavi")):
+            // if(function_exists("wp_pagenavi")):
 
-              wp_pagenavi(); 
+            //   wp_pagenavi(); 
 
-            endif;  
+            // endif;  
+
+            global $wp_query;
+             $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
 
            wp_reset_query();?>
           </ul>
@@ -271,7 +275,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
           $fav_args = array(
                   'post_type'       => 'acme_article', 
-                  'posts_per_page'  => -1, 
+                  'posts_per_page'  => 2, 
                   'meta_query'        => array(
                     'relation'  => 'AND',
                       array(
@@ -282,13 +286,13 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                   )
               );
              ?>
-            <ul class="post-list-thumb">
+            <ul class="post-list-thumb post-favorites">
              
                 <?php 
                  query_posts( $fav_args );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
               ?>  
-              <li>
+              <li id="post-favorites-<?php echo the_ID() ?>" class="post-favorites-<?php echo the_ID() ?> post-favorite-list list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
                 //Returns All Term Items for "my_taxonomy"
@@ -333,11 +337,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               <?php endif;  
 
               //wp pagenavi plugin for pagination   
-                if(function_exists("wp_pagenavi")):
+                global $wp_query;
 
-                  wp_pagenavi(); 
-
-                endif;  
+                $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
 
                wp_reset_query();?>
            
@@ -349,15 +351,15 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
         
         <!-- DRAFT -->
         <!--tab 2-->
-        <div role="tabpanel" class="tab-pane <?php if(isset($_GET['status'])) { if ($_GET['status']== 'draft') { echo 'active'; } else { echo ''; } } else { echo ''; } ?> " id="3">
-           <ul class="post-list-thumb">
+        <div role="tabpanel" class="tab-pane <?php echo $_GET['status'] == 'draft' ? 'active' : ''; ?>" id="3">
+           <ul class="post-list-thumb post-draft">
           <?php
              # get_wpposts();
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
             $param = array( 
                     'post_type'       => 'acme_article', 
-                    'posts_per_page'  => 6, 
+                    'posts_per_page'  => 2, 
                     'paged'           => $paged, 
                     'author'          => $user->ID, 
                     'post_status'     => 'draft',
@@ -367,7 +369,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               query_posts( $param );
               if ( have_posts() ) : while ( have_posts() ) : the_post();
           ?>
-            <li>
+            <li id="post-draft-<?php echo the_ID() ?>" class="post-draft-<?php echo the_ID() ?> post-draft-list list-thumb">
               <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <?php
                 //Returns All Term Items for "my_taxonomy"
@@ -417,11 +419,14 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           <?php endif;  
 
           //wp pagenavi plugin for pagination   
-            if(function_exists("wp_pagenavi")):
+            // if(function_exists("wp_pagenavi")):
 
-              wp_pagenavi(); 
+            //   wp_pagenavi(); 
 
-            endif;  
+            // endif;  
+             global $wp_query;
+
+             $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
 
            wp_reset_query();?>
           </ul>
@@ -468,63 +473,63 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 <script type="text/javascript">
 $(function(){
 
-      $(document).on('click', "#image-button", function(e) {
-        $('#imgInp').trigger('click');
-      });
+    //   $(document).on('click', "#image-button", function(e) {
+    //     $('#imgInp').trigger('click');
+    //   });
 
-      function readURL(input) {
+    //   function readURL(input) {
 
-          if (input.files && input.files[0]) {
-              var reader = new FileReader();
+    //       if (input.files && input.files[0]) {
+    //           var reader = new FileReader();
 
-              reader.onload = function (e) {
-                  $('#blah').attr('src', e.target.result);
-              }
+    //           reader.onload = function (e) {
+    //               $('#blah').attr('src', e.target.result);
+    //           }
 
-              reader.readAsDataURL(input.files[0]);
-          }
-      }
+    //           reader.readAsDataURL(input.files[0]);
+    //       }
+    //   }
 
-      // $("#imgInp").change(function(){
-      $(document).on('change', "#imgInp", function(e) {
-          readURL(this);
-      });
+    //   // $("#imgInp").change(function(){
+    //   $(document).on('change', "#imgInp", function(e) {
+    //       readURL(this);
+    //   });
   
-     $(document).on('click', ".edit", function(e) {
-         e.preventDefault();
+    //  $(document).on('click', ".edit", function(e) {
+    //      e.preventDefault();
 
-         $('.user_details').hide();
-         $('.userinfo_section').show();
+    //      $('.user_details').hide();
+    //      $('.userinfo_section').show();
 
-     });
+    //  });
 
-     $(document).on('click', ".update_user_info", function() {
+    //  $(document).on('click', ".update_user_info", function() {
 
-        if (confirm("Are you sure you want to save the chages?") == true) {
+    //     if (confirm("Are you sure you want to save the chages?") == true) {
 
-          $('#form-curator-info').submit();
+    //       $('#form-curator-info').submit();
 
-        } else {
+    //     } else {
 
-          cancellation();
+    //       cancellation();
             
-        }
+    //     }
 
-     });
+    //  });
 
-    $(document).on('click', ".cancel_user_info", function(e) {
-         e.preventDefault();
+    // $(document).on('click', ".cancel_user_info", function(e) {
+    //      e.preventDefault();
 
-         cancellation();
-     });
+    //      cancellation();
+    //  });
 
      
-     function cancellation() {
+    //  function cancellation() {
 
-         $('.userinfo_section').hide();
-         $('.user_details').show();
+    //      $('.userinfo_section').hide();
+    //      $('.user_details').show();
 
-     }
+    //  }
 
 });
 </script>

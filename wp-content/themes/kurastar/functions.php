@@ -388,6 +388,41 @@ function twentyfifteen_scripts() {
 		'expand'   => '<span class="screen-reader-text">' . __( 'expand child menu', 'twentyfifteen' ) . '</span>',
 		'collapse' => '<span class="screen-reader-text">' . __( 'collapse child menu', 'twentyfifteen' ) . '</span>',
 	) );
+
+ // global $wp_query;
+
+	// wp_enqueue_script(
+ // 			'pbd-alp-load-posts',
+ // 			get_template_directory_uri() . '/js/load-posts.js',
+ // 			array('jquery'),
+ // 			'20141010',
+ // 			false
+ // 		);
+ 		
+ // 		wp_enqueue_style(
+ // 			'pbd-alp-style',
+ // 			get_template_directory_uri() . '/css/style.css',
+ // 			false,
+ // 			'1.0',
+ // 			'all'
+ // 		);
+
+
+ // 		$max = $wp_query->max_num_pages;
+ // 		$paged = ( get_query_var('paged') > 1 ) ? get_query_var('paged') : 1;
+ 		
+ // 		// Add some parameters for the JS.
+ // 		wp_localize_script(
+ // 			'pbd-alp-load-posts',
+ // 			'pbd_alp',
+ // 			array(
+ // 				'startPage' => $paged,
+ // 				'maxPages' => $max,
+ // 				'nextLink' => next_posts($max, false)
+ // 			)
+ // 		);
+
+
 }
 add_action( 'wp_enqueue_scripts', 'twentyfifteen_scripts' );
 
@@ -571,3 +606,55 @@ function send_like_request(){
 
 add_action('wp_ajax_send-like', 'send_like_request');
 add_action('wp_ajax_nopriv_send-like', 'send_like_request');
+
+
+
+/*Change link of custom post type - Article*/
+function article_links($post_link, $post = 0) {
+    if($post->post_type === 'acme_article') {
+        return home_url('article/' . $post->ID . '/');
+    }
+    else{
+        return $post_link;
+    }
+}
+add_filter('post_type_link', 'article_links', 1, 3);
+
+/*Add the correct rewrites rules to prevent page not found*/
+function article_rewrites_init(){
+    add_rewrite_rule('article/([0-9]+)?$', 'index.php?post_type=acme_article&p=$matches[1]', 'top');
+}
+add_action('init', 'article_rewrites_init');
+
+
+/*Custom breadcrumb in curator detail page only, to display the curator name*/
+function custom_breadcrumb() {
+
+	$uri = trim($_SERVER["HTTP_HOST"] . $_SERVER["REDIRECT_URL"], '/');              
+  	$uri = explode('/', $uri);
+ 
+  	$breadcrumb = '';
+
+  	if($uri['1'] == 'curator-detail') {
+	   
+	    $user_id = $_GET['id'];
+		$user 	 = get_userdata( $user_id );
+
+		$breadcrumb = '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to Home." href="/" class="home">Home</a></span>';
+		$breadcrumb .= '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to Home." href="'.get_permalink().'?id='.$user_id.'" class="curator-detail">Curator Detail</a></span>';
+		$breadcrumb .= '<span typeof="v:Breadcrumb"><span property="v:title">'.$user->display_name.'</span></span>';
+		
+		$breadcrumb.="";
+
+  	}
+	
+	return $breadcrumb;
+}
+
+add_action('init', 'session_ajax');
+function session_ajax() {
+	
+	if (!session_id()) {
+      session_start();
+    }
+}

@@ -4,15 +4,6 @@ if ( ! function_exists( 'wp_handle_upload' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/file.php' );
 }
 
-function getFacebookDetails($source_url){
-    $rest_url = "http://api.facebook.com/restserver.php?format=json&method=links.getStats&urls=".urlencode($source_url);
-    $json = json_decode(file_get_contents($rest_url),true);
-return $json;
-}
-
-// x
-
-
 if ( ! function_exists('array_get') ) {
   function array_get($arr, $key, $default = null, $echo = false) {
     $out = $default;
@@ -250,7 +241,6 @@ function post_acme_article($post){
     $message = 'Please fill-up the required fields.';
   }
   
-  echo '<script type="text/javascript">alert("article '.$post_status.'");</script>';
   wp_redirect(site_url().'/curator-detail/?id='.$post_author.'&status='.$post_status);
 }
 
@@ -453,4 +443,58 @@ function getArticleImage($post_id)
   }
 
   return $src;
+}
+
+
+add_action('init', 'update_article_info');
+
+function update_article_info(){
+
+  if(isset($_POST['update_article_info'])) {
+
+      $post_id = $_POST['post_id'];
+
+      $post_data = array(
+          'ID'            => $_POST['post_id'],
+          'post_title'    => wp_strip_all_tags( $_POST['post_title'] ),
+      );
+
+
+    if(!empty($_FILES['post_image']['name'])){
+
+      $uploaddir = wp_upload_dir();
+      $file = $_FILES["post_image"]["name"];
+
+      $uploadfile = $uploaddir['path'] . '/' . basename( $file );
+
+      move_uploaded_file( $file , $uploadfile );
+      $filename = basename( $uploadfile );
+
+      $wp_filetype = wp_check_filetype(basename($filename), null );
+
+      $attachment = array(
+          'post_mime_type' => $wp_filetype['type'],
+          'post_title'     => preg_replace('/\.[^.]+$/', '', $filename),
+          'post_content'   => '',
+          'post_status'    => 'inherit'
+      );
+
+      foreach($_FILES as $file => $value) {
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
+        $attach_id = media_handle_upload( $file, $post_id );            
+        set_post_thumbnail( $post_id , $attach_id);
+        update_post_meta($post_id,'_thumbnail_id',$attach_id);
+      }
+
+      #$image_url = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
+
+    }
+
+      $posts =  wp_update_post( $post_data );
+        
+  }
+
 }

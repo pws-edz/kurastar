@@ -67,34 +67,36 @@
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4">
-						<div class="pointer2"></div>
-				<?php
-                //Returns All Term Items for "my_taxonomy"
-                $category        = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-                $countries       = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
-                $authorID        = get_the_author_meta($post->ID);
- 
-                $fb_user_access_token = get_user_meta( get_the_author_meta( 'ID' ), 'fb_user_access_token', true ); 
-                $fb_profile_picture   = get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
-        
+						<div class="pointer2">
+						</div>
+						<?php
+		                //Returns All Term Items for "my_taxonomy"
+		                $category        = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+		                $countries       = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+		                $authorID        = get_the_author_meta($post->ID);
+		 
+		                $fb_user_access_token = get_user_meta( get_the_author_meta( 'ID' ), 'fb_user_access_token', true ); 
+		                $fb_profile_picture   = get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+		        
 
-               if($fb_user_access_token != '') {
+		               if($fb_user_access_token != '') {
 
-                	$profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
+		                	$profile =  get_user_meta( get_the_author_meta( 'ID' ), 'fb_profile_picture', true ); 
 
-               } else {
+		               } else {
 
-		            if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
-		              	$profile = get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
-		            }else{
-                    	$profile = get_template_directory_uri()."/images/default-image.jpg";
-		            }
-               }
+				            if(get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) )) {
+				              	$profile = get_the_author_meta( 'profile_url', get_the_author_meta( 'ID' ) );
+				            }else{
+		                    	$profile = get_template_directory_uri()."/images/default-image.jpg";
+				            }
+		               }
 
-                //diplay reference post data
-       
-               ?>
-				<div class="postimg postimg2" style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
+		                //diplay reference post data
+		       
+		               ?>
+						<div id="change-image-2" class="postimg postimg2" style="background-image:url(<?php echo getArticleImage($post->ID); ?>);">
+						</div>
 
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-8">
@@ -123,9 +125,36 @@
 	                  <?php endif; ?>  
 				</div>
 				<div class="curator-info">
-					<div class="curator-info">
-					<p><?php the_title(); ?> </p>
-				</div>
+					<!-- <div class="curator-info"> -->
+					<!-- <p><?php the_title(); ?></p> -->
+				<!-- </div> -->
+				<form method="POST" id="edit-custom-form" enctype="multipart/form-data">
+                <div class="display_details">
+                  <span id="edit-form">
+                    <p><?php the_title(); ?></p>
+                  </span>
+                  <?php if(is_user_logged_in() &&   get_the_author_meta( 'ID' ) == get_current_user_id() ) : ?>
+                    <span class="catlabel"><a href="#" class="edit-custom-form">Edit</a> </span>
+                  <?php endif; ?>
+                </div>
+
+                <div style="display:none;" class="display_section">
+                	<div class="row">
+	                    <div class="form-grp form-placeholder-offset">
+							<textarea name="post_title" placeholder="Title" class="form-control form-control-stroked"><?php the_title(); ?></textarea>
+	                    </div>
+                    </div>
+                    <img id="uploaded_image" src="<?php echo getArticleImage($post->ID); ?>" style="display:none">
+                    <input type="file" name="post_image" id="post_image" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
+                    <input type="hidden" name="update_article_info" value="_update_article_info">
+                    <input type="hidden" name="post_id" value="<?php echo $post->ID ?>">
+                    <a href="#" class="btn catlabel update_process"><?php _e('Save', 'wp') ?></a>
+                    <a href="#" class="btn catlabel cancel_process"><?php _e('Cancel', 'wp') ?></a>
+
+                </div>
+                <div class="clear"></div>
+              </form>
+
 				</div>
 				<div class="infobelow">
 
@@ -133,29 +162,25 @@
 						
 						<ul class="socialmedia">
 							<li class="like-button">
-								<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
+
+							<?php if (is_user_logged_in() && get_post_meta($post->ID, '_user_liked', true) != get_current_user_id() ): ?>
 								<form class="form-send-like" method="POST">
 									<p class="message"></p>
-		                <div class="form-group">
-		             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
-		             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
-		             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
-		             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
-		             	    <input type="hidden" name="action" value="send-like">
-		             	    <i class="fa fa-heart"></i>
-		                    <button type="submit" class="smallpoints "><span class="label-sm">Thank You</span> (<?php echo count_total_favorites($post->ID) ?>)</button>
-		                </div>
-		            </form>
-                <?php else: ?>
-                	<i class="fa fa-heart"></i>
-                	<span class="smallpoints smallpoints-left likes-font">
-                	<?php 
-                			echo 'Thank You ('.count_total_favorites($post->ID).')';
-                	?>
-                	Thank You
-                	</span>
+					                <div class="form-group">
+					             	    <input type="hidden" name="postid" value="<?php echo $post->ID ?>">
+					             	    <input type="hidden" name="owned" value="<?php echo get_current_user_id() == get_the_author_meta( 'ID' ) ? 'yes' : 'no';  ?>">
+					             	    <input type="hidden" name="author" value="<?php echo get_the_author_meta( 'ID' ) ?>">                   	    
+					             	    <input type="hidden" name="user" value="<?php echo get_current_user_id() ?>">
+					             	    <input type="hidden" name="action" value="send-like">
+					             	    <i class="fa fa-heart"></i>
+					                    <button type="submit" class="smallpoints "><span class="label-sm">Thank You</span> (<?php echo count_total_favorites($post->ID) ?>)</button>
+					                </div>
+					            </form>
+		                    <?php else: ?>
+			                	<i class="fa fa-heart"></i>
+			                	<span class="smallpoints smallpoints-left likes-font"><?php echo 'Thank You ('.count_total_favorites($post->ID).')';?></span>
+		                    <?php endif; ?>	
 
-                  <?php endif; ?>	
 							</li>
 							<li class="fb-button">
 								<a class = "social-media" href="#" onclick="" class="twitter"><i class="fa fa-thumbs-o-up"></i> <span class="label-sm"> Facebook </span><span class="share-count">(<?php echo kura_twitter_count(get_permalink( $post->ID )) ?>)</span></a>
