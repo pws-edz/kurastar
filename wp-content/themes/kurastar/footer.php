@@ -9,8 +9,8 @@
  * @since Twenty Fifteen 1.0
  */
 ?>			
-<div class="block-footer1">
-	<div class="defaultWidth center clear-auto">
+<!-- <div class="block-footer1">
+	<div class=" center clear-auto">
 		<a href="<?php home_url(); ?>" class="logofooter">
 			<img src="<?php echo get_template_directory_uri(); ?>/images/logo_gray.png" />
 		</a>
@@ -18,9 +18,9 @@
 			<?php wp_nav_menu( array('menu' => 'footer-menu')); ?>
 		</div>
 	</div>
-</div>
+</div> -->
 <div class="block-footer2">
-	<div class="defaultWidth center clear-auto block-footer2-wrap">
+	<div class=" center clear-auto block-footer2-wrap">
 		<div class="footcountry">
 			<h3 class="footlabel">Countries</h3>
 			<?php echo do_shortcode( '[footer_country]' ); ?>
@@ -34,7 +34,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="defaultWidth center clear-auto">
+	
+	<div class="center clear-auto">
+		<div class="social-media-footer">
+		<ul class="sm-list-footer">
+			<li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/images/twitter.png" alt=""></a></li>
+			<li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/images/facebook.png" alt=""></a></li>
+			<li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/images/gplus.png" alt=""></a></li>
+			<li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/images/hatena.png" alt=""></a></li>
+		</ul>
+	</div>
 		<p class="copyright">&copy; Copyright Kura-Star 2015. All Right Reserved.</p>
 	</div>
 </div>		

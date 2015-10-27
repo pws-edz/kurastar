@@ -10,7 +10,7 @@
  */
 ?>
 
-<div class="mainbanner subpage-banner">
+<!-- <div class="mainbanner subpage-banner">
     <div class="flexslider">
       <ul class="slides">
         <?php $row = 1; if(get_field('home_slider', 6)): ?>
@@ -51,7 +51,7 @@
     </div>
   </form>
 </div>
-</div>
+</div> -->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="defaultWidth center clear-auto bodycontent">
