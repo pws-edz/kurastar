@@ -195,62 +195,128 @@ $(document).on('change', "#post_image", function(e) {
   readURL(this);
 });
 
-/*Curator Detail Page*/
+jQuery(document).ready(function($) {
 
-// $(document).on('click', "#image-button", function(e) {
-// 	$('#imgInp').trigger('click');
-// });
+   /*load more for publish & draft tab*/
+ $('.custom').click(function() {
 
-// function readURL(input) {
+   var pp = parseInt($('.custom-'+$(this).data('status')+'-pp').val()) + 1;
+   $('.custom-'+$(this).data('status')+'-pp').val(pp);
+ 
+    $(this).text('Loading posts...');
+    // This does the ajax request
+    $.ajax({
+        url: ajaxurl,
+        type: "POST",
+        dataType: "json",
+        data: {
+            'action':'tab_ajax_request',
+            'post_type' : $(this).data('post-type'),
+            'posts_per_page' : parseInt($(this).data('post-per-page')),
+            'paged' :  parseInt(pp),
+            'author' : $(this).data('author'),
+            'status' : $(this).data('status'),
+            'orderby' : $(this).data('orderby'),
+            'order' : $(this).data('order')
+        },
+        success:function(response) {
+            // This outputs the result of the ajax request
+            console.log(response);
+            $('.custom-'+response.post_status).text('Load More');
+            $('.post-'+response.post_status+'-wrapper').append(response.result);
 
-//   if (input.files && input.files[0]) {
-//       var reader = new FileReader();
+            if(response.max == response.paged) {
 
-//       reader.onload = function (e) {
-//           $('#blah').attr('src', e.target.result);
-//       }
+               $('.custom-'+response.post_status).hide();
+            }
+           
+        },
+        error: function(errorThrown){
+            console.log(errorThrown);
+        }
+    });  
+         return false;     
+    });
 
-//       reader.readAsDataURL(input.files[0]);
-//   }
-// }
+ /*load more for favorites tab*/ 
+ $('.custom-favpagi').click(function() {
 
-// // $("#imgInp").change(function(){
-// $(document).on('change', "#imgInp", function(e) {
-//   readURL(this);
-// });
+    var pp = parseInt($('.custom-'+$(this).data('status')+'-pp').val()) + 1;
+    $('.custom-'+$(this).data('status')+-'pp').val(pp);
 
-// $(document).on('click', ".edit", function(e) {
-//  e.preventDefault();
+    $(this).text('Loading posts...');
 
-//  $('.user_details').hide();
-//  $('.userinfo_section').show();
+    // This does the ajax request
+    $.ajax({
+        url: ajaxurl,
+        type: "POST",
+        dataType: "json",
+        data: {
+            'action':'favorite_tab_ajax_request',
+            'paged' :  parseInt(pp),
+            'author' : $(this).data('author'),
+            'status' : $(this).data('status')
+        },
+        success:function(response) {
+            // This outputs the result of the ajax request
+            console.log(response);
+            $('.custom-'+response.post_status).text('Load More');
+            $('.post-'+response.post_status+'-wrapper').append(response.result);
 
-// });
+            if(response.max == response.paged) {
 
-// $(document).on('click', ".update_user_info", function() {
+               $('.custom-'+response.post_status).hide();
+            }
+           
+        },
+        error: function(errorThrown){
+            console.log(errorThrown);
+        }
+    });  
+         return false;     
+    });
+	
 
-// if (confirm("Are you sure you want to save the chages?") == true) {
-
-//   $('#form-curator-info').submit();
-
-// } else {
-
-//   cancellation();
-    
-// }
-
-// });
-
-// $(document).on('click', ".cancel_user_info", function(e) {
-//  e.preventDefault();
-
-//  cancellation();
-// });
+ /*load more for home page*/
+$('.custom-defaultpagi').click(function() {
 
 
-// function cancellation() {
+   var pp = parseInt($('.custom-publish-pp').val()) + 1;
+   $('.custom-publish-pp').val(pp);
+    $(this).text('Loading posts...');
 
-//  $('.userinfo_section').hide();
-//  $('.user_details').show();
+      console.log(parseInt($(this).data('post-per-page')));
+    // This does the ajax request
+    $.ajax({
+        url: ajaxurl,
+        type: "POST",
+        dataType: "json",
+        data: {
+            'action':'default_ajax_request',
+            'post_type' : $(this).data('post-type'),
+            'posts_per_page' : parseInt($(this).data('post-per-page')),
+            'paged' :  parseInt(pp),
+            'status' : $(this).data('status'),
+            'orderby' : $(this).data('orderby'),
+            'order' : $(this).data('order')
+        },
+        success:function(response) {
+            // This outputs the result of the ajax request
+            console.log(response);
 
-// }
+            $('.custom-'+response.post_status).text('Load More');
+            $('.post-'+response.post_status+'-wrapper').append(response.result);
+
+            if(response.max == response.paged) {
+
+               $('.custom-'+response.post_status).hide();
+            }
+           
+        },
+        error: function(errorThrown){
+            console.log(errorThrown);
+        }
+    });  
+         return false;     
+    });
+});

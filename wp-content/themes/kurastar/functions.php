@@ -388,41 +388,6 @@ function twentyfifteen_scripts() {
 		'expand'   => '<span class="screen-reader-text">' . __( 'expand child menu', 'twentyfifteen' ) . '</span>',
 		'collapse' => '<span class="screen-reader-text">' . __( 'collapse child menu', 'twentyfifteen' ) . '</span>',
 	) );
-
- // global $wp_query;
-
-	// wp_enqueue_script(
- // 			'pbd-alp-load-posts',
- // 			get_template_directory_uri() . '/js/load-posts.js',
- // 			array('jquery'),
- // 			'20141010',
- // 			false
- // 		);
- 		
- // 		wp_enqueue_style(
- // 			'pbd-alp-style',
- // 			get_template_directory_uri() . '/css/style.css',
- // 			false,
- // 			'1.0',
- // 			'all'
- // 		);
-
-
- // 		$max = $wp_query->max_num_pages;
- // 		$paged = ( get_query_var('paged') > 1 ) ? get_query_var('paged') : 1;
- 		
- // 		// Add some parameters for the JS.
- // 		wp_localize_script(
- // 			'pbd-alp-load-posts',
- // 			'pbd_alp',
- // 			array(
- // 				'startPage' => $paged,
- // 				'maxPages' => $max,
- // 				'nextLink' => next_posts($max, false)
- // 			)
- // 		);
-
-
 }
 add_action( 'wp_enqueue_scripts', 'twentyfifteen_scripts' );
 
@@ -657,4 +622,235 @@ function session_ajax() {
 	if (!session_id()) {
       session_start();
     }
+
+    //unset($_SESSION);
 }
+
+
+function tab_ajax_request() {
+
+
+     	$params = array( 
+                'post_type'       => $_POST['post_type'], 
+                'posts_per_page'  => $_POST['posts_per_page'], 
+                'paged'           => $_POST['paged'], 
+                'author'          => $_POST['author'], 
+                'post_status'     => $_POST['status'],
+                'orderby'         => $_POST['orderby'],
+                'order'           => $_POST['order']
+		);
+     	
+     	 $ctr = 0;
+         
+         $wp_query = new WP_Query( $params );
+	   	 $html = "";    
+
+         if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) : $wp_query->the_post();
+         	
+
+			$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+			$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+
+			$authorID = get_the_author_meta($post->ID);
+			$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+			$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
+
+
+		    $html .='<li>';
+
+			  $html .='<a href="'.get_permalink().'" class="post-list-thumb-wrap">';
+			  $html .='<div class="postimg" style="background: url('.getArticleImage($post->ID).')"></div>';
+			  $html .='</a>';
+
+			  $html .='<div class="labels">';
+				  if($countries) {
+				  	foreach($countries as $country) {
+				  		$html .='<a href="/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $country;
+				  		$html .='</a>';
+				  	}
+				  }
+
+				  if($category) {
+				  	foreach($category as $country) {
+				  		$html .='<a href="/search-results/?country=select&category='.$category.'+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $category;
+				  		$html .='</a>';
+				  	}
+				  }
+			  $html .='</div>';
+
+			$html .='</li>';
+		$ctr++;
+		endwhile; endif;
+
+
+
+    echo json_encode(array('post'=>$_POST, 'paged'=> $_POST['paged'],  'post_status'=> $_POST['status'], 'result' => $html, 'count' => $ctr, 'max' => $wp_query->max_num_pages ));
+
+    die();
+
+}
+
+
+add_action('wp_ajax_tab_ajax_request', 'tab_ajax_request');
+add_action('wp_ajax_nopriv_tab_ajax_request', 'tab_ajax_request');
+
+
+
+function favorite_tab_ajax_request() {
+
+
+     	$params = array(
+                  'post_type'       => 'acme_article', 
+                  'posts_per_page'  => 2, 
+                  'paged'           => $_POST['paged'], 
+                  'meta_query'        => array(
+                    'relation'  => 'AND',
+                      array(
+                          'key' => '_user_liked',
+                          'value' => $_POST['author'],
+                          'compare' => '='
+                      )
+                  )
+              );
+     	
+     	 $ctr = 0;
+         
+         $wp_query = new WP_Query( $params );
+	   	 $html = "";    
+
+         if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) : $wp_query->the_post();
+         	
+
+			$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+			$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+
+			$authorID = get_the_author_meta($post->ID);
+			$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+			$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
+
+
+		    $html .='<li>';
+
+			  $html .='<a href="'.get_permalink().'" class="post-list-thumb-wrap">';
+			  $html .='<div class="postimg" style="background: url('.getArticleImage($post->ID).')"></div>';
+			  $html .='</a>';
+
+			  $html .='<div class="labels">';
+				  if($countries) {
+				  	foreach($countries as $country) {
+				  		$html .='<a href="/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $country;
+				  		$html .='</a>';
+				  	}
+				  }
+
+				  if($category) {
+				  	foreach($category as $country) {
+				  		$html .='<a href="/search-results/?country=select&category='.$category.'+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $category;
+				  		$html .='</a>';
+				  	}
+				  }
+			  $html .='</div>';
+
+			$html .='</li>';
+		$ctr++;
+		endwhile; endif;
+
+
+
+    echo json_encode(array('post'=>$_POST, 'paged'=> $_POST['paged'],  'post_status'=> $_POST['status'], 'result' => $html, 'count' => $ctr, 'max' => $wp_query->max_num_pages ));
+
+    die();
+
+}
+
+
+add_action('wp_ajax_favorite_tab_ajax_request', 'favorite_tab_ajax_request');
+add_action('wp_ajax_nopriv_favorite_tab_ajax_request', 'favorite_tab_ajax_request');
+
+
+
+function default_ajax_request() {
+	global $wp_query;
+
+
+     	$params = array( 
+                'post_type'       => $_POST['post_type'], 
+                'posts_per_page'  => $_POST['posts_per_page'], 
+                'paged'           => $_POST['paged'], 
+                'post_status'     => $_POST['status'],
+                'orderby'         => $_POST['orderby'],
+                'order'           => $_POST['order']
+		);
+     	
+     	 $ctr = 0;
+         
+         $wp_query = new WP_Query( $params );
+	   	 $html = "";    
+
+
+         if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) : $wp_query->the_post();
+         	
+
+			$category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+			$countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+
+			$authorID = get_the_author_meta($post->ID);
+			$curator_profile = get_cupp_meta($authorID, 'thumbnail');
+
+			$custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+
+
+
+		    $html .='<li>';
+
+			  $html .='<a href="'.get_permalink().'" class="post-list-thumb-wrap">';
+			  $html .='<div class="postimg" style="background: url('.getArticleImage($post->ID).')"></div>';
+			  $html .='</a>';
+
+			  $html .='<div class="labels">';
+				  if($countries) {
+				  	foreach($countries as $country) {
+				  		$html .='<a href="/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $country;
+				  		$html .='</a>';
+				  	}
+				  }
+
+				  if($category) {
+				  	foreach($category as $country) {
+				  		$html .='<a href="/search-results/?country=select&category='.$category.'+category&post_type=post+type+curators-cat" class="countrylabel">';
+				  		$html .='<i class="fa fa-map-marker"></i>';
+				  		$html .= $category;
+				  		$html .='</a>';
+				  	}
+				  }
+			  $html .='</div>';
+
+			$html .='</li>';
+		$ctr++;
+		endwhile; endif;
+
+
+
+    echo json_encode(array('post'=>$_POST, 'paged'=> $_POST['paged'],  'post_status'=> $_POST['status'], 'result' => $html, 'count' => $ctr, 'max' => $wp_query->max_num_pages ));
+
+    die();
+
+}
+
+add_action('wp_ajax_default_ajax_request', 'default_ajax_request');
+add_action('wp_ajax_nopriv_default_ajax_request', 'default_ajax_request');
+

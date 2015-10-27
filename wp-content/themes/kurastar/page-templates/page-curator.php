@@ -188,95 +188,101 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
       <div class="tab-content curator-tab-content curator-tab-content">
         <div role="tabpanel" class="tab-pane <?php echo $_GET['status'] == 'publish' ? 'active' : $_GET['status'] == '' ? 'active' : ''; ?>" id="1">
           <ul class="post-list-thumb post-publish">
+             <div class="post-publish-wrapper"> 
           <?php
-             # get_wpposts();
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-
+            $paged = ( get_query_var('paged') > 1 ) ? get_query_var('paged') : 1;
             $param = array( 
                     'post_type'       => 'acme_article', 
                     'posts_per_page'  => 2, 
-                    'post_status'     => 'publish', 
                     'paged'           => $paged, 
                     'author'          => $user->ID, 
+                    'post_status'     => 'publish',
                     'orderby'         => 'post_date',
                     'order'           => 'DESC');
 
-              query_posts( $param );
-              if ( have_posts() ) : while ( have_posts() ) : the_post();
+            $wp_query = new WP_Query( $param );
+
+
+              if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) : $wp_query->the_post();
           ?>
-            <li id="post-publish-<?php echo the_ID() ?>" class="post-publish-<?php echo the_ID() ?> post-publish-list list-thumb">
-              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
-              <?php
-                //Returns All Term Items for "my_taxonomy"
-                $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-                $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+           
+              <li id="post-publish-<?php echo the_ID() ?>" class="post-publish-<?php echo the_ID() ?> post-publish-list list-thumb">
+                <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
+                <?php
+                  //Returns All Term Items for "my_taxonomy"
+                  $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+                  $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
-                $authorID = get_the_author_meta($post->ID);
-                $curator_profile = get_cupp_meta($authorID, 'thumbnail');
+                  $authorID = get_the_author_meta($post->ID);
+                  $curator_profile = get_cupp_meta($authorID, 'thumbnail');
 
-                $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
+                  $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
-              ?>
-              <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
-                
-              </a>
-              <div class="labels">
+                ?>
+                <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
+                  
+                </a>
+                <div class="labels">
 
-                  <?php if($countries): ?>
-                    <?php foreach($countries as $country): ?>
-                      <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                        <i class="fa fa-map-marker"></i> 
-                        <?php echo $country; //フィリピン ?>
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <!-- <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a> -->
-                  <?php endif; ?>
+                    <?php if($countries): ?>
+                      <?php foreach($countries as $country): ?>
+                        <a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
+                          <i class="fa fa-map-marker"></i> 
+                          <?php echo $country; //フィリピン ?>
+                        </a>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <!-- <a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a> -->
+                    <?php endif; ?>
 
-                  <?php if($category): ?>
-                    <?php foreach($category as $cat): ?>
-                      <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                        <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                        <?php echo $cat; //観光 ?> 
-                      </a>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
-                  <?php endif; ?>               
-                </div>
-            </li>
-
+                    <?php if($category): ?>
+                      <?php foreach($category as $cat): ?>
+                        <a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
+                          <i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
+                          <?php echo $cat; //観光 ?> 
+                        </a>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
+                    <?php endif; ?>               
+                  </div>
+              </li>
+          
+             
           
           <?php 
           endwhile ;   
           else:?>
           <li><p> No available articles.</p></li>
-          <?php endif;  
-
-          //wp pagenavi plugin for pagination   
-            // if(function_exists("wp_pagenavi")):
-
-            //   wp_pagenavi(); 
-
-            // endif;  
-
-            global $wp_query;
-             $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
-
-           wp_reset_query();?>
+          <?php endif;   
+           wp_reset_postdata();
+           ?>
+             </div>
+             <?php if ( $wp_query->have_posts() ) : ?>
+             <p>
+              <a class="custom custom-publish" href="#" data-slug="curator-detail" data-post-type="acme_article" data-post-per-page="2" data-paged="1" data-author="<?php echo $user->ID ?>" data-status="publish" data-orderby="post_date" data-order="DESC">
+                Load More</a>
+                <input type="hidden" class="custom-publish-pp" value="<?php echo $paged ?>">
+              </p>
+            <?php endif; ?>
           </ul>
         </div>
+        
         
         <!-- FAVORITES -->
         <!--tab 1-->
         <div role="tabpanel" class="tab-pane" id="2">
+
+            <ul class="post-list-thumb post-favorite">
+             <div class="post-favorite-wrapper">
            <?php 
+            $paged = ( get_query_var('paged') > 1 ) ? get_query_var('paged') : 1;
 
-
-          $fav_args = array(
+            $fav_args = array(
                   'post_type'       => 'acme_article', 
                   'posts_per_page'  => 2, 
+                  'paged'           => $paged, 
                   'meta_query'        => array(
                     'relation'  => 'AND',
                       array(
@@ -286,17 +292,14 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                       )
                   )
               );
-             ?>
-            <ul class="post-list-thumb post-favorites">
-             
-                <?php 
-                 query_posts( $fav_args );
-              if ( have_posts() ) : while ( have_posts() ) : the_post();
-              ?>  
-              <li id="post-favorites-<?php echo the_ID() ?>" class="post-favorites-<?php echo the_ID() ?> post-favorite-list list-thumb">
-              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
-              <?php
-                //Returns All Term Items for "my_taxonomy"
+
+              //    query_posts( $fav_args );
+              // if ( have_posts() ) : while ( have_posts() ) : the_post();
+
+              $query_favorite = new WP_Query( $fav_args );
+
+              if ( $query_favorite->have_posts() ) : while ( $query_favorite->have_posts() ) : $query_favorite->the_post();
+              //Returns All Term Items for "my_taxonomy"
                 $category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
                 $authorID          = get_the_author_meta($post->ID);
@@ -304,7 +307,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                 $curator_profile   = get_avatar( $authorID );
                 $custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
 
-              ?>
+              ?>  
+              <li id="post-favorite-<?php echo the_ID() ?>" class="post-favorite-<?php echo the_ID() ?> post-favorite-list list-thumb">
+              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 
               </a>
@@ -337,16 +342,16 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
               <li><p> No available articles.</p></li>
               <?php endif;  
 
-              //wp pagenavi plugin for pagination   
-                global $wp_query;
-
-                $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
-
-               wp_reset_query();?>
-           
-
-                 ?>
-             
+               wp_reset_postdata();
+               ?>
+                </div>
+                <?php if($query_favorite->have_posts()): ?>
+                 <p>
+                  <a class="custom-favpagi custom-favorite" href="#" data-slug="curator-detail" data-author="<?php echo $user->ID ?>" data-status="favorite">
+                    Load More</a>
+                    <input type="hidden" class="custom-favorite-pp" value="<?php echo $paged ?>">
+                  </p>
+                <?php endif; ?>
             </ul>
         </div>
         
@@ -354,10 +359,10 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
         <!--tab 2-->
         <div role="tabpanel" class="tab-pane <?php echo $_GET['status'] == 'draft' ? 'active' : ''; ?>" id="3">
            <ul class="post-list-thumb post-draft">
+            <div class="post-draft-wrapper">
           <?php
-             # get_wpposts();
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
+  
+            $paged = ( get_query_var('paged') > 1 ) ? get_query_var('paged') : 1;
             $param = array( 
                     'post_type'       => 'acme_article', 
                     'posts_per_page'  => 2, 
@@ -367,13 +372,12 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                     'orderby'         => 'post_date',
                     'order'           => 'DESC');
 
-              query_posts( $param );
-              if ( have_posts() ) : while ( have_posts() ) : the_post();
-          ?>
-            <li id="post-draft-<?php echo the_ID() ?>" class="post-draft-<?php echo the_ID() ?> post-draft-list list-thumb">
-              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
-              <?php
-                //Returns All Term Items for "my_taxonomy"
+
+            $query_draft = new WP_Query( $param );
+
+              if ( $query_draft->have_posts() ) : while ( $query_draft->have_posts() ) : $query_draft->the_post();
+
+               //Returns All Term Items for "my_taxonomy"
                 $category = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
                 $countries  = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
 
@@ -382,7 +386,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
                 $custom_image_link =  get_post_meta( $post->ID, '_custom_image_link', true);
 
-              ?>
+            ?>
+            <li id="post-draft-<?php echo the_ID() ?>" class="post-draft-<?php echo the_ID() ?> post-draft-list list-thumb">
+              <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap post-id<?php echo $post->ID ?>">
               <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
                 
               </a>
@@ -418,18 +424,15 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
           else:?>
           <li><p> No available articles.</p></li>
           <?php endif;  
-
-          //wp pagenavi plugin for pagination   
-            // if(function_exists("wp_pagenavi")):
-
-            //   wp_pagenavi(); 
-
-            // endif;  
-             global $wp_query;
-
-             $_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
-
-           wp_reset_query();?>
+           wp_reset_postdata();?>
+            </div>
+            <?php if ( $query_draft->have_posts() ) : ?>
+             <p>
+              <a class="custom custom-draft" href="#" data-slug="curator-detail" data-post-type="acme_article" data-post-per-page="2" data-paged="1" data-author="<?php echo $user->ID ?>" data-status="draft" data-orderby="post_date" data-order="DESC">
+                Load More</a>
+                <input type="hidden" class="custom-draft-pp" value="<?php echo $paged ?>">
+              </p>
+             <?php  endif; ?>
           </ul>
         </div><!--tab 3-->
       </div>
@@ -470,69 +473,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
   
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
 
-    //   $(document).on('click', "#image-button", function(e) {
-    //     $('#imgInp').trigger('click');
-    //   });
 
-    //   function readURL(input) {
-
-    //       if (input.files && input.files[0]) {
-    //           var reader = new FileReader();
-
-    //           reader.onload = function (e) {
-    //               $('#blah').attr('src', e.target.result);
-    //           }
-
-    //           reader.readAsDataURL(input.files[0]);
-    //       }
-    //   }
-
-    //   // $("#imgInp").change(function(){
-    //   $(document).on('change', "#imgInp", function(e) {
-    //       readURL(this);
-    //   });
-  
-    //  $(document).on('click', ".edit", function(e) {
-    //      e.preventDefault();
-
-    //      $('.user_details').hide();
-    //      $('.userinfo_section').show();
-
-    //  });
-
-    //  $(document).on('click', ".update_user_info", function() {
-
-    //     if (confirm("Are you sure you want to save the chages?") == true) {
-
-    //       $('#form-curator-info').submit();
-
-    //     } else {
-
-    //       cancellation();
-            
-    //     }
-
-    //  });
-
-    // $(document).on('click', ".cancel_user_info", function(e) {
-    //      e.preventDefault();
-
-    //      cancellation();
-    //  });
-
-     
-    //  function cancellation() {
-
-    //      $('.userinfo_section').hide();
-    //      $('.user_details').show();
-
-    //  }
-
-});
 </script>
 <?php 
-get_footer();?>
+get_footer();
