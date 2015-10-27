@@ -1,7 +1,7 @@
 <?php 
 
 /*Template Name: Home*/
-
+global $wp;
 get_header(); ?>
 	<div class="mainbanner">
 		<div class="flexslider">
@@ -51,13 +51,21 @@ get_header(); ?>
 			<h2 class="whatsnew">ー最新情報ー</h2>
 
 
-			<ul class="post-list-thumb">
+			<ul class="post-list-thumb post-list-default">
 			<?php
 				 # get_wpposts();
-				  query_posts( array( 'post_type' => 'acme_article', 'posts_per_page' => 9, 'paged' => get_query_var('page')) );
-				  if ( have_posts() ) : while ( have_posts() ) : the_post();
+#
+			# 	$temp = $wp_query; 
+  			#	$wp_query = null; 
+
+				 #global $query_string;
+			 	query_posts(array( 'post_type' => 'acme_article','posts_per_page' => 6, 'post_status' => 'publish', 'paged' => get_query_var('page')) );
+				 if ( have_posts() ) : while ( have_posts() ) : the_post();
+				# $wp_query = new WP_Query(  array( 'post_type' => 'acme_article', 'posts_per_page' => 9, 'post_status' => 'publish', 'paged' => get_query_var('page'))  );
+
+				#  if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) : $wp_query->the_post();
 			?>
-				<li>
+				<li id="post-<?php echo the_ID() ?>" class="post-<?php echo the_ID() ?> post">
 				  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
                     <?php
                  	//Returns All Term Items for "my_taxonomy"
@@ -97,14 +105,25 @@ get_header(); ?>
 			
 			<?php endwhile ;   endif;  
 
+    	//	load_more_button();
+
 			//wp pagenavi plugin for pagination		
-			  if(function_exists("wp_pagenavi")):
+			  // if(function_exists("wp_pagenavi")):
 
-			  	wp_pagenavi(); 
+			  // 	wp_pagenavi(); 
 
-			  endif;	
+			  // endif;	
 
-			 wp_reset_query();?>
+	  #  $wp_query = null; 
+
+  	#	$wp_query = $temp;
+			global $wp_query;
+
+			$_SESSION['custom_max_pages'] = $wp_query->max_num_pages; //add this value to work with the load more
+
+			 wp_reset_query(); 
+
+			#wp_reset_postdata();?>
 			</ul>
 
 		</div>
