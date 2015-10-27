@@ -81,16 +81,16 @@ class MyShortcode {
 							$post = $wp_query->post;
 							//var_dump($post);
 	                    ?>
-						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>);"></div>
+						<div class="siderankimage"style="background-image:url(<?php echo getArticleImage($post->ID); ?>); background-position: center;"></div>
 						<h4 class="ranktitle"><?php if (strlen($post->post_title) > 10) {echo mb_strimwidth(the_title($before = '', $after = '', FALSE), 0, 10). '...'; } else {the_title();} ?></h4>
 						<span class="smallpoints smallpoints-right">
 							<?php
-								// $view = do_shortcode( '[post_view]' );
-								// if ( $view == 1 ) {
-								// 	echo $view.'<span> view</span>';
-								//  } else {
-								//  	echo $view.'<span> views</span>';
-								//  }
+								$view = do_shortcode( '[post_view]' );
+								if ( $view == 1 ) {
+									echo $view.'<span> view</span>';
+								 } else {
+								 	echo $view.'<span> views</span>';
+								 }
 							 ?></span>
 				</li>
 			<?php endwhile; endif; wp_reset_query(); ?>	

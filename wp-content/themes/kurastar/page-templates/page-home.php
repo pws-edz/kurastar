@@ -22,7 +22,8 @@ get_header(); ?>
 					<div class="transwrap">
 						<input id="cat" type="text" name="category" value="select category" readonly />
 					</div>
-					<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" />
+				<!-- 	<input type="submit" class="search-btn" value="post type curators-cat" name="post_type" /> -->
+				<input type="submit" class="search-btn" value="" name="post_type" />
 					
 					<?php 
 						/*
@@ -60,39 +61,38 @@ get_header(); ?>
 				  <a href="<?php echo get_permalink(); ?>" class="post-list-thumb-wrap">
                     <?php
                  	//Returns All Term Items for "my_taxonomy"
-					$category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
-					$countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
-					$authorID          = get_the_author_meta($post->ID);
-					$curator_profile   = get_cupp_meta($authorID, 'thumbnail');
-					$custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
+						$category          = wp_get_post_terms($post->ID, 'article_cat', array("fields" => "names"));
+						$countries         = wp_get_post_terms($post->ID, 'article_country_cat', array("fields" => "names"));
+						$authorID          = get_the_author_meta($post->ID);
+						$curator_profile   = get_cupp_meta($authorID, 'thumbnail');
+						$custom_image_link = get_post_meta( $post->ID, '_custom_image_link', true);
+          ?>
+            <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
+          </a>
+            <div class="labels ">
+            	<?php if($countries): ?>
+            		<?php foreach($countries as $country): ?>
+            			<a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
+            				<i class="fa fa-map-marker"></i> 
+            				<span class="label-post"><?php echo $country; //フィリピン ?></span>
+            				
+            			</a>
+            		<?php endforeach; ?>
+            	<?php else: ?>
+            		<a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
+            	<?php endif; ?>
 
-                    ?>
-                    <div class="postimg" style="background: url(<?php echo getArticleImage($post->ID); ?>)"></div>
-	                </a>
-	                <div class="labels">
-
-                      	<?php if($countries): ?>
-                      		<?php foreach($countries as $country): ?>
-                      			<a href="<?php echo '/search-results/?country='.$country.'&category=select+category&post_type=post+type+curators-cat'; ?>" class="countrylabel">
-                      				<i class="fa fa-map-marker"></i> 
-                      				<?php echo $country; //フィリピン ?>
-                      			</a>
-                      		<?php endforeach; ?>
-                      	<?php else: ?>
-                      		<a href="#" class="countrylabel"><i class="fa fa-map-marker"> No Country</i></a>
-                      	<?php endif; ?>
-
-                      	<?php if($category): ?>
-                      		<?php foreach($category as $cat): ?>
-                      			<a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
-                      				<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i> 
-                      				<?php echo $cat; //観光 ?> 
-                      			</a>
-                      		<?php endforeach; ?>
-                      	<?php else: ?>
-                      		<!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
-                      	<?php endif; ?>               
-                      </div>
+            	<?php if($category): ?>
+            		<?php foreach($category as $cat): ?>
+            			<a href="<?php echo '/search-results/?country=select+country&category='.$cat.'&post_type=post+type+curators-cat'; ?>" class="catlabel">
+            				<i class="<?php echo categoryLogo(array('category' => $cat)); ?>"></i>
+            				<span class="label-post"><?php echo $cat; //観光 ?> </span> 
+            			</a>
+            		<?php endforeach; ?>
+            	<?php else: ?>
+            		<!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
+            	<?php endif; ?>               
+            </div>
 				</li>
 			
 			<?php endwhile ;   endif;  

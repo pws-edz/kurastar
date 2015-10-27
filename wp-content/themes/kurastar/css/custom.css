@@ -285,6 +285,7 @@ p {
 .related-posts .post-detail-list > li {
 	float: left;
 	width: 33.33333%;
+	position: relative;
 }
 
 .related-posts{
@@ -952,7 +953,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 	margin-top: 8px;
 	border-top: 0;
 }
-.article-detail-wrap .labels {
+.post-detail-list .labels {
 	margin-top: 0;
 	position: absolute;
 	bottom: 10px;

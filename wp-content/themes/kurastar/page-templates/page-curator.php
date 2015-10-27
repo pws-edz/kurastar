@@ -131,9 +131,6 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                   <?php endif; ?>
                 </div>
 
-                
-
-
                 <div style="display:none;" class="userinfo_section">
                   <div class="row">
                     <div class="form-grp form-placeholder-offset input-user">
