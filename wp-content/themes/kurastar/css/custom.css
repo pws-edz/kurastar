@@ -151,7 +151,7 @@ p {
     font-size: inherit;
     color: #b8b8b8;
 }
-.menu a {
+/*.menu a {
 	font-size:16px;
 	color:#acacac;
 	font-weight:bold;
@@ -168,8 +168,8 @@ p {
 	float:left;
 	width:20%;
 	text-align:center;
-}
-#menu-category-menu.menu li {
+}*/
+/*#menu-category-menu.menu li {
 	width: 100%;
     text-align: left;
 }
@@ -233,55 +233,88 @@ p {
 }
 .menu a.selected i  {
 	color: #ee7500;
-}
+}*/
 
-.mainbanner {
+/*.mainbanner {
 	width:100%;
 	height:auto;
 	max-height:450px;
 	overflow:hidden;
 	position:relative;
+}*/
+
+.nav-actions {
+	float: right;
+	display: table;
+	margin: auto;
 }
+.nav-actions li {
+	float: left;
+	margin-top: 10px;
+}
+.nav-actions li a {
+	padding: 10px 45px 10px 0;
+}
+.nav-actions p {
+	margin-top: -5px;
+	margin-left: 7px;
+	color: #333;
+}
+
 .banner {
 	margin-top: 100px;
-	height: 250px;
+}
+.banner select {
+	width: 250px;
+	height: 45px;
+	margin-left: 5px;
+	font-size: 20px;
+	padding: 5px;
+	color:  #EE8B2B;
+}
+.category-search-title p {
+	color: #fff;
+	font-size: 28px;
 }
 .category-search {
 	background-color: rgba(0,0,0,0.5);
 	text-align: center;
-	padding: 50px;
-	
+	padding: 50px 0 10px;
 }
-.subpage-banner {
-	max-height: 260px;
+.category-search form {
+	margin: 0 0 20px;
 }
-
-.subpage-banner .flexslider {
-	max-height: 260px;
+.category-search input {
+	background:#EE8B2B;
+	color: #f5f5f5;
+	border-left: 1px solid #EE8B2B;
+	padding: 16px 18px;
+	margin-left: 5px;
 }
-.subpage-searchwrap {
-	top: 110% !important;
+.sm-list-footer {
+	display: table;
+	margin: auto;
 }
-.slides {
-	overflow:hidden;
-	/*height:450px;*/
-	height:auto;
-	max-height:450px;
+.sm-list-footer li {
+	float: left;
+	padding: 15px;
 }
-.slides  img {
-	width:100%;
-	top:-50%;
+.footer-menu {
+	margin-bottom: 30px;
 }
-.searchwrap {
-  position: absolute;
-  width: 804px;
-  height: 400px;
-  /*top: 70%;*/
-  top: 87%;
-  left: 50%;
-  margin-left: -402px;
-  margin-top: -200px;
-  z-index: 9999;
+.footer-menu ul {
+	display: table !important;
+	margin: auto;
+}
+.footer-menu ul li {
+	float: left;
+	padding: 10px;
+}
+.footer-copyright {
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+	padding-bottom: 30px;
 }
 
 /*Articles*/
@@ -1161,6 +1194,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 .block-footer2-wrap {
 	padding:12px 0;
+	padding-bottom: 45px;
 }
 .logofooter {
 	float:left;
@@ -1170,16 +1204,37 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .logofooter img {
 	width:100%;
 }
-.social-media-footer {
-	margin: auto;
-	text-align: center;
+.menu a {
+	font-size: 12px;
+	color: #fff;
 }
-.sm-list-footer li{
+#menu-footer-menu-1 {
 	display: table;
-	margin-right: 20px;
-	float: left;
+	margin: auto;
 }
-#menu-footer-menu {
+#menu-footer-menu-1 li {
+	float: left;
+	margin-right: 10px;
+}
+/*.menu a {
+	font-size:16px;
+	color:#acacac;
+	font-weight:bold;
+	display:block;
+	padding:10px 0;
+	padding-bottom:6px;
+	border-bottom:solid 3px #1b191a;
+	text-transform: uppercase;
+}
+.menu {
+	overflow:auto;
+}
+.menu li {
+	float:left;
+	width:20%;
+	text-align:center;
+}*/
+/*#menu-footer-menu {
 	float:right;
 	overflow:auto;
 }
@@ -1203,7 +1258,7 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 #menu-footer-menu .current-menu-item a {
 	background: none;
 	color: #ee7500;
-}
+}*/
 .footcountry {
 	float:left;
 }
@@ -1394,12 +1449,12 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 }
 /******************************/
 
-.copyright { 
+/*.copyright { 
 	text-align:center;
 	font-size:13px;
 	color:#898989;
 	padding-bottom:20px;
-}
+}*/
 
 .droplistcountry h4, .droplistcategory h4 {
 	font-size:13px;
@@ -1912,6 +1967,9 @@ a.post-list-thumb-wrap:hover h2, a.post-list-thumb-wrap:hover h4 {
 .registration-page input[type=checkbox] {
 	position: absolute;
     margin-left: -20px;
+}
+.checkbox {
+	margin-top: 10px !important;
 }
 
 .user-login {
@@ -2564,28 +2622,18 @@ div#picture img {
 	margin-top: 20px;
 	display: inline-block;
 }
-.searchform input {
+.searchform .search-input input {
 	padding: 15px 10px;
-	width: 200px;
+	width: 215px;
 	margin: 4px;
 	background: #fff;
 }
- .search-text {
+.searchform .search-text input {
 	background-color: #EE8B2B;
-	border: 1px solid #EE8B2B;
-	padding: 15px 15px;
-	font-size: 12px;
 	color: #fff;
-	cursor: pointer;
+	padding: 16px 18px;
 }
-.banner select {
-	width: 250px;
-	height: 45px;
-	margin: 16px;
-	font-size: 20px;
-	padding: 5px;
-	color:  #EE8B2B;
-}
+
 
 input.search-field {
 	border-radius: 50px;

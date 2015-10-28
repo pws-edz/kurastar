@@ -8,51 +8,68 @@
  */
 
 get_header(); ?>
-<div class="mainbanner">
-            <div class="flexslider">
-              <ul class="slides">
-                <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image.jpg" /></li>
-                <li><img src="<?php echo get_template_directory_uri(); ?>/images/main_image2.jpg" /></li>
-              </ul>
-            </div>
-            <div class="defaultWidth center searchwrap">
-            <form>
-              <div class="searchwrap-inner">
-                <div class="transwrap">
-                  <input id="cty" type="text" value="select country" readonly />
-                </div>
-                <div class="transwrap">
-                  <input id="cat" type="text" value="select category" readonly />
-                </div>
-                <input type="submit" class="search-btn" value="" />
-                
-                <div class="dropcountry">
-                <div class="pointer"></div>
-                
-                <div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
-                  <div class="droplistcountry">
-                    <div>
-                      <?php wp_nav_menu( array('menu' => 'country-menu')); ?>
-                    </div>
-                  </div>
-                </div>
-                </div>
+<div class="banner">
+  
+  <div class="category-search">
+    
+    <form action="">
+      <div class="category-search-title">
+        <p>どこの国の写真をみたい？</p>
+      </div>
+      <select name="" id="country">
+        <option value="hide">-- 国を選ぶ --</option>
+        <option value="india">インド</option>
+        <option value="indonesia">インドネシア</option>
+        <option value="cambodia"> カンボジア</option>
+        <option value="singapore">シンガポール</option>
+        <option value="thailand">タイ</option>
+        <option value="philippines">フィリピン</option>
+        <option value="vietnam">ベトナム</option>
+        <option value="malaysia">マレーシア</option>
+        <option value="china">中国</option>
+        <option value="taiwan">台湾</option>
+        <option value="japan">日本</option>
+        <option value="korea">韓国</option>
+        <option value="hongkong">香港/マカオ</option>
+        <option value="egypt">エジプト</option>
+        <option value="dubai">ドバイ</option>
+        <option value="middleeast">中東</option>
+        <option value="usa">アメリカ</option>
+        <option value="argentina">アルゼンチン</option>
+        <option value="canada">カナダ</option>
+        <option value="brazil">ブラジル</option>
+        <option value="bolivia">ボリビア</option>
+        <option value="mexico">メキシコ</option>
+        <option value="australia">オーストラリア</option>
+        <option value="guam">グアム</option>
+        <option value="saipan">サイパン</option>
+        <option value="hawaii">ハワイ</option>
+        <option value="newzealand">ニュージーランド</option>
+        <option value="uk">イギリス</option>
+        <option value="italy">イタリア</option>
+        <option value="austria">オーストリア</option>
+        <option value="greece">ギリシャ</option>
+        <option value="croatia">クロアチア</option>
+        <option value="switzerland">スイス</option>
+        <option value="spain">スペイン</option>
+        <option value="czech-republic">チェコ</option>
+        <option value="germany">ドイツ</option>
+        <option value="france">フランス</option>
 
-                <div class="dropcategory">
-                <div class="pointer"></div>
-                <div class="mCustomScrollbar light" data-mcs-theme="minimal-dark">
-                  <div class="droplistcategory">
-                    <div>
-                      <?php wp_nav_menu( array('menu' => 'category-menu')); ?>
-                    </div>
-                    <div></div>
-                  </div>
-                
-                </div>
-                </div>
-              </div>
-            </form>
-            </div>
+      </select>
+      <select name="" id="category">
+        <option value="">-- ジャンルを選ぶ --</option>
+        <option value="life">生活</option>
+        <option value="fashion">ファッション</option>
+        <option value="gourmet">グルメ</option>
+        <option value="hotel">ホテル</option>
+        <option value="leisure">観光スポット</option>
+
+      </select>
+      <input type="submit" value="検索">
+    </form>
+
+  </div>
 </div>
 
 	<div id="primary" class="content-area container">

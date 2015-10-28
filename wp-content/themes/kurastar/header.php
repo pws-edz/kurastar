@@ -62,11 +62,56 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 							</div> -->
 
 							<div class="searchform">
-								<span class="search-input"><input type="text" placeholder="Search Form"></span>
-								<span class="search-text">Search</span>
+								<span class="search-input"><input type="text" placeholder="気になるワード"></span>
+								<span class="search-text"><input type="submit" value="検索" id="keyword_search_btn"></span>
 							</div>
 
-							<div class="actions">
+							<ul class="nav-actions">
+								<?php if (!is_user_logged_in()): ?>
+
+								<li>
+									<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />
+										<p>POST</p>
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url() ?>/user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup.png" />
+										<p>REGISTER</p>
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url() ?>/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />
+									<p>LOGIN</p>
+								</a>
+								</li>
+
+								<?php else: ?>
+									<?php  
+										$current_user = wp_get_current_user(); 
+										$profile = getCurrentProfile(array( 'user_id' => $current_user->ID )); 
+									?>
+
+								<li>
+									<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />
+										<p>POST</p>
+									</a>
+								</li>
+								<li class="profile-img">
+									<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
+									<img src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="56" width="56">
+									<p><?php echo $current_user->user_login ?></p>
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />
+										<p>LOGOUT</p></a>
+								</li>
+								<?php endif; ?>
+
+
+							</ul>
+
+							<!-- <div class="actions">
 								<?php if (!is_user_logged_in()): ?>
 
 									<a href="<?php echo site_url() ?>/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
@@ -86,7 +131,7 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 									<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
 								<?php endif; ?>
 
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<!-- <div class="head2">
