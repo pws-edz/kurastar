@@ -80,33 +80,33 @@ get_header(); ?>
 	<div class="contentbox">
 		
 		<div class="contentbox">
-            <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-                <?php if(function_exists('bcn_display'))
-                {
-                    bcn_display();
-                }?>
-            </div>
+      <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+          <?php if(function_exists('bcn_display'))
+          {
+              bcn_display();
+          }?>
+      </div>
 
-	    	<div class="form-results">
-			<?php $result = false; ?>	
-			<?php if(!empty( $_POST['action'] )): $result = post_acme_article($_POST); endif; ?>
-			<?php if($result): ?>
+	    <div class="form-results">
+				<?php $result = false; ?>	
+				<?php if(!empty( $_POST['action'] )): $result = post_acme_article($_POST); endif; ?>
+				<?php if($result): ?>
 
-					<?php $image_url = wp_get_attachment_url( get_post_thumbnail_id($result['post_id']) ); ?>
-					<?php if($result['status'] == 'success'): ?>
-						<div class="result-post alert result-post post-success" role="alert">
-							<span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
-							<?php echo $result['msg'];  ?>	
-						</div>
-					<?php else: ?>
-						<div class="result-post alert alert-danger" role="alert">
-							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="false"></span>
-							<?php echo $result['msg'];  ?>	
-						</div>
-					<?php endif; ?>
+						<?php $image_url = wp_get_attachment_url( get_post_thumbnail_id($result['post_id']) ); ?>
+						<?php if($result['status'] == 'success'): ?>
+							<div class="result-post alert result-post post-success" role="alert">
+								<span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
+								<?php echo $result['msg'];  ?>	
+							</div>
+						<?php else: ?>
+							<div class="result-post alert alert-danger" role="alert">
+								<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="false"></span>
+								<?php echo $result['msg'];  ?>	
+							</div>
+						<?php endif; ?>
 
-			<?php endif; ?>
-    		</div>
+				<?php endif; ?>
+    	</div>
     	</div>
 
     </div>
@@ -223,9 +223,15 @@ get_header(); ?>
 	    		<div class="form-grp" style="display:none;" >
 					<input type="text" name="post_id" id="post-id" placeholder="Post ID" value="<?php echo isset($result['post_id']) ? $result['post_id'] : ''  ?>">
 				</div>
-				<div class="form-grp">
-					<textarea name="post_title" class="text-height" placeholder="Description"><?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?></textarea>
-				</div>
+					<div class="form-grp">
+						<textarea name="post_title" class="text-height" placeholder="Description"><?php echo isset($_POST['post_title']) ? $_POST['post_title'] : ''  ?></textarea>
+					</div>
+					<div class="form-grp">
+						<input type="text" placeholder="Tags">
+					</div>
+					<div class="form-grp">
+						<input type="text" placeholder="Location">
+					</div>
 	    	</div>
     	
     		<?php wp_nonce_field( '_wp_custom_post','_wp_custom_post_nonce_field' ); ?>
