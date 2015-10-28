@@ -122,7 +122,6 @@ get_header(); ?>
 								</a>
 							<?php endforeach; ?>
 						<?php else: ?>
-							<!-- <a href="#" class="catlabel"><i class="fa fa-hotel"></i> No Category</a> -->
 						<?php endif; ?>               
 						</div>
 
