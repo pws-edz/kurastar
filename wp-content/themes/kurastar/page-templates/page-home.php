@@ -131,15 +131,13 @@ get_header(); ?>
 				 wp_reset_postdata();?>
 			 	 </div>
 				<?php if ( $wp_query->have_posts() ) : ?>
-					<p>
+					<p class="load-div">
 						<a class="custom-defaultpagi custom-publish" href="#" data-slug="home" data-post-type="acme_article" data-post-per-page="9" data-paged="1" data-status="publish" data-orderby="post_date" data-order="DESC">
-						Load More</a>
+						<span class="load-more">Load More</span></a>
 						<input type="hidden" class="custom-publish-pp" value="<?php echo $paged ?>">
 					</p>
 				<?php  endif; ?>
 			</ul>
-		
-
 		</div>
 		<!-- start sidebar -->
 
@@ -151,10 +149,7 @@ get_header(); ?>
 			</div>
 
 			<a href="<?php echo bloginfo() ?>/curators/"><button type="button" class="btn btn-default curators">See Curators</button></a>
-			<?php echo do_shortcode( '[most_view]' ); ?> 
-			<div class="sideboxcontent ad300">
-				<img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
-			</div>
+			<?php echo do_shortcode( '[most_view]' ); ?>
 			
  			<?php 
  				/*

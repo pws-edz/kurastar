@@ -281,9 +281,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
            ?>
              </div>
              <?php if ( $wp_query->have_posts() ) : ?>
-             <p>
+             <p class="load-div">
               <a class="custom custom-publish" href="#" data-slug="curator-detail" data-post-type="acme_article" data-post-per-page="2" data-paged="1" data-author="<?php echo $user->ID ?>" data-status="publish" data-orderby="post_date" data-order="DESC">
-                Load More</a>
+                <span class="load-more">Load More</span></a>
                 <input type="hidden" class="custom-publish-pp" value="<?php echo $paged ?>">
               </p>
             <?php endif; ?>
@@ -367,9 +367,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
                ?>
                 </div>
                 <?php if($query_favorite->have_posts()): ?>
-                 <p>
+                 <p class="load-div">
                   <a class="custom-favpagi custom-favorite" href="#" data-slug="curator-detail" data-author="<?php echo $user->ID ?>" data-status="favorite">
-                    Load More</a>
+                    <span class="load-more">Load More</span></a>
                     <input type="hidden" class="custom-favorite-pp" value="<?php echo $paged ?>">
                   </p>
                 <?php endif; ?>
@@ -448,9 +448,9 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
            wp_reset_postdata();?>
             </div>
             <?php if ( $query_draft->have_posts() ) : ?>
-             <p>
+             <p class="load-div">
               <a class="custom custom-draft" href="#" data-slug="curator-detail" data-post-type="acme_article" data-post-per-page="2" data-paged="1" data-author="<?php echo $user->ID ?>" data-status="draft" data-orderby="post_date" data-order="DESC">
-                Load More</a>
+                <span class="load-more">Load More</span></a>
                 <input type="hidden" class="custom-draft-pp" value="<?php echo $paged ?>">
               </p>
              <?php  endif; ?>
@@ -470,10 +470,7 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
     </div>
 
     <a href="<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
-    <?php echo do_shortcode( '[most_view]' ); ?> 
-    <div class="sideboxcontent ad300">
-      <img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
-    </div>
+    <?php echo do_shortcode( '[most_view]' ); ?>
     
       <?php 
         /*

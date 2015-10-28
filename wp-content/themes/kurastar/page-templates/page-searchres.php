@@ -184,9 +184,6 @@ get_header(); ?>
         </a>
       </div>
       <a href="?<?php echo site_url() ?>/curator/"><button type="button" class="btn btn-default curators">See Curators</button></a>
-      <div class="sideboxcontent ad300">
-       <img src="<?php echo get_template_directory_uri(); ?>/images/300x300.jpg" />
-      </div>
       
       <?php 
         /*
