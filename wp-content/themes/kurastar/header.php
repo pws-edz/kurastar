@@ -50,17 +50,12 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 		<div class="box100 mainWrap">
 			<div class="contentWrap">
 				<div class="nav-header">
-					<div class="head1">
+					
 						<div class="center headwrap">
-							<a class="menu-sp"></a>
+							
 							<div class="logo">
 								<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/images/kurastarlogo.png" alt="株式会社 デュナレイト" title="株式会社 デュナレイト" /></a>
 							</div>
-
-							<!-- <div class="searchform">
-								<?php get_search_form();?>
-							</div> -->
-
 							<div class="searchform">
 								<span class="search-input"><input type="text" placeholder="気になるワード"></span>
 								<span class="search-text"><input type="submit" value="検索" id="keyword_search_btn"></span>
@@ -110,35 +105,8 @@ var ajaxurl = "<?php echo site_url() ?>/wp-admin/admin-ajax.php";
 
 
 							</ul>
-
-							<!-- <div class="actions">
-								<?php if (!is_user_logged_in()): ?>
-
-									<a href="<?php echo site_url() ?>/user-login"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGIN</a>
-									<a href="<?php echo site_url() ?>/user-registration"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_signup-n.png" />REGISTER</a>
-									<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
-									
-								<?php else: ?>
-									<a href="<?php echo wp_logout_url('$index.php'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_login.png" />LOGOUT</a>
-									<?php  
-										$current_user = wp_get_current_user(); 
-										$profile = getCurrentProfile(array( 'user_id' => $current_user->ID )); 
-									?>
-
-									<a href="<?php echo site_url() ?>/curator-detail/?id=<?php echo $current_user->ID ?>">
-									<img src="<?php echo $profile; ?>" class="avatar avatar-96 photo" height="96" width="96">
-									<?php echo $current_user->user_login ?></a>
-									<a href="<?php echo site_url() ?>/create-article"><img src="<?php echo get_template_directory_uri(); ?>/images/icon_write.png" />POST</a>
-								<?php endif; ?>
-
-							</div> -->
-						</div>
+						
 					</div>
-					<!-- <div class="head2">
-						<div class="defaultWidth center menuwrap">
-							<?php wp_nav_menu( array('menu' => 'header-menu')); ?>
-						</div>
-					</div> -->
 					<?php acf_form_head(); ?>
 		
 				</div>
