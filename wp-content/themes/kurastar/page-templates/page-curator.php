@@ -129,57 +129,67 @@ $curator_profile = get_avatar_url(get_avatar( $user->ID ));
 
             <div class="article-content">
               <div class="labels labels2">
-              <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
-              <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites </span>
-            </div>
+                <span class="countrylabel"><b><?php echo $user_posts ?></b> <?php echo $user_posts > 1 ? 'Articles' : 'Article'?></span>
+                <span class="catlabel"><b><?php echo count_user_favorites($user->ID) ?></b> Favorites </span>
+              </div>
 
-            <div class="curator-info">
-              <form method="POST" id="edit-custom-form" enctype="multipart/form-data">
-                <div class="display_details">
-                  <span id="edit-form">
-                    <h4>
-                        <?php echo $user->display_name ?> 
-                    </h4>
-                    <p> <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
-                  </span>
-                  <?php 
+              <div class="curator-info">
+                <form method="POST" id="edit-custom-form" enctype="multipart/form-data">
+                  <div class="display_details">
+                    <span id="edit-form">
+                      <h4>
+                          <?php echo $user->display_name ?> 
+                      </h4>
+                      <p> <?php echo get_the_author_meta( 'description', $user->ID ) ?></p>
+                    </span>
+                    <?php 
 
-                    $current_user    = wp_get_current_user(); 
-                  ?>
-                  <?php if(is_user_logged_in() && $current_user->ID == $user->ID) : ?>
-                    <span class="catlabel"><a href="#" class="edit-custom-form">Edit</a> </span>
-                  <?php endif; ?>
-                </div>
-
-                <!-- <div style="display:none;" class="userinfo_section"> -->
-                
-
-
-                <div style="display:none;" class="display_section">
-                  <div class="row">
-                    <div class="form-grp form-placeholder-offset input-user">
-                      <input type="file" name="profile" id="post_image" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
-                      <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
-
-                    </div>
+                      $current_user    = wp_get_current_user(); 
+                    ?>
+                    <?php if(is_user_logged_in() && $current_user->ID == $user->ID) : ?>
+                      <span class="catlabel"><a href="#" class="edit-custom-form">Edit</a> </span>
+                    <?php endif; ?>
                   </div>
-                   <div class="row">
-                    <div class="form-grp form-placeholder-offset desc-user">
-                      <textarea name="user_description" placeholder="Information" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
+
+                  <!-- <div style="display:none;" class="userinfo_section"> -->
+                  <div style="display:none;" class="display_section">
+                    <div class="row">
+                      <div class="form-grp form-placeholder-offset input-user">
+                        <input type="file" name="profile" id="post_image" accept="image/*" class="form-control form-control-stroked" style="visibility: hidden;">
+                        <input type="text" name="full_name" class="form-control form-control-stroked" id="full_name" placeholder="Full Name" value="<?php echo $user->display_name ?>">
+
+                      </div>
                     </div>
+                     <div class="row">
+                      <div class="form-grp form-placeholder-offset desc-user">
+                        <textarea name="user_description" placeholder="Information" class="form-control form-control-stroked"><?php echo get_the_author_meta( 'description', $user->ID ) ?></textarea>
+                      </div>
+                    </div>
+                     <input type="hidden" name="update_user_info" value="_update_user_info">
+                     <input type="hidden" name="user_id" value="<?php echo $user->ID ?>">
+                     <a href="#" class="btn catlabel update_process"><?php _e('Save', 'wp') ?></a>
+                     <a href="#" class="btn catlabel cancel_process"><?php _e('Cancel', 'wp') ?></a>
                   </div>
-                   <input type="hidden" name="update_user_info" value="_update_user_info">
-                   <input type="hidden" name="user_id" value="<?php echo $user->ID ?>">
-                   <a href="#" class="btn catlabel update_process"><?php _e('Save', 'wp') ?></a>
-                   <a href="#" class="btn catlabel cancel_process"><?php _e('Cancel', 'wp') ?></a>
-                </div>
-                <div class="clear"></div>
-              </form>
-            </div>
+                  <div class="clear"></div>
+                </form>
+              </div>
+
+              <div class="points-detail">
+                <?php
+                  $view = do_shortcode( '[post_view]' );
+                  if ( $view == 1 ) {
+                    # code...
+                    echo $view.'<span>View</span>';
+                   } else
+                   {
+                    echo $view.'<span>Views</span>';
+                   }
+                 ?>
+              </div>
             <div class="clear"></div>
               </div>
-            </div>
-            </div>
+          </div>
+        </div>
             
             
         
